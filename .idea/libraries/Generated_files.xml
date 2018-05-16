@@ -1,0 +1,71 @@
+<component name="libraryTable">
+  <library name="Generated files" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/src/register.js" />
+        <item url="file://$PROJECT_DIR$/src/index.js" />
+        <item url="file://$PROJECT_DIR$/src/grammar.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript.js" />
+        <item url="file://$PROJECT_DIR$/src/cake.js" />
+        <item url="file://$PROJECT_DIR$/src/browser.js" />
+        <item url="file://$PROJECT_DIR$/src/optparse.js" />
+        <item url="file://$PROJECT_DIR$/src/helpers.js" />
+        <item url="file://$PROJECT_DIR$/node_modules/escodegen/node_modules/esutils/test/code.js" />
+        <item url="file://$PROJECT_DIR$/node_modules/escodegen/node_modules/esutils/test/keyword.js" />
+        <item url="file://$PROJECT_DIR$/node_modules/iferr/test/index.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/cake.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/grammar.js" />
+        <item url="file://$PROJECT_DIR$/node_modules/iferr/index.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/register.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/coffeescript.js" />
+        <item url="file://$PROJECT_DIR$/bin/c.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/browser.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/helpers.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/optparse.js" />
+        <item url="file://$PROJECT_DIR$/src/command.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/index.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/command.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/repl.js" />
+        <item url="file://$PROJECT_DIR$/src/repl.js" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/src/register.js" />
+      <root url="file://$PROJECT_DIR$/src/index.js" />
+      <root url="file://$PROJECT_DIR$/src/grammar.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript.js" />
+      <root url="file://$PROJECT_DIR$/src/cake.js" />
+      <root url="file://$PROJECT_DIR$/src/browser.js" />
+      <root url="file://$PROJECT_DIR$/src/optparse.js" />
+      <root url="file://$PROJECT_DIR$/src/helpers.js" />
+      <root url="file://$PROJECT_DIR$/src/command.js" />
+      <root url="file://$PROJECT_DIR$/src/repl.js" />
+      <root url="file://$PROJECT_DIR$/src/register.js" />
+      <root url="file://$PROJECT_DIR$/src/index.js" />
+      <root url="file://$PROJECT_DIR$/src/grammar.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript.js" />
+      <root url="file://$PROJECT_DIR$/src/cake.js" />
+      <root url="file://$PROJECT_DIR$/src/browser.js" />
+      <root url="file://$PROJECT_DIR$/src/optparse.js" />
+      <root url="file://$PROJECT_DIR$/src/helpers.js" />
+      <root url="file://$PROJECT_DIR$/node_modules/escodegen/node_modules/esutils/test/code.js" />
+      <root url="file://$PROJECT_DIR$/node_modules/escodegen/node_modules/esutils/test/keyword.js" />
+      <root url="file://$PROJECT_DIR$/node_modules/iferr/test/index.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/cake.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/grammar.js" />
+      <root url="file://$PROJECT_DIR$/node_modules/iferr/index.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/register.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/coffeescript.js" />
+      <root url="file://$PROJECT_DIR$/bin/c.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/browser.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/helpers.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/optparse.js" />
+      <root url="file://$PROJECT_DIR$/src/command.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/index.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/command.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/repl.js" />
+      <root url="file://$PROJECT_DIR$/src/repl.js" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>

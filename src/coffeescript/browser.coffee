@@ -3,6 +3,7 @@
 # We add support for loading remote Coffee scripts via **XHR**, and
 # `text/coffeescript` script tags, source maps via data-URLs, and so on.
 
+
 CoffeeScript = require './coffeescript'
 { compile } = CoffeeScript
 
