@@ -10,6 +10,14 @@ try {
 var path = require('path');
 var fs   = require('fs');
 
+
+process.stdout.write("HELLO COFFEESCRIPT\n");
+
+
+var fl = [
+  'Classes',
+];
+
 var potentialPaths = [
   path.join(process.cwd(), 'node_modules/coffeescript/lib/coffeescript'),
   path.join(process.cwd(), 'node_modules/coffeescript/lib/coffee-script'),
@@ -23,3 +31,23 @@ for (var i = 0, len = potentialPaths.length; i < len; i++) {
     break;
   }
 }
+
+console.log("BEG:delay");
+setTimeout(() => {
+  console.log("END:delay");
+for (var i = 0, len = fl.length; i < len; i++) {
+  fs.copyFileSync(`/Users/pete/gitlab/rn/API/rn/Ladybug/${fl[i]}.coffee`, `/Users/pete/gitlab/rn/API/Shared/${fl[i]}.coffee`);
+  fs.copyFileSync(`/Users/pete/gitlab/rn/API/rn/Ladybug/${fl[i]}.js`, `/Users/pete/gitlab/rn/API/Shared/${fl[i]}.js`);
+  console.log(`copied ${fl[i]}`);
+}
+}, 2000);
+
+
+/*
+ for (var i = 0, len = fl.length; i < len; i++) {
+ fs.copyFileSync(`/Users/pete/gitlab/rn/API/rn/Ladybug/${fl[i]}.coffee`, `/Users/pete/gitlab/rn/API/Shared/${fl[i]}.coffee`);
+ fs.copyFileSync(`/Users/pete/gitlab/rn/API/rn/Ladybug/${fl[i]}.js`, `/Users/pete/gitlab/rn/API/Shared/${fl[i]}.js`);
+ console.log(`copied ${fl[i]}`);
+ }
+ */
+console.log('EOL');
