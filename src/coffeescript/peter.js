@@ -18,8 +18,8 @@ lg = function(line) {
 };
 
 process = function(code, ENV = {}) {
-  var _, a, arg, i, j, len, line, lines, name, req, stack;
-  //	log "process"
+  var a, arg, i, j, len, line, lines, name, req, stack;
+  //	log "process: ENV=#{JSON.stringify ENV}"
   code = code.toString();
   //	log "FILE: SRC1: #{code}\n"
   a = [];
@@ -32,7 +32,7 @@ process = function(code, ENV = {}) {
     return tokens[1];
   };
   req = {
-    bGo: 1 // 0=off 1=on
+    bGo: true
   };
   lines = code.split('\n');
   for (i = j = 0, len = lines.length; j < len; i = ++j) {
@@ -40,22 +40,26 @@ process = function(code, ENV = {}) {
     switch (false) {
       //		line = line.replace /Charles/, 'Christmas'
       case line.slice(0, 3) !== "#if":
-        //				req.bGo
+        //				log "IF: line=#{line}: #{req.bGo}"
+
+        // save current requirements for later
         stack.push(req);
+        // clone otherwise side offect of messing with requirements object just saved
         req = Object.assign({}, req);
+        // the default is that this #if section is DEAD.  BUT, if bGo is true, then not dead: we need to flip when it else
         req.bFlipOnElse = false;
         if (req.bGo) {
           req.bFlipOnElse = true;
           name = arg(line);
-          req.bGo = ENV[name];
+          // only go if this target is one of the environments
+          req.bGo = !!ENV[name];
         }
         break;
-      //				else
-      //					req[] = true
-      //					req.bIf = true
-      //					lg "if:req=#{JSON.stringify req}"
+      //					log "IF: name=#{name} bGo=#{req.bGo}"
       case line.slice(0, 5) !== "#else":
         if (req.bFlipOnElse) {
+          // we're alive, so flip... whatever the logic was, now it's the opposite
+          //					log "flipping"
           req.bGo = !req.bGo;
         }
         break;
@@ -68,32 +72,7 @@ process = function(code, ENV = {}) {
         }
     }
   }
-  //				unless req.bSuppress
-  //					if O.CNT_OWN(req) is 0
-  //	#					log "empty"
-  //						a.push line
-  //					else
-  //	# make sure all requirements satisfied
-  //						bGo = true
-  //						for k of req
-  //							log "found #{k}"
-  //							if req[k]
-  //	#							log "eval"
-  //								bGo &= ENV[k]
-  //							log "bGo=#{bGo}"
-  //						if bGo
-  //							if req.last is "if"	#HACK
-  //								log "req.bSuppressElse = true"
-  //								req.bSuppressElse = true
-  //							a.push line
-  //						else
-  //							lg "SKIP: #{line}"
-  //		lines[i] = line
-  //		log "LINE: #{line}"
-  _ = a.join('\n');
-  //	log "========== AFTER"
-  //	log _
-  return _;
+  return a.join('\n');
 };
 
 module.exports = {
@@ -127,7 +106,7 @@ module.exports = {
             c2 = "before\nthis is NOT rn\nafter";
             return fn(c1, c2, {}, this);
           });
-          this.T("if: env=rn", function() {
+          this.t("if: env=rn", function() {
             var c1, c2;
             c1 = "before\n#if rn\nthis is rn\n#else\nthis is NOT rn\n#endif\nafter";
             c2 = "before\nthis is rn\nafter";
@@ -135,12 +114,12 @@ module.exports = {
               rn: true
             }, this);
           });
-          return this.t("nested if: env=rn", function() {
+          return this.T("nested if: env=emily", function() {
             var c1, c2;
-            c1 = "before\n#if rn\nthis is rn\n#else\nthis is NOT rn\n#endif\nafter";
-            c2 = "before\nthis is NOT rn\nafter";
+            c1 = "before\n#if rn\nthis is rn\n#else\nthis is NOT rn\n#if emily\nthis is emily\n#else\nthis is NOT emily\n#endif\n#endif\nafter";
+            c2 = "before\nthis is NOT rn\nthis is emily\nafter";
             return fn(c1, c2, {
-              rn: false
+              emily: true
             }, this);
           });
         });

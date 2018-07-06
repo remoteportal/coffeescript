@@ -12,7 +12,7 @@ lg = (line) -> console.log line
 
 
 process = (code, ENV = {}) ->
-#	log "process"
+#	log "process: ENV=#{JSON.stringify ENV}"
 
 	code = code.toString()
 
@@ -30,7 +30,7 @@ process = (code, ENV = {}) ->
 		tokens[1]
 
 	req =
-		bGo: 1		# 0=off 1=on
+		bGo: true
 
 	lines = code.split '\n'
 	for line,i in lines
@@ -38,55 +38,34 @@ process = (code, ENV = {}) ->
 
 		switch
 			when line[0..2] is "#if"
-#				req.bGo
+#				log "IF: line=#{line}: #{req.bGo}"
+
+				# save current requirements for later
 				stack.push req
 
+				# clone otherwise side offect of messing with requirements object just saved
 				req = Object.assign {}, req
+
+				# the default is that this #if section is DEAD.  BUT, if bGo is true, then not dead: we need to flip when it else
 				req.bFlipOnElse = false
 				if req.bGo
 					req.bFlipOnElse = true
 
 					name = arg line
-					req.bGo = ENV[name]
-#				else
-#					req[] = true
-#					req.bIf = true
-#					lg "if:req=#{JSON.stringify req}"
 
+					# only go if this target is one of the environments
+					req.bGo = !!ENV[name]
+#					log "IF: name=#{name} bGo=#{req.bGo}"
 			when line[0..4] is "#else"
 				if req.bFlipOnElse
+					# we're alive, so flip... whatever the logic was, now it's the opposite
+#					log "flipping"
 					req.bGo = ! req.bGo
 			when line[0..5] is "#endif"
 				req = stack.pop()
 			else
 				a.push line if req.bGo
-#				unless req.bSuppress
-#					if O.CNT_OWN(req) is 0
-#	#					log "empty"
-#						a.push line
-#					else
-#	# make sure all requirements satisfied
-#						bGo = true
-#						for k of req
-#							log "found #{k}"
-#							if req[k]
-#	#							log "eval"
-#								bGo &= ENV[k]
-#							log "bGo=#{bGo}"
-#						if bGo
-#							if req.last is "if"	#HACK
-#								log "req.bSuppressElse = true"
-#								req.bSuppressElse = true
-#							a.push line
-#						else
-#							lg "SKIP: #{line}"
-	#		lines[i] = line
-	#		log "LINE: #{line}"
-
-	_ = a.join '\n'
-#	log "========== AFTER"
-#	log _
-	_
+	a.join '\n'
 
 
 
@@ -140,7 +119,7 @@ this is NOT rn
 after
 """
 						fn c1, c2, {}, this
-					@T "if: env=rn", ->
+					@t "if: env=rn", ->
 						c1 = """
 before
 #if rn
@@ -156,22 +135,28 @@ this is rn
 after
 """
 						fn c1, c2, {rn:true}, this
-					@t "nested if: env=rn", ->
+					@T "nested if: env=emily", ->
 						c1 = """
 before
 #if rn
 this is rn
 #else
 this is NOT rn
+#if emily
+this is emily
+#else
+this is NOT emily
+#endif
 #endif
 after
 """
 						c2 = """
 before
 this is NOT rn
+this is emily
 after
 """
-						fn c1, c2, {rn:false}, this
+						fn c1, c2, {emily:true}, this
 		)).run()
 #endif
 
