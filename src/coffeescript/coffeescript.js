@@ -92,6 +92,7 @@ exports.compile = compile = withPrettyErrors(function(code, options = {}) {
   // we need to recompile it to get a source map for `prepareStackTrace`.
   generateSourceMap = options.sourceMap || options.inlineMap || (options.filename == null);
   filename = options.filename || '<anonymous>';
+  //PETER: called here?
   checkShebangLine(filename, code);
   if (sources[filename] == null) {
     sources[filename] = [];

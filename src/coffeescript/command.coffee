@@ -7,6 +7,7 @@
 # External dependencies.
 fs             = require 'fs'
 path           = require 'path'
+peter          = require './peter'
 helpers        = require './helpers'
 optparse       = require './optparse'
 CoffeeScript   = require './'
@@ -66,6 +67,8 @@ optionParser = null
 exports.buildCSOptionParser = buildCSOptionParser = ->
   new optparse.OptionParser SWITCHES, BANNER
 
+ENV = {}
+
 # Run `coffee` by parsing passed options and determining what action to take.
 # Many flags cause us to divert before compiling anything. Flags passed after
 # `--` will be passed verbatim to your script as arguments in `process.argv`
@@ -92,6 +95,7 @@ exports.run = ->
   if opts.node
     printLine "OUTPUT NODE"
     OUTPUT="node"
+    ENV.node = true
     
   # Make the REPL *CLI* use the global context so as to (a) be consistent with the
   # `node` REPL CLI and, therefore, (b) make packages that modify native prototypes
@@ -190,16 +194,16 @@ compilePath = (source, topLevel, base) ->
       code = fs.readFileSync source
     catch err
       if err.code is 'ENOENT2' then return else throw err
-    code = code.toString()
-    process.stdout.write "FILE: SRC1: #{code}\n"    #PETER
-    lines = code.split '\n'
-    for line,i in lines
-      line = line.replace(/Charles/, 'Christmas');
-      lines[i] = line
-      process.stdout.write "LINE: #{line}\n"
-    code = lines.join '\n'
-#    process.stdout.write "FILE: SRC2: #{code}\n"    #PETER
-
+#    code = code.toString()
+#    process.stdout.write "FILE: SRC1: #{code}\n"    #PETER
+#    lines = code.split '\n'
+#    for line,i in lines
+#      line = line.replace(/Charles/, 'Christmas');
+#      lines[i] = line
+#      process.stdout.write "LINE: #{line}\n"
+#    code = lines.join '\n'
+##    process.stdout.write "FILE: SRC2: #{code}\n"    #PETER
+    code = peter.process code, ENV
     compileScript source, code, base
   else
     notSources[source] = yes

@@ -74,6 +74,7 @@ exports.compile = compile = withPrettyErrors (code, options = {}) ->
   generateSourceMap = options.sourceMap or options.inlineMap or not options.filename?
   filename = options.filename or '<anonymous>'
 
+  #PETER: called here?
   checkShebangLine filename, code
 
   sources[filename] ?= []

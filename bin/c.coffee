@@ -1,7 +1,9 @@
 c="Charles"
 #if nr
 a2=2
-#end
+#else
+bElse = true
+#endif
 a3=3
 
 fn = (a) ->

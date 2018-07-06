@@ -2,22 +2,35 @@
   <library name="Generated files" type="javaScript">
     <properties>
       <sourceFilesUrls>
-        <item url="file://$PROJECT_DIR$/src/coffeescript/register.js" />
         <item url="file://$PROJECT_DIR$/node_modules/escodegen/node_modules/esutils/test/code.js" />
         <item url="file://$PROJECT_DIR$/node_modules/escodegen/node_modules/esutils/test/keyword.js" />
-        <item url="file://$PROJECT_DIR$/bin/c.js" />
         <item url="file://$PROJECT_DIR$/node_modules/iferr/test/index.js" />
-        <item url="file://$PROJECT_DIR$/src/coffeescript/browser.js" />
-        <item url="file://$PROJECT_DIR$/src/coffeescript/helpers.js" />
-        <item url="file://$PROJECT_DIR$/src/coffeescript/optparse.js" />
-        <item url="file://$PROJECT_DIR$/src/coffeescript/index.js" />
-        <item url="file://$PROJECT_DIR$/src/coffeescript/nodes.js" />
         <item url="file://$PROJECT_DIR$/src/coffeescript/coffeescript.js" />
-        <item url="file://$PROJECT_DIR$/src/coffeescript/command.js" />
-        <item url="file://$PROJECT_DIR$/src/coffeescript/repl.js" />
         <item url="file://$PROJECT_DIR$/src/coffeescript/cake.js" />
         <item url="file://$PROJECT_DIR$/src/coffeescript/grammar.js" />
         <item url="file://$PROJECT_DIR$/node_modules/iferr/index.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/Date.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/C.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/register.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/N.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/trace.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/A.js" />
+        <item url="file://$PROJECT_DIR$/bin/c.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/S.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/browser.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/helpers.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/ut.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/optparse.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/O.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/index.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/Util.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/V.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/tests.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/Base.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/nodes.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/repl.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/command.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/peter.js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
@@ -41,22 +54,35 @@
       <root url="file://$PROJECT_DIR$/src/helpers.js" />
       <root url="file://$PROJECT_DIR$/src/command.js" />
       <root url="file://$PROJECT_DIR$/src/repl.js" />
-      <root url="file://$PROJECT_DIR$/src/coffeescript/register.js" />
       <root url="file://$PROJECT_DIR$/node_modules/escodegen/node_modules/esutils/test/code.js" />
       <root url="file://$PROJECT_DIR$/node_modules/escodegen/node_modules/esutils/test/keyword.js" />
-      <root url="file://$PROJECT_DIR$/bin/c.js" />
       <root url="file://$PROJECT_DIR$/node_modules/iferr/test/index.js" />
-      <root url="file://$PROJECT_DIR$/src/coffeescript/browser.js" />
-      <root url="file://$PROJECT_DIR$/src/coffeescript/helpers.js" />
-      <root url="file://$PROJECT_DIR$/src/coffeescript/optparse.js" />
-      <root url="file://$PROJECT_DIR$/src/coffeescript/index.js" />
-      <root url="file://$PROJECT_DIR$/src/coffeescript/nodes.js" />
       <root url="file://$PROJECT_DIR$/src/coffeescript/coffeescript.js" />
-      <root url="file://$PROJECT_DIR$/src/coffeescript/command.js" />
-      <root url="file://$PROJECT_DIR$/src/coffeescript/repl.js" />
       <root url="file://$PROJECT_DIR$/src/coffeescript/cake.js" />
       <root url="file://$PROJECT_DIR$/src/coffeescript/grammar.js" />
       <root url="file://$PROJECT_DIR$/node_modules/iferr/index.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/Date.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/C.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/register.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/N.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/trace.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/A.js" />
+      <root url="file://$PROJECT_DIR$/bin/c.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/S.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/browser.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/helpers.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/ut.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/optparse.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/O.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/index.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/Util.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/V.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/tests.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/Base.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/nodes.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/repl.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/command.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/peter.js" />
     </CLASSES>
     <SOURCES />
   </library>

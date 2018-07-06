@@ -1,0 +1,131 @@
+ALL_TRISTATE = null
+
+UT_TEST_PRE_ONE_LINER___OVERRIDE_ON = 1
+
+TRACE_DUMP = 0
+
+HUMAN = 1													# only if reviewed by human
+
+TRACE_DURATION_REPORT = false
+TRACE_DURATION_MIN_MS = 100
+
+
+
+
+module.exports =
+	# *
+	AUDIT: 0
+	C: 0
+	D: 0				#AKA: DESTRUCTORS, TEARDOWN
+	DELAY: 0
+	DELAY_END: 0
+	DIRECTORY: 0
+	DETAIL: 0
+	ENV: 0
+	EVENTS_RECEIVED: 0
+	HUMAN: HUMAN
+	INTERNET: 0
+	NOISE: 0
+	TEARDOWN: 0
+
+
+	FB_CREATE: 0
+
+	CONFIG: 0
+
+	CMAP: 0
+
+	DEFAULT: 0
+
+	DELIVER: 0
+	DELIVER_C: 0
+
+	
+	SOCKET_CONNECTED: 0
+	SOCKET_CLOSE: 0
+	SOCKET_CLOSED: 0
+	SOCKET_LISTEN: 0
+	SOCKET_NOISE: 0
+	SOCKET_OPEN: 0
+	SOCKET_OPENED: 0
+	SOCKET_RECEIVED: 0
+	SOCKET_SENT: 0
+
+	WARNINGS: 0
+
+	REGISTER: 0
+
+	SEND_SYNC: 0
+
+
+	# SQL
+	SQL_CLOSE: 0
+	SQL_DDL: 0
+	SQL_OPEN: 0
+	SQL_OPEN_ALREADY: 0
+	SQL: 0
+
+	
+	# TestClient
+	TEST_CLIENT: 0
+
+
+	# TestHub
+	TESTHUB: 0
+
+
+	# Tests
+	TESTS: 0			#H #WTF
+
+
+	# UT
+	UT_BAG_SET: 0
+	UT_BAG_DUMP: 0
+	UT_DUR: 0
+	UT_TEST_LOG_ENABLED: 1
+	UT_TEST_POST_ONE_LINER: 0
+	UT_TEST_PRE_ONE_LINER: 1
+	UT_RESOLVED: 0
+
+
+
+
+	
+	#TODO: add name space
+	ID_TRANSLATE: 0
+	PROPERTY_DELETE: 0
+	RESET: 0
+	SAVE_ID: 0
+	UPLIST_EMPTY: 0
+	UPLOAD: 0
+
+
+if ALL_TRISTATE?
+	for k of module.exports
+		module.exports[k] = ALL_TRISTATE
+
+
+if UT_TEST_PRE_ONE_LINER___OVERRIDE_ON
+	module.exports.UT_TEST_PRE_ONE_LINER = 1
+
+
+#module.exports.SOCKET_OPEN = 1
+#module.exports.SOCKET_OPEN = 1
+
+#OVERRIDES
+#module.exports.AUDIT = 1
+module.exports.SQL_OPEN_ALREADY = 0
+#module.exports.UT_TEST_LOG_ENABLED = 1
+module.exports.TRACE_DURATION_REPORT = TRACE_DURATION_REPORT
+module.exports.TRACE_DURATION_MIN_MS = TRACE_DURATION_MIN_MS
+module.exports.WARNINGS = 1
+module.exports.SQL_DDL = 0
+module.exports.HUMAN = HUMAN
+
+
+if TRACE_DUMP
+	for k, v of module.exports
+		console.log "#{k}: #{v}"
+
+
+return

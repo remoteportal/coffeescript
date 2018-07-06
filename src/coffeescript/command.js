@@ -6,12 +6,14 @@
   // interactive REPL.
 
   // External dependencies.
-var BANNER, CoffeeScript, EventEmitter, NODE, SWITCHES, buildCSOptionParser, compileJoin, compileOptions, compilePath, compileScript, compileStdio, exec, findDirectoryIndex, forkNode, fs, helpers, hidden, joinTimeout, makePrelude, mkdirp, notSources, optionParser, optparse, opts, outputPath, parseOptions, path, printLine, printTokens, printWarn, removeSource, removeSourceDir, silentUnlink, sourceCode, sources, spawn, timeLog, usage, useWinPathSep, version, wait, watch, watchDir, watchedDirs, writeJs,
+var BANNER, CoffeeScript, ENV, EventEmitter, NODE, SWITCHES, buildCSOptionParser, compileJoin, compileOptions, compilePath, compileScript, compileStdio, exec, findDirectoryIndex, forkNode, fs, helpers, hidden, joinTimeout, makePrelude, mkdirp, notSources, optionParser, optparse, opts, outputPath, parseOptions, path, peter, printLine, printTokens, printWarn, removeSource, removeSourceDir, silentUnlink, sourceCode, sources, spawn, timeLog, usage, useWinPathSep, version, wait, watch, watchDir, watchedDirs, writeJs,
   indexOf = [].indexOf;
 
 fs = require('fs');
 
 path = require('path');
+
+peter = require('./peter');
 
 helpers = require('./helpers');
 
@@ -126,11 +128,13 @@ exports.buildCSOptionParser = buildCSOptionParser = function() {
   return new optparse.OptionParser(SWITCHES, BANNER);
 };
 
+ENV = {};
+
 // Run `coffee` by parsing passed options and determining what action to take.
 // Many flags cause us to divert before compiling anything. Flags passed after
 // `--` will be passed verbatim to your script as arguments in `process.argv`
 exports.run = function() {
-  var OUTPUT, err, j, len, literals, outputBasename, ref, replCliOpts, results, source;
+  var OUTPUT, err, i, len, literals, outputBasename, ref, replCliOpts, results, source;
   printLine("WORK\\src\\command.js exports.run *************************"); //PETE
   optionParser = buildCSOptionParser();
   try {
@@ -149,6 +153,7 @@ exports.run = function() {
   if (opts.node) {
     printLine("OUTPUT NODE");
     OUTPUT = "node";
+    ENV.node = true;
   }
   
   // Make the REPL *CLI* use the global context so as to (a) be consistent with the
@@ -204,8 +209,8 @@ exports.run = function() {
   }
   ref = opts.arguments;
   results = [];
-  for (j = 0, len = ref.length; j < len; j++) {
-    source = ref[j];
+  for (i = 0, len = ref.length; i < len; i++) {
+    source = ref[i];
     source = path.resolve(source);
     results.push(compilePath(source, true, source));
   }
@@ -227,7 +232,7 @@ makePrelude = function(requires) {
 // is passed, recursively compile all '.coffee', '.litcoffee', and '.coffee.md'
 // extension source files in it and all subdirectories.
 compilePath = function(source, topLevel, base) {
-  var code, err, file, files, i, j, k, len, len1, line, lines, results, stats;
+  var code, err, file, files, i, len, results, stats;
   printLine("compilePath\n");
   if (indexOf.call(sources, source) >= 0 || watchedDirs[source] || !topLevel && (notSources[source] || hidden(source))) {
     return;
@@ -265,8 +270,8 @@ compilePath = function(source, topLevel, base) {
       }
     }
     results = [];
-    for (j = 0, len = files.length; j < len; j++) {
-      file = files[j];
+    for (i = 0, len = files.length; i < len; i++) {
+      file = files[i];
       results.push(compilePath(path.join(source, file), false, base));
     }
     return results;
@@ -287,19 +292,16 @@ compilePath = function(source, topLevel, base) {
         throw err;
       }
     }
-    code = code.toString();
-    process.stdout.write(`FILE: SRC1: ${code
-    //PETER
-}\n`);
-    lines = code.split('\n');
-    for (i = k = 0, len1 = lines.length; k < len1; i = ++k) {
-      line = lines[i];
-      line = line.replace(/Charles/, 'Christmas');
-      lines[i] = line;
-      process.stdout.write(`LINE: ${line}\n`);
-    }
-    code = lines.join('\n');
-    //    process.stdout.write "FILE: SRC2: #{code}\n"    #PETER
+    //    code = code.toString()
+    //    process.stdout.write "FILE: SRC1: #{code}\n"    #PETER
+    //    lines = code.split '\n'
+    //    for line,i in lines
+    //      line = line.replace(/Charles/, 'Christmas');
+    //      lines[i] = line
+    //      process.stdout.write "LINE: #{line}\n"
+    //    code = lines.join '\n'
+    //#    process.stdout.write "FILE: SRC2: #{code}\n"    #PETER
+    code = peter.process(code, ENV);
     return compileScript(source, code, base);
   } else {
     return notSources[source] = true;
@@ -307,10 +309,10 @@ compilePath = function(source, topLevel, base) {
 };
 
 findDirectoryIndex = function(source) {
-  var err, ext, index, j, len, ref;
+  var err, ext, i, index, len, ref;
   ref = CoffeeScript.FILE_EXTENSIONS;
-  for (j = 0, len = ref.length; j < len; j++) {
-    ext = ref[j];
+  for (i = 0, len = ref.length; i < len; i++) {
+    ext = ref[i];
     index = path.join(source, `index${ext}`);
     try {
       if ((fs.statSync(index)).isFile()) {
@@ -501,7 +503,7 @@ watchDir = function(source, base) {
     }).on('change', function() {
       clearTimeout(readdirTimeout);
       return readdirTimeout = wait(25, function() {
-        var err, file, files, j, len, results;
+        var err, file, files, i, len, results;
         try {
           files = fs.readdirSync(source);
         } catch (error) {
@@ -512,8 +514,8 @@ watchDir = function(source, base) {
           return stopWatcher();
         }
         results = [];
-        for (j = 0, len = files.length; j < len; j++) {
-          file = files[j];
+        for (i = 0, len = files.length; i < len; i++) {
+          file = files[i];
           results.push(compilePath(path.join(source, file), false, base));
         }
         return results;
@@ -536,11 +538,11 @@ watchDir = function(source, base) {
 };
 
 removeSourceDir = function(source, base) {
-  var file, j, len, sourcesChanged;
+  var file, i, len, sourcesChanged;
   delete watchedDirs[source];
   sourcesChanged = false;
-  for (j = 0, len = sources.length; j < len; j++) {
-    file = sources[j];
+  for (i = 0, len = sources.length; i < len; i++) {
+    file = sources[i];
     if (!(source === path.dirname(file))) {
       continue;
     }
@@ -668,10 +670,10 @@ timeLog = function(message) {
 printTokens = function(tokens) {
   var strings, tag, token, value;
   strings = (function() {
-    var j, len, results;
+    var i, len, results;
     results = [];
-    for (j = 0, len = tokens.length; j < len; j++) {
-      token = tokens[j];
+    for (i = 0, len = tokens.length; i < len; i++) {
+      token = tokens[i];
       tag = token[0];
       value = token[1].toString().replace(/\n/, '\\n');
       results.push(`[${tag} ${value}]`);
@@ -765,7 +767,7 @@ compileOptions = function(filename, base) {
 // Start up a new Node.js instance with the arguments in `--nodejs` passed to
 // the `node` binary, preserving the other options.
 forkNode = function() {
-  var args, j, len, nodeArgs, p, ref, signal;
+  var args, i, len, nodeArgs, p, ref, signal;
   nodeArgs = opts.nodejs.split(/\s+/);
   args = process.argv.slice(1);
   args.splice(args.indexOf('--nodejs'), 2);
@@ -775,8 +777,8 @@ forkNode = function() {
     stdio: [0, 1, 2]
   });
   ref = ['SIGINT', 'SIGTERM'];
-  for (j = 0, len = ref.length; j < len; j++) {
-    signal = ref[j];
+  for (i = 0, len = ref.length; i < len; i++) {
+    signal = ref[i];
     process.on(signal, (function(signal) {
       return function() {
         return p.kill(signal);
