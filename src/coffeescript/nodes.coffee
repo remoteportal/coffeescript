@@ -3010,6 +3010,7 @@ exports.While = class While extends Base
       super res
     else
       @returns = not @jumps()
+#      @returns = no #PETER: #SUCCESS!  turned off comprehension return array!!!  comment-out for risk mitigation
       this
 
   addBody: (@body) ->

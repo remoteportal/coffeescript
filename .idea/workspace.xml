@@ -2,19 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="11dbedff-929c-41ba-92e0-c0b43c9dffab" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Generated_files.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Generated_files.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/c.coffee" afterPath="$PROJECT_DIR$/bin/c.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/c.js" afterPath="$PROJECT_DIR$/bin/c.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bin/coffee" afterPath="$PROJECT_DIR$/bin/coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/coffeescript/coffeescript.js" afterPath="$PROJECT_DIR$/lib/coffeescript/coffeescript.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/coffeescript.coffee" afterPath="$PROJECT_DIR$/src/coffeescript/coffeescript.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/coffeescript.js" afterPath="$PROJECT_DIR$/src/coffeescript/coffeescript.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/command.coffee" afterPath="$PROJECT_DIR$/src/coffeescript/command.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/command.js" afterPath="$PROJECT_DIR$/src/coffeescript/command.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/lexer.coffee" afterPath="$PROJECT_DIR$/src/coffeescript/lexer.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/nodes.coffee" afterPath="$PROJECT_DIR$/src/coffeescript/nodes.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/nodes.js" afterPath="$PROJECT_DIR$/src/coffeescript/nodes.js" />
     </list>
     <ignored path="coffeescript.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -45,56 +38,22 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="nodes.coffee" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/coffeescript/nodes.coffee">
+      <file leaf-file-name="sourcemap.litcoffee" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/coffeescript/sourcemap.litcoffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="101">
-              <caret line="561" column="18" selection-start-line="561" selection-start-column="18" selection-end-line="561" selection-end-column="18" />
+            <state relative-caret-position="-1887">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="scope.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/coffeescript/scope.js">
+      <file leaf-file-name="optparse.coffee" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/coffeescript/optparse.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="122">
-              <caret line="121" column="16" selection-start-line="121" selection-start-column="4" selection-end-line="121" selection-end-column="16" />
+            <state relative-caret-position="210">
+              <caret line="14" column="20" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="20" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="scope.litcoffee" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/coffeescript/scope.litcoffee">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="660">
-              <caret line="90" column="6" selection-start-line="90" selection-start-column="6" selection-end-line="90" selection-end-column="6" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="README.md" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/README.md">
-          <provider editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="0">
-                <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-                <folding />
-              </first_editor>
-              <second_editor>
-                <js_state />
-              </second_editor>
-            </state>
-          </provider>
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="FIRST">
-              <first_editor relative-caret-position="511">
-                <caret line="76" column="25" selection-start-line="76" selection-start-column="25" selection-end-line="76" selection-end-column="25" />
-                <folding />
-              </first_editor>
-              <second_editor />
             </state>
           </provider>
         </entry>
@@ -104,9 +63,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="120">
               <caret line="8" column="9" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
-              <folding>
-                <marker date="1530872135181" expanded="true" signature="48:62" ph="..." />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -121,11 +78,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="command.coffee" pinned="false" current-in-tab="false">
+      <file leaf-file-name="command.coffee" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/coffeescript/command.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2835">
-              <caret line="189" column="45" selection-start-line="189" selection-start-column="45" selection-end-line="189" selection-end-column="45" />
+            <state relative-caret-position="209">
+              <caret line="183" column="45" selection-start-line="183" selection-start-column="45" selection-end-line="183" selection-end-column="45" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="option_parser.coffee" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/option_parser.coffee">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-30">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -169,10 +136,11 @@
         <option value="$PROJECT_DIR$/bin/c.coffee" />
         <option value="$PROJECT_DIR$/src/coffeescript/coffeescript.js" />
         <option value="$PROJECT_DIR$/bin/coffee" />
-        <option value="$PROJECT_DIR$/src/coffeescript/command.coffee" />
         <option value="$PROJECT_DIR$/src/coffeescript/coffeescript.coffee" />
         <option value="$PROJECT_DIR$/src/coffeescript/nodes.coffee" />
         <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/src/coffeescript/lexer.coffee" />
+        <option value="$PROJECT_DIR$/src/coffeescript/command.coffee" />
       </list>
     </option>
   </component>
@@ -230,6 +198,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="coffeescript" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="coffeescript" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="coffeescript" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -388,12 +370,12 @@
       <option name="presentableId" value="Default" />
       <updated>1526471339672</updated>
       <workItem from="1526471341019" duration="5624000" />
-      <workItem from="1530808210600" duration="13790000" />
+      <workItem from="1530808210600" duration="16608000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19414000" />
+    <option name="totallyTimeSpent" value="22232000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="380" y="23" width="1537" height="1120" extended-state="0" />
@@ -402,7 +384,7 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15159401" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32921028" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921028" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921028" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -453,13 +435,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/grammar.coffee" />
-    <entry file="file://$PROJECT_DIR$/src/index.coffee" />
-    <entry file="file://$PROJECT_DIR$/src/register.coffee" />
-    <entry file="file://$PROJECT_DIR$/src/repl.coffee" />
-    <entry file="file://$PROJECT_DIR$/src/rewriter.coffee" />
-    <entry file="file://$PROJECT_DIR$/src/sourcemap.litcoffee" />
-    <entry file="file://$PROJECT_DIR$/src/scope.litcoffee" />
     <entry file="file://$PROJECT_DIR$/src/command.coffee" />
     <entry file="file://$PROJECT_DIR$/src/nodes.coffee" />
     <entry file="file://$PROJECT_DIR$/src/lexer.coffee" />
@@ -627,14 +602,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/coffeescript/optparse.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="332">
-          <caret line="60" column="19" selection-start-line="60" selection-start-column="15" selection-end-line="60" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/coffeescript/index.coffee">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="332">
@@ -663,14 +630,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="332">
           <caret line="43" column="115" selection-start-line="43" selection-start-column="111" selection-end-line="43" selection-end-column="115" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/argument_parsing.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="513">
-          <caret line="115" column="18" selection-start-line="115" selection-start-column="18" selection-end-line="115" selection-end-column="18" />
           <folding />
         </state>
       </provider>
@@ -747,16 +706,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bin/c.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="9" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
-          <folding>
-            <marker date="1530872135181" expanded="true" signature="48:62" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/coffeescript/coffeescript.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -797,42 +746,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bin/coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="27" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/coffeescript/command.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2835">
-          <caret line="189" column="45" selection-start-line="189" selection-start-column="45" selection-end-line="189" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/coffeescript/nodes.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="101">
-          <caret line="561" column="18" selection-start-line="561" selection-start-column="18" selection-end-line="561" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/coffeescript/scope.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
-          <caret line="121" column="16" selection-start-line="121" selection-start-column="4" selection-end-line="121" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/coffeescript/scope.litcoffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
+        <state relative-caret-position="315">
           <caret line="90" column="6" selection-start-line="90" selection-start-column="6" selection-end-line="90" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/c.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="9" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
           <folding />
         </state>
       </provider>
@@ -851,11 +776,157 @@
       </provider>
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="511">
-            <caret line="76" column="25" selection-start-line="76" selection-start-column="25" selection-end-line="76" selection-end-column="25" />
+          <first_editor relative-caret-position="616">
+            <caret line="93" column="2" selection-start-line="93" selection-start-column="2" selection-end-line="93" selection-end-column="2" />
             <folding />
           </first_editor>
           <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/coffeescript/lexer.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="107">
+          <caret line="1211" column="46" selection-start-line="1211" selection-start-column="46" selection-end-line="1211" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/coffeescript/nodes.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="3008" column="10" selection-start-line="3008" selection-start-column="10" selection-end-line="3008" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/coffeescript/scope.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="122">
+          <caret line="121" column="16" selection-start-line="121" selection-start-column="4" selection-end-line="121" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="27" selection-start-line="9" selection-start-column="27" selection-end-line="9" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/coffeescript/rewriter.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1086">
+          <caret line="739" column="43" selection-start-line="739" selection-start-column="43" selection-end-line="739" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/coffeescript/sourcemap.litcoffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1887">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/argument_parsing.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="11" selection-start-line="20" selection-start-column="11" selection-end-line="20" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/coffeescript/optparse.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" column="20" selection-start-line="14" selection-start-column="8" selection-end-line="14" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/classes.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1526470787288" expanded="true" signature="16377:16456" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="16406:16452" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="16557:16659" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="16592:16655" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="17794:17945" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="17828:17941" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="18429:18580" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="18463:18576" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="26237:26447" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="26266:26313" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="26332:26370" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="26403:26443" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="26585:26658" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="26605:26654" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="28314:28388" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="28338:28384" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="29020:29052" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="31823:32070" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="31853:31886" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="31928:31974" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="32012:32043" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="32114:32511" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="32187:32286" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="32332:32403" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="32445:32480" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="33125:33372" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="33155:33188" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="33230:33276" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="33314:33345" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="33416:33813" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="33489:33588" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="33634:33705" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="33747:33782" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="34449:34696" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="34479:34512" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="34554:34600" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="34638:34669" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="34740:35137" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="34813:34912" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="34958:35029" ph="{...}" />
+            <marker date="1526470787288" expanded="true" signature="35071:35106" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/cluster.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/invocation_argument_parsing.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-225">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/option_parser.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-30">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/coffeescript/command.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="209">
+          <caret line="183" column="45" selection-start-line="183" selection-start-column="45" selection-end-line="183" selection-end-column="45" />
+          <folding />
         </state>
       </provider>
     </entry>

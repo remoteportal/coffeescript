@@ -89,6 +89,10 @@ switch:
 - generator in CoffeeScript is simply a function that yields
 - [].concat
 
+## Remember
+
+- MUST pass -c to actually write transpiled .js to file!
+
 ## Installation
 
 Once you have Node.js installed:
