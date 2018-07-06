@@ -6,6 +6,11 @@ _                         = require 'underscore'
 CoffeeScript              = require './lib/coffeescript'
 helpers                   = require './lib/coffeescript/helpers'
 
+#PETER
+printLine = (line) -> process.stdout.write line + '\n'
+printWarn = (line) -> process.stderr.write line + '\n'
+
+
 # ANSI Terminal Colors.
 bold = red = green = yellow = reset = ''
 unless process.env.NODE_DISABLE_COLORS
@@ -58,8 +63,12 @@ buildParser = ->
   fs.writeFileSync 'lib/coffeescript/parser.js', parser
 
 buildExceptParser = (callback) ->
-  files = fs.readdirSync 'src'
-  files = ('src/' + file for file in files when file.match(/\.(lit)?coffee$/))
+  files = fs.readdirSync 'src/coffeescript/'
+
+  log 'buildExceptParser...', green
+  log files
+  files = ('src/coffeescript/' + file for file in files when file.match(/\.(lit)?coffee$/))
+  log files
   run ['-c', '-o', 'lib/coffeescript'].concat(files), callback
 
 build = (callback) ->

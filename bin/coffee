@@ -20,15 +20,15 @@ var fl = [
 
 var potentialPaths = [
   path.join(__dirname, '../src/coffeescript'),
-  path.join(process.cwd(), 'node_modules/coffeescript/lib/coffeescript'),
-  path.join(process.cwd(), 'node_modules/coffeescript/lib/coffeescript'),
-  path.join(process.cwd(), 'node_modules/coffeescript/lib/coffee-script'),
-  path.join(process.cwd(), 'node_modules/coffee-script/lib/coffee-script'),
-  path.join(__dirname, '../lib/coffeescript')
+  // path.join(process.cwd(), 'node_modules/coffeescript/lib/coffeescript'),
+  // path.join(process.cwd(), 'node_modules/coffeescript/lib/coffeescript'),
+  // path.join(process.cwd(), 'node_modules/coffeescript/lib/coffee-script'),
+  // path.join(process.cwd(), 'node_modules/coffee-script/lib/coffee-script'),
+  // path.join(__dirname, '../lib/coffeescript')
 ];
 
 for (var i = 0, len = potentialPaths.length; i < len; i++) {
-  process.stdout.write(`TRY ${potentialPaths[i]}\n`);
+  process.stdout.write(`TRY2 ${potentialPaths[i]}\n`);
   if (fs.existsSync(potentialPaths[i])) {
     require(potentialPaths[i] + '/command').run();
     break;

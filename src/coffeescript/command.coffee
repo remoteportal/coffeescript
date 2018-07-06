@@ -27,7 +27,7 @@ hidden = (file) -> /^\.|~$/.test file
 BANNER = '''
   Usage: coffee [options] path/to/script.coffee [args]
 
-  If called without options, `coffee` will run your script.
+  If called without options, `coffee` will run YOUR script!!!!!FRI
 '''
 
 # The list of all the valid option flags that `coffee` knows how to handle.
@@ -150,6 +150,8 @@ makePrelude = (requires) ->
 # is passed, recursively compile all '.coffee', '.litcoffee', and '.coffee.md'
 # extension source files in it and all subdirectories.
 compilePath = (source, topLevel, base) ->
+  printLine "compilePath\n"
+
   return if source in sources   or
             watchedDirs[source] or
             not topLevel and (notSources[source] or hidden source)
@@ -544,6 +546,7 @@ forkNode = ->
 # Print the `--help` usage message and exit. Deprecated switches are not
 # shown.
 usage = ->
+  printLine "HELP!"
   printLine optionParser.help()
 
 # Print the `--version` message and exit.

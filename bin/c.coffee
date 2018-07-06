@@ -1,4 +1,4 @@
-c="charles"
+c="Charles"
 #if NODE
 a2=2
 #ENDIF
