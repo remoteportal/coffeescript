@@ -409,7 +409,7 @@ module.exports =
 
 	abort: abort
 	exit: (msg) ->
-		m_logStream.end "\n--EOF but PREMATURE EXIT: #{msg}--"
+		m_logStream?.end "\n--EOF but PREMATURE EXIT: #{msg}--"
 		m_logStream = null
 
 #if node
