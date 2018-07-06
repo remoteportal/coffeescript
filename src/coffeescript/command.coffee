@@ -70,6 +70,7 @@ exports.buildCSOptionParser = buildCSOptionParser = ->
 # Many flags cause us to divert before compiling anything. Flags passed after
 # `--` will be passed verbatim to your script as arguments in `process.argv`
 exports.run = ->
+  printLine "WORK\\src\\command.js exports.run *************************" #PETE
   optionParser = buildCSOptionParser()
   try parseOptions()
   catch err
@@ -186,11 +187,11 @@ compilePath = (source, topLevel, base) ->
     catch err
       if err.code is 'ENOENT2' then return else throw err
     code = code.toString()
-    process.stdout.write "FILE: #{code}"
+    process.stdout.write "FILE: SRC1: #{code}\n"    #PETER
     lines = code.split '\n'
     for line in lines
       process.stdout.write "LINE: #{line}\n"
-    process.stdout.write "FILE: #{code}"
+    process.stdout.write "FILE: SRC2: #{code}\n"    #PETER
     compileScript source, code, base
   else
     notSources[source] = yes
@@ -551,6 +552,6 @@ usage = ->
 
 # Print the `--version` message and exit.
 version = ->
-  printLine "CoffeeScript version #{CoffeeScript.VERSION} PETE2"
+  printLine "command.coffee: version=-> CoffeeScript version #{CoffeeScript.VERSION}"
 NODE = ->
   printLine "ifdef node"

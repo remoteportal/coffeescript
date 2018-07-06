@@ -1026,7 +1026,7 @@ exports.HereComment = class HereComment extends Base
         leadingWhitespace = /^\s*/.exec(line)[0]
         if leadingWhitespace.length > largestIndent.length
           largestIndent = leadingWhitespace
-      @content = @content.replace ///^(#{leadingWhitespace})///gm, ''
+#T      @content = @content.replace ///^(#{leadingWhitespace})///gm, ''
 
     @content = "/*#{@content}#{if hasLeadingMarks then ' ' else ''}*/"
     fragment = @makeCode @content
@@ -3321,12 +3321,16 @@ exports.Try = class Try extends Base
     else
       []
 
-    ensurePart = if @ensure then ([].concat @makeCode(" finally {\n"), @ensure.compileToFragments(o, LEVEL_TOP),
-      @makeCode("\n#{@tab}}")) else []
+    ensurePart = if @ensure
+        ([].concat @makeCode(" finally {\n"), @ensure.compileToFragments(o, LEVEL_TOP), @makeCode("\n#{@tab}}"))
+      else
+        []
 
     [].concat @makeCode("#{@tab}try {\n"),
       tryPart,
       @makeCode("\n#{@tab}}"), catchPart, ensurePart
+
+process.stdout.write "********(nodes)**************"  #PETER
 
 #### Throw
 
@@ -3517,6 +3521,7 @@ exports.StringWithInterpolations = class StringWithInterpolations extends Base
 
 #### For
 
+#PETER: comprehensions
 # CoffeeScript's replacement for the *for* loop is our array and object
 # comprehensions, that compile into *for* loops here. They also act as an
 # expression, able to return the result of each filtered iteration.
@@ -3568,6 +3573,7 @@ exports.For = class For extends While
       moveComments @[attribute], @
     this
 
+#PETER
   # Welcome to the hairiest method in all of CoffeeScript. Handles the inner
   # loop, filtering, stepping, and result saving for array, object, and range
   # comprehensions. Some of the generated code can be shared in common, and
@@ -3628,8 +3634,8 @@ exports.For = class For extends While
           increment = "#{if kvar isnt ivar then "++#{ivar}" else "#{ivar}++"}"
         forPartFragments = [@makeCode("#{declare}; #{compare}; #{kvarAssign}#{increment}")]
     if @returns
-      resultPart   = "#{@tab}#{rvar} = [];\n"
-      returnResult = "\n#{@tab}return #{rvar};"
+      resultPart   = "#{@tab}#{rvar} = [];\n"   #PETER
+      returnResult = "\n#{@tab}return #{rvar}; //R"
       body.makeReturn rvar
     if @guard
       if body.expressions.length > 1

@@ -1,5 +1,9 @@
 c="Charles"
-#if NODE
+#if nr
 a2=2
-#ENDIF
+#end
 a3=3
+
+fn = (a) ->
+	for v in a
+		v
