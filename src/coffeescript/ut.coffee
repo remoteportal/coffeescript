@@ -340,9 +340,24 @@ decorateJustObject = (test, me2, parent) ->
 #						console.log "i=#{i}: #{_}-#{arguments[i]}"
 
 				unless bEQ
-					s = "@eq values violation:\n"
-					for i in [0..arguments.length-1]			#H: these lines cause a hang!
-						s += "> arg#{i}: #{V.PAIR arguments[i]}#{if S.IS arguments[i] then "  DUMP: #{S.DUMP arguments[i], undefined, true}" else ""}\n"
+					s = "@eq values violation!\n"
+					bStrings = true
+					s += "---------------------VALUES----------------------\n"
+					for i in [0..arguments.length-1]
+#						s += "> arg#{i}: #{V.PAIR arguments[i]}\n\n"
+						s += "#{V.PAIR arguments[i]}\n\n"
+						bStrings = false		unless S.IS arguments[i]
+
+					if bStrings
+						s += "---------------------LEN------------------\n"
+						for i in [0..arguments.length-1]
+							s += "length=#{arguments[i].length}\n"
+
+						s += "---------------------DUMP------------------\n"
+						for i in [0..arguments.length-1]
+							s += "#{S.HEX arguments[i]}\n\n"
+
+					s += "-------------------------------------------\n"
 					@logError s
 		else
 			throw new Error "eq: must pass at least two arguments"

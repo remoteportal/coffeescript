@@ -18,7 +18,7 @@ lg = function(line) {
 };
 
 process = function(code, ENV = {}) {
-  var _, a, arg, bGo, compute, cur, i, j, k, len, line, lines, name, stack;
+  var _, a, arg, i, j, len, line, lines, name, req, stack;
   //	log "process"
   code = code.toString();
   //	log "FILE: SRC1: #{code}\n"
@@ -31,51 +31,63 @@ process = function(code, ENV = {}) {
     //		log "arg: #{tokens[1]}"
     return tokens[1];
   };
-  compute = function() {};
-  cur = {};
+  req = {
+    bGo: 1 // 0=off 1=on
+  };
   lines = code.split('\n');
   for (i = j = 0, len = lines.length; j < len; i = ++j) {
     line = lines[i];
     switch (false) {
       //		line = line.replace /Charles/, 'Christmas'
       case line.slice(0, 3) !== "#if":
-        //				log line
-        stack.push(cur);
-        cur = Object.assign({}, cur);
-        cur[name = arg(line)] = true;
-        //				O.DUMP cur
-        compute();
+        //				req.bGo
+        stack.push(req);
+        req = Object.assign({}, req);
+        req.bFlipOnElse = false;
+        if (req.bGo) {
+          req.bFlipOnElse = true;
+          name = arg(line);
+          req.bGo = ENV[name];
+        }
         break;
+      //				else
+      //					req[] = true
+      //					req.bIf = true
+      //					lg "if:req=#{JSON.stringify req}"
       case line.slice(0, 5) !== "#else":
-        //				log line
-        //				stack[stack.length-1][name] ^= true
-        cur[name] ^= true;
-        compute();
+        if (req.bFlipOnElse) {
+          req.bGo = !req.bGo;
+        }
         break;
       case line.slice(0, 6) !== "#endif":
-        //				log line
-        cur = stack.pop();
+        req = stack.pop();
         break;
       default:
-        if (O.CNT_OWN(cur) === 0) {
-          //					log "empty"
+        if (req.bGo) {
           a.push(line);
-        } else {
-          // make sure all requirements satisfied
-          bGo = true;
-          for (k in cur) {
-            if (cur[k]) {
-              bGo &= ENV[k];
-            }
-          }
-          if (bGo) {
-            a.push(line);
-          }
         }
     }
   }
+  //				unless req.bSuppress
+  //					if O.CNT_OWN(req) is 0
+  //	#					log "empty"
+  //						a.push line
   //					else
-  //						lg "SKIP: #{line}"
+  //	# make sure all requirements satisfied
+  //						bGo = true
+  //						for k of req
+  //							log "found #{k}"
+  //							if req[k]
+  //	#							log "eval"
+  //								bGo &= ENV[k]
+  //							log "bGo=#{bGo}"
+  //						if bGo
+  //							if req.last is "if"	#HACK
+  //								log "req.bSuppressElse = true"
+  //								req.bSuppressElse = true
+  //							a.push line
+  //						else
+  //							lg "SKIP: #{line}"
   //		lines[i] = line
   //		log "LINE: #{line}"
   _ = a.join('\n');
@@ -95,24 +107,41 @@ module.exports = {
           var fn;
           fn = (c1, c2, ENV, that) => {
             var rv;
-            console.log(`====================BEFORE================ ENV=${ENV}`);
-            console.log(c1);
-            console.log("-----");
-            console.log(c2);
-            rv = process(c1, c2, ENV);
+            //						console.log "====================BEFORE================ ENV=#{JSON.stringify ENV}"
+            //						console.log c1
+            //						console.log "-----------------------------------------------"
+            //						console.log c2
+            //						console.log "-----------------------------------------------"
+            rv = process(c1, ENV);
             return that.eq(rv, c2);
           };
-          this._t("simple", function() {
+          this.t("trivial", function() {
             var c1, c2;
-            c1 = "one\ntwo\nthree";
-            c2 = process(c1);
-            return this.eq(c1, c2);
-          });
-          return this.t("if", function() {
-            var c1, c2;
-            c1 = "before\n#if rn\nthis is rn\n#endif\nafter";
-            c2 = "before\nafter";
+            c1 = "abc\ndef";
+            c2 = "abc\ndef";
             return fn(c1, c2, {}, this);
+          });
+          this.t("if: env=", function() {
+            var c1, c2;
+            c1 = "before\n#if rn\nthis is rn\n#else\nthis is NOT rn\n#endif\nafter";
+            c2 = "before\nthis is NOT rn\nafter";
+            return fn(c1, c2, {}, this);
+          });
+          this.T("if: env=rn", function() {
+            var c1, c2;
+            c1 = "before\n#if rn\nthis is rn\n#else\nthis is NOT rn\n#endif\nafter";
+            c2 = "before\nthis is rn\nafter";
+            return fn(c1, c2, {
+              rn: true
+            }, this);
+          });
+          return this.t("nested if: env=rn", function() {
+            var c1, c2;
+            c1 = "before\n#if rn\nthis is rn\n#else\nthis is NOT rn\n#endif\nafter";
+            c2 = "before\nthis is NOT rn\nafter";
+            return fn(c1, c2, {
+              rn: false
+            }, this);
           });
         });
       }

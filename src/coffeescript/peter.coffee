@@ -29,9 +29,8 @@ process = (code, ENV = {}) ->
 #		log "arg: #{tokens[1]}"
 		tokens[1]
 
-	compute = ->
-
-	cur = {}
+	req =
+		bGo: 1		# 0=off 1=on
 
 	lines = code.split '\n'
 	for line,i in lines
@@ -39,34 +38,48 @@ process = (code, ENV = {}) ->
 
 		switch
 			when line[0..2] is "#if"
-#				log line
-				stack.push cur
-				cur = Object.assign {}, cur
-				cur[name = arg(line)] = true
-#				O.DUMP cur
-				compute()
+#				req.bGo
+				stack.push req
+
+				req = Object.assign {}, req
+				req.bFlipOnElse = false
+				if req.bGo
+					req.bFlipOnElse = true
+
+					name = arg line
+					req.bGo = ENV[name]
+#				else
+#					req[] = true
+#					req.bIf = true
+#					lg "if:req=#{JSON.stringify req}"
+
 			when line[0..4] is "#else"
-#				log line
-#				stack[stack.length-1][name] ^= true
-				cur[name] ^= true
-				compute()
+				if req.bFlipOnElse
+					req.bGo = ! req.bGo
 			when line[0..5] is "#endif"
-#				log line
-				cur = stack.pop()
+				req = stack.pop()
 			else
-				if O.CNT_OWN(cur) is 0
-#					log "empty"
-					a.push line
-				else
-# make sure all requirements satisfied
-					bGo = true
-					for k of cur
-						if cur[k]
-							bGo &= ENV[k]
-					if bGo
-						a.push line
+				a.push line if req.bGo
+#				unless req.bSuppress
+#					if O.CNT_OWN(req) is 0
+#	#					log "empty"
+#						a.push line
 #					else
-#						lg "SKIP: #{line}"
+#	# make sure all requirements satisfied
+#						bGo = true
+#						for k of req
+#							log "found #{k}"
+#							if req[k]
+#	#							log "eval"
+#								bGo &= ENV[k]
+#							log "bGo=#{bGo}"
+#						if bGo
+#							if req.last is "if"	#HACK
+#								log "req.bSuppressElse = true"
+#								req.bSuppressElse = true
+#							a.push line
+#						else
+#							lg "SKIP: #{line}"
 	#		lines[i] = line
 	#		log "LINE: #{line}"
 
@@ -91,34 +104,74 @@ module.exports =
 			run: ->
 				@s "process", ->
 					fn = (c1,c2,ENV, that) =>
-						console.log "====================BEFORE================ ENV=#{ENV}"
-						console.log c1
-						console.log "-----"
-						console.log c2
-						rv = process c1, c2, ENV
+#						console.log "====================BEFORE================ ENV=#{JSON.stringify ENV}"
+#						console.log c1
+#						console.log "-----------------------------------------------"
+#						console.log c2
+#						console.log "-----------------------------------------------"
+						rv = process c1, ENV
 						that.eq rv, c2
 
-					@_t "simple", ->
+
+
+					@t "trivial", ->
 						c1 = """
-one
-two
-three
+abc
+def
 """
-						c2 = process c1
-						@eq c1, c2
-					@t "if", ->
+						c2 = """
+abc
+def
+"""
+						fn c1, c2, {}, this
+					@t "if: env=", ->
 						c1 = """
 before
 #if rn
 this is rn
+#else
+this is NOT rn
 #endif
 after
 """
 						c2 = """
 before
+this is NOT rn
 after
 """
 						fn c1, c2, {}, this
+					@T "if: env=rn", ->
+						c1 = """
+before
+#if rn
+this is rn
+#else
+this is NOT rn
+#endif
+after
+"""
+						c2 = """
+before
+this is rn
+after
+"""
+						fn c1, c2, {rn:true}, this
+					@t "nested if: env=rn", ->
+						c1 = """
+before
+#if rn
+this is rn
+#else
+this is NOT rn
+#endif
+after
+"""
+						c2 = """
+before
+this is NOT rn
+after
+"""
+						fn c1, c2, {rn:false}, this
 		)).run()
 #endif
 

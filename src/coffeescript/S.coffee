@@ -122,7 +122,99 @@ F = (o) ->
 	O.LOG o
 	for item,v of o
 		console.log item, v
+
+
+HEX = (s) ->
+	a = [
+		C.BACKSPACE
+		"BS"
+		C.TAB
+		"TAB"
+		C.LF
+		"LF"
+		C.CR
+		"CR"
+		C.SHIFT
+		"SHIFT"
+		C.CTRL
+		"CTRL"
+		C.ALT
+		"ALT"
+		C.ESC
+		"ESC"
+		C.SPACE
+		"SPACE"
+		C.PAGE_UP
+		"PAGE_UP"
+		C.PAGE_DOWN
+		"PAGE_DOWN"
+		C.END
+		"END"
+		C.HOME
+		"HOME"
+		C.LEFT
+		"LEFT"
+		C.UP
+		"UP"
+		C.RIGHT
+		"RIGHT"
+		C.DOWN
+		"DOWN"
+		C.INSERT
+		"INSERT"
+		C.DELETE
+		"DELETE"
+		C.F1
+		"F1"
+		C.F2
+		"F2"
+		C.F3
+		"F3"
+		C.F4
+		"F4"
+		C.F5
+		"F5"
+		C.F6
+		"F6"
+		C.F7
+		"F7"
+		C.F8
+		"F8"
+		C.F9
+		"F9"
+		C.F10
+		"F10"
+		C.F11
+		"F11"
+		C.F12
+		"F12"
+	]
+
+	special = Object.create null
+
+	while a.length > 0
+		special["_"+a.shift()] = a.shift()	#H: why doesn't this work with "_"?   special appears to NEVER POPULATE
+
+	buf = ""
 	
+	idx = 0
+	a = s.split ""
+	while c = a.shift()
+		unicode = c.charCodeAt 0
+
+		hex = unicode.toString 16	#PATTERN:HEX
+		if hex.length is 1
+			hex = "0#{hex}"
+
+		if c2 = special["_"+unicode]
+			css = "c-special"
+		else
+			css = "c"
+			c2 = c
+
+		#				buf += " #{idx++}: #{c2} #{hex}"
+		buf += "  #{c2} #{hex}"
+	buf
 
 IS = (v) -> Object::toString.call(v) is "[object String]"
 
@@ -385,4 +477,5 @@ module.exports =
 #				buf += "<span class='dump-idx'>#{idx++}</span><span class='dump-#{css}'>#{c2}</span><span class='dump-hex'>#{hex}</span>"
 #		buf
 	enumCheck: (target, css) -> (",#{css},").contains ",#{target},"
+	HEX: HEX
 	IS: IS
