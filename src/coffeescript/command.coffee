@@ -96,6 +96,7 @@ exports.run = ->
     printLine "OUTPUT NODE"
     OUTPUT="node"
     ENV.node = true
+    ENV.ut = true
     
   # Make the REPL *CLI* use the global context so as to (a) be consistent with the
   # `node` REPL CLI and, therefore, (b) make packages that modify native prototypes

@@ -18,7 +18,7 @@ lg = function(line) {
 };
 
 process = function(code, ENV = {}) {
-  var a, arg, i, j, len, line, lines, name, req, stack;
+  var a, arg, i, len, line, lineNbr, lines, name, req, stack;
   //	log "process: ENV=#{JSON.stringify ENV}"
   code = code.toString();
   //	log "FILE: SRC1: #{code}\n"
@@ -35,21 +35,23 @@ process = function(code, ENV = {}) {
     bGo: true
   };
   lines = code.split('\n');
-  for (i = j = 0, len = lines.length; j < len; i = ++j) {
-    line = lines[i];
+  for (lineNbr = i = 0, len = lines.length; i < len; lineNbr = ++i) {
+    line = lines[lineNbr];
+    //		line = line.replace /Charles/, 'Christmas'
+    lg(`${lineNbr} LINE: ${line}`);
     switch (false) {
-      //		line = line.replace /Charles/, 'Christmas'
       case line.slice(0, 3) !== "#if":
         //				log "IF: line=#{line}: #{req.bGo}"
 
         // save current requirements for later
         stack.push(req);
-        // clone otherwise side offect of messing with requirements object just saved
+        // clone (otherwise side offect of messing with requirements object just saved)
         req = Object.assign({}, req);
         // the default is that this #if section is DEAD.  BUT, if bGo is true, then not dead: we need to flip when it else
         req.bFlipOnElse = false;
         if (req.bGo) {
           req.bFlipOnElse = true;
+          req.bFoundIF = true;
           name = arg(line);
           // only go if this target is one of the environments
           req.bGo = !!ENV[name];
@@ -57,6 +59,9 @@ process = function(code, ENV = {}) {
         break;
       //					log "IF: name=#{name} bGo=#{req.bGo}"
       case line.slice(0, 5) !== "#else":
+        if (!req.bFoundIF) {
+          throw new Error(`line=${lineNbr + 1} #else without #if`);
+        }
         if (req.bFlipOnElse) {
           // we're alive, so flip... whatever the logic was, now it's the opposite
           //					log "flipping"
@@ -114,12 +119,22 @@ module.exports = {
               rn: true
             }, this);
           });
-          return this.T("nested if: env=emily", function() {
+          this.t("nested if: env=emily", function() {
             var c1, c2;
             c1 = "before\n#if rn\nthis is rn\n#else\nthis is NOT rn\n#if emily\nthis is emily\n#else\nthis is NOT emily\n#endif\n#endif\nafter";
             c2 = "before\nthis is NOT rn\nthis is emily\nafter";
             return fn(c1, c2, {
               emily: true
+            }, this);
+          });
+          return this.T("#else", {
+            expect: "EXCEPTION"
+          }, function() {
+            var c1, c2;
+            c1 = "abc\n#else\ndef";
+            c2 = "abc3\ndef";
+            return fn(c1, c2, {
+              rn: true
             }, this);
           });
         });

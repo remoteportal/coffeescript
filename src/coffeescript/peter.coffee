@@ -33,8 +33,11 @@ process = (code, ENV = {}) ->
 		bGo: true
 
 	lines = code.split '\n'
-	for line,i in lines
+
+	for line,lineNbr in lines
 #		line = line.replace /Charles/, 'Christmas'
+
+		lg "#{lineNbr} LINE: #{line}"
 
 		switch
 			when line[0..2] is "#if"
@@ -43,13 +46,14 @@ process = (code, ENV = {}) ->
 				# save current requirements for later
 				stack.push req
 
-				# clone otherwise side offect of messing with requirements object just saved
+				# clone (otherwise side offect of messing with requirements object just saved)
 				req = Object.assign {}, req
 
 				# the default is that this #if section is DEAD.  BUT, if bGo is true, then not dead: we need to flip when it else
 				req.bFlipOnElse = false
 				if req.bGo
 					req.bFlipOnElse = true
+					req.bFoundIF = true
 
 					name = arg line
 
@@ -57,6 +61,9 @@ process = (code, ENV = {}) ->
 					req.bGo = !!ENV[name]
 #					log "IF: name=#{name} bGo=#{req.bGo}"
 			when line[0..4] is "#else"
+				unless req.bFoundIF
+					throw new Error "line=#{lineNbr+1} #else without #if"
+
 				if req.bFlipOnElse
 					# we're alive, so flip... whatever the logic was, now it's the opposite
 #					log "flipping"
@@ -65,6 +72,7 @@ process = (code, ENV = {}) ->
 				req = stack.pop()
 			else
 				a.push line if req.bGo
+
 	a.join '\n'
 
 
@@ -135,7 +143,7 @@ this is rn
 after
 """
 						fn c1, c2, {rn:true}, this
-					@T "nested if: env=emily", ->
+					@t "nested if: env=emily", ->
 						c1 = """
 before
 #if rn
@@ -157,6 +165,17 @@ this is emily
 after
 """
 						fn c1, c2, {emily:true}, this
+					@T "#else", expect:"EXCEPTION", ->
+						c1 = """
+abc
+#else
+def
+"""
+						c2 = """
+abc3
+def
+"""
+						fn c1, c2, {rn:true}, this
 		)).run()
 #endif
 
