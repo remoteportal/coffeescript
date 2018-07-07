@@ -18,7 +18,7 @@ lg = function(line) {
 };
 
 process = function(code, ENV = {}) {
-  var a, arg, i, len, line, lineNbr, lines, name, ref, req, stack, th;
+  var a, arg, doReq, i, len, line, lineNbr, lines, name, req, stack, th;
   //	log "process: ENV=#{JSON.stringify ENV}"
   code = code.toString();
   //	log "FILE: SRC1: #{code}\n"
@@ -31,21 +31,42 @@ process = function(code, ENV = {}) {
     return tokens[1];
   };
   req = {
-    bGo: true
+    bGo: true,
+    bFoundIF: false,
+    bFoundELSE: false
   };
   lines = code.split('\n');
 //TODO #EASY: add ifdef end
 //TODO: add switch, elseif?
-//TODO: residude comment: //if node
+//TODO: residue comment: //if node
   for (lineNbr = i = 0, len = lines.length; i < len; lineNbr = ++i) {
     line = lines[lineNbr];
     //		line = line.replace /?harles/, 'Christmas'
     lg(`${lineNbr + 1} LINE: ${line}`);
-    //SLOW
+    //SLOW: set for EACH LINE!
     th = function(msg) {
       throw new Error(`line=${lineNbr + 1}: depth=${stack.length}${(req.name ? ` name=${req.name}` : "")}: ${msg}`);
     };
+    doReq = function(name, bFlipIII) {
+      var ref;
+      // 			the default is that this #if section is DEAD.  BUT, if bGo is true, then not dead: we need to flip when it else
+      req.bFlipOnElse = false;
+      if (req.bGo) {
+        req.name = name;
+        req.bFlipOnElse = true;
+        req.bFoundELSE = false;
+        req.bFoundIF = true;
+        if ((ref = req.name) !== "0" && ref !== "1" && ref !== "ut" && ref !== "node" && ref !== "rn" && ref !== "cs" && ref !== "bin") {
+          th("unknown");
+        }
+        // only go if this target is one of the environments
+        req.bGo = req.name === "0" ? false : !!ENV[req.name];
+        return req.bGo = req.name === "1" ? true : req.bGo;
+      }
+    };
     switch (false) {
+      //				req.bAlive = ! req.bGo
+      //				log "IF: name=#{req.name} bGo=#{req.bGo}"
       case line.slice(0, 3) !== "#if":
         //				log "IF: line=#{line}: #{req.bGo}"
         name = arg(line);
@@ -54,30 +75,33 @@ process = function(code, ENV = {}) {
         //CHALLENGE: why clone?  appears to break if just set req={}   !!!
         // clone (otherwise side offect of messing with requirements object just saved)
         req = Object.assign({}, req);
-        // the default is that this #if section is DEAD.  BUT, if bGo is true, then not dead: we need to flip when it else
-        req.bFlipOnElse = false;
-        if (req.bGo) {
-          req.name = name;
-          req.bFlipOnElse = true;
-          req.bFoundELSE = false;
-          req.bFoundIF = true;
-          if ((ref = req.name) !== "0" && ref !== "1" && ref !== "ut" && ref !== "node" && ref !== "rn" && ref !== "cs" && ref !== "bin") {
-            th("unknown");
-          }
-          // only go if this target is one of the environments
-          req.bGo = req.name === "0" ? false : !!ENV[req.name];
-          req.bGo = req.name === "1" ? true : req.bGo;
+        doReq(name, true);
+        req.bChainSatisfied = req.bGo;
+        break;
+      case line.slice(0, 7) !== "#elseif":
+        if (req.bFoundELSE) {
+          th("#elseif following #else");
+        }
+        //				lg "elseif: satis=#{req.bChainSatisfied}"
+        if (req.bChainSatisfied) {
+          // chain is henceforth DEAD!
+          req.bGo = false;
+          req.bFlipOnElse = false; // turn off '#else'
+        } else {
+          name = arg(line);
+          // replace requirements with new name, keep same requirement object
+          req.bGo = true;
+          doReq(name);
         }
         break;
-      //					log "IF: name=#{req.name} bGo=#{req.bGo}"
       case line.slice(0, 5) !== "#else":
+        if (!req.bFoundIF) {
+          th("#else without #if");
+        }
         if (req.bFoundELSE) {
           th("#else duplicated");
         } else {
           req.bFoundELSE = true;
-        }
-        if (!req.bFoundIF) {
-          th("#else without #if");
         }
         if (req.bFlipOnElse) {
           // we're alive, so flip... whatever the logic was, now it's the opposite
@@ -86,6 +110,7 @@ process = function(code, ENV = {}) {
         break;
       case line.slice(0, 6) !== "#endif":
         if (stack.length > 0) {
+          // return to requirements before first #if of this current chain was encountered
           req = stack.pop();
         } else {
           th("#endif without #if");
@@ -170,12 +195,58 @@ module.exports = {
               rn: true
             }, this);
           });
+          this.T("#elseif: case 1  (chain #if rn)", function() {
+            var c1, c2;
+            c1 = ".before\n.#if rn\n.this is rn\n.#elseif node\n.this is node\n.#else\n.neither\n.#endif\n.after";
+            c2 = ".before\n.this is rn\n.after";
+            return fn(c1, c2, {
+              rn: true,
+              node: true
+            }, this);
+          });
+          this.T("#elseif: case 2 (chain #elseif node)", function() {
+            var c1, c2;
+            c1 = ".before\n.#if rn\n.this is rn\n.#elseif node\n.this is node\n.#else\n.neither\n.#endif\n.after";
+            c2 = ".before\n.this is node\n.after";
+            return fn(c1, c2, {
+              rn: false,
+              node: true
+            }, this);
+          });
+          this.T("#elseif: case 3 (chain #else)", function() {
+            var c1, c2;
+            c1 = ".before\n.#if rn\n.this is rn\n.#elseif node\n.this is node\n.#else\n.neither\n.#endif\n.after";
+            c2 = ".before\n.neither\n.after";
+            return fn(c1, c2, {
+              rn: false,
+              node: false
+            }, this);
+          });
+          this.T("#else followed by #elseif", {
+            exceptionMessage: "line=6: depth=1 name=rn: #elseif following #else"
+          }, function() {
+            var c1;
+            c1 = ".before\n.#if rn\n.this is rn\n.#else\n.neither\n.#elseif node\n.this is node\n.#endif\n.after";
+            return fn(c1, "", {
+              rn: true,
+              node: true
+            }, this);
+          });
           this.t("nested if: env=node", function() {
             var c1, c2;
             c1 = ".before\n.#if rn\n.this is rn\n.#else\n.this is NOT rn\n.#if node\n.this is emily\n.#else\n.this is NOT emily\n.#endif\n.#endif\n.after";
             c2 = ".before\n.this is NOT rn\n.this is emily\n.after";
             return fn(c1, c2, {
               node: true
+            }, this);
+          });
+          this.t("double #if", function() {
+            var c1, c2;
+            c1 = ".before\n.#if rn\n.#if node\n.this is node\n.#else\n.this is NOT node\n.#endif\n.between\n.#endif\n.after";
+            c2 = ".before\n.this is NOT node\n.between\n.after";
+            return fn(c1, c2, {
+              rn: true,
+              node: false
             }, this);
           });
           this.t("#else", {

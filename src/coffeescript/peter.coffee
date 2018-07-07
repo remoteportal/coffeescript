@@ -29,25 +29,44 @@ process = (code, ENV = {}) ->
 
 	req =
 		bGo: true
+		bFoundIF: false
+		bFoundELSE: false
+
 
 	lines = code.split '\n'
 
 	#TODO #EASY: add ifdef end
 	#TODO: add switch, elseif?
-	#TODO: residude comment: //if node
+	#TODO: residue comment: //if node
 
 	for line,lineNbr in lines
 #		line = line.replace /?harles/, 'Christmas'
 
 		lg "#{lineNbr+1} LINE: #{line}"
 
-		#SLOW
+		#SLOW: set for EACH LINE!
 		th = (msg) -> throw new Error "line=#{lineNbr+1}: depth=#{stack.length}#{if req.name then " name=#{req.name}" else ""}: #{msg}"
 
+		doReq = (name, bFlipIII) ->
+# 			the default is that this #if section is DEAD.  BUT, if bGo is true, then not dead: we need to flip when it else
+			req.bFlipOnElse = false
+			if req.bGo
+				req.name = name
+				req.bFlipOnElse = true
+				req.bFoundELSE = false
+				req.bFoundIF = true
+
+				if req.name not in ["0","1","ut","node","rn","cs","bin"]
+					th "unknown"
+
+				# only go if this target is one of the environments
+				req.bGo = if req.name is "0" then false else !!ENV[req.name]
+				req.bGo = if req.name is "1" then true else req.bGo
+#				req.bAlive = ! req.bGo
+#				log "IF: name=#{req.name} bGo=#{req.bGo}"
 		switch
 			when line[0..2] is "#if"
 #				log "IF: line=#{line}: #{req.bGo}"
-
 				name = arg line
 
 				# save current requirements for later
@@ -56,36 +75,38 @@ process = (code, ENV = {}) ->
 				#CHALLENGE: why clone?  appears to break if just set req={}   !!!
 				# clone (otherwise side offect of messing with requirements object just saved)
 				req = Object.assign {}, req
+				doReq name, true
+				req.bChainSatisfied = req.bGo
+			when line[0..6] is "#elseif"
+				if req.bFoundELSE
+					th "#elseif following #else"
 
-				# the default is that this #if section is DEAD.  BUT, if bGo is true, then not dead: we need to flip when it else
-				req.bFlipOnElse = false
-				if req.bGo
-					req.name = name
-					req.bFlipOnElse = true
-					req.bFoundELSE = false
-					req.bFoundIF = true
+#				lg "elseif: satis=#{req.bChainSatisfied}"
+				if req.bChainSatisfied
+					# chain is henceforth DEAD!
+					req.bGo = false
+					req.bFlipOnElse = false			# turn off '#else'
+				else
+					name = arg line
 
-					if req.name not in ["0","1","ut","node","rn","cs","bin"]
-						th "unknown"
-
-					# only go if this target is one of the environments
-					req.bGo = if req.name is "0" then false else !!ENV[req.name]
-					req.bGo = if req.name is "1" then true else req.bGo
-#					log "IF: name=#{req.name} bGo=#{req.bGo}"
+					# replace requirements with new name, keep same requirement object
+					req.bGo = true
+					doReq name
 			when line[0..4] is "#else"
+				unless req.bFoundIF
+					th "#else without #if"
+
 				if req.bFoundELSE
 					th "#else duplicated"
 				else
 					req.bFoundELSE = true
-
-				unless req.bFoundIF
-					th "#else without #if"
 
 				if req.bFlipOnElse
 					# we're alive, so flip... whatever the logic was, now it's the opposite
 					req.bGo = ! req.bGo
 			when line[0..5] is "#endif"
 				if stack.length > 0
+					# return to requirements before first #if of this current chain was encountered
 					req = stack.pop()
 				else
 					th "#endif without #if"
@@ -202,6 +223,73 @@ module.exports =
 .after
 """
 						fn c1, c2, {rn:true}, this
+					@T "#elseif: case 1  (chain #if rn)", ->
+						c1 = """
+.before
+.#if rn
+.this is rn
+.#elseif node
+.this is node
+.#else
+.neither
+.#endif
+.after
+"""
+						c2 = """
+.before
+.this is rn
+.after
+"""
+						fn c1, c2, {rn:true, node:true}, this
+					@T "#elseif: case 2 (chain #elseif node)", ->
+						c1 = """
+.before
+.#if rn
+.this is rn
+.#elseif node
+.this is node
+.#else
+.neither
+.#endif
+.after
+"""
+						c2 = """
+.before
+.this is node
+.after
+"""
+						fn c1, c2, {rn:false, node:true}, this
+					@T "#elseif: case 3 (chain #else)", ->
+						c1 = """
+.before
+.#if rn
+.this is rn
+.#elseif node
+.this is node
+.#else
+.neither
+.#endif
+.after
+"""
+						c2 = """
+.before
+.neither
+.after
+"""
+						fn c1, c2, {rn:false, node:false}, this
+					@T "#else followed by #elseif", exceptionMessage:"line=6: depth=1 name=rn: #elseif following #else", ->
+						c1 = """
+.before
+.#if rn
+.this is rn
+.#else
+.neither
+.#elseif node
+.this is node
+.#endif
+.after
+"""
+						fn c1, "", {rn:true, node:true}, this
 					@t "nested if: env=node", ->
 						c1 = """
 .before
@@ -224,6 +312,26 @@ module.exports =
 .after
 """
 						fn c1, c2, {node:true}, this
+					@t "double #if", ->
+						c1 = """
+.before
+.#if rn
+.#if node
+.this is node
+.#else
+.this is NOT node
+.#endif
+.between
+.#endif
+.after
+"""
+						c2 = """
+.before
+.this is NOT node
+.between
+.after
+"""
+						fn c1, c2, {rn:true, node:false}, this
 					@t "#else", exceptionMessage:"line=2: depth=0: #else without #if", ->
 						c1 = """
 .abc
