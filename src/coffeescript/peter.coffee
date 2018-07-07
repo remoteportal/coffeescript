@@ -1,8 +1,5 @@
-PETER=8
-
 O = require './O'
 trace = require './trace'
-
 
 
 
@@ -50,6 +47,8 @@ process = (code, ENV = {}) ->
 			when line[0..2] is "#if"
 #				log "IF: line=#{line}: #{req.bGo}"
 
+				name = arg line
+
 				# save current requirements for later
 				stack.push req
 
@@ -60,13 +59,16 @@ process = (code, ENV = {}) ->
 				# the default is that this #if section is DEAD.  BUT, if bGo is true, then not dead: we need to flip when it else
 				req.bFlipOnElse = false
 				if req.bGo
+					req.name = name
 					req.bFlipOnElse = true
 					req.bFoundELSE = false
 					req.bFoundIF = true
-					req.name = arg line
+
+					if req.name not in ["0","ut","node","rn","cs","bin"]
+						th "unknown"
 
 					# only go if this target is one of the environments
-					req.bGo = !!ENV[req.name]
+					req.bGo = if req.name is "0" then false else !!ENV[req.name]
 #					log "IF: name=#{req.name} bGo=#{req.bGo}"
 			when line[0..4] is "#else"
 				if req.bFoundELSE
@@ -156,6 +158,18 @@ module.exports =
 .after
 """
 						fn c1, c2, {}, this
+					@t "if: env=", ->
+						c1 = """
+.#if 0
+.NO
+.#else
+.YES
+.#endif
+"""
+						c2 = """
+.YES
+"""
+						fn c1, c2, {}, this
 					@t "if: env=rn", ->
 						c1 = """
 .before
@@ -172,14 +186,14 @@ module.exports =
 .after
 """
 						fn c1, c2, {rn:true}, this
-					@t "nested if: env=emily", ->
+					@t "nested if: env=node", ->
 						c1 = """
 .before
 .#if rn
 .this is rn
 .#else
 .this is NOT rn
-.#if emily
+.#if node
 .this is emily
 .#else
 .this is NOT emily
@@ -193,7 +207,7 @@ module.exports =
 .this is emily
 .after
 """
-						fn c1, c2, {emily:true}, this
+						fn c1, c2, {node:true}, this
 					@t "#else", exceptionMessage:"line=2: depth=0: #else without #if", ->
 						c1 = """
 .abc
@@ -238,6 +252,13 @@ module.exports =
 .#if ALONE
 .#else
 .this is NOT rn
+.#endif
+"""
+						fn c1, "", {}, this
+					@T "unknown name", exceptionMessage:"line=1: depth=1 name=Michelle: unknown", ->
+						c1 = """
+.#if Michelle
+.inside
 .#endif
 """
 						fn c1, "", {}, this
