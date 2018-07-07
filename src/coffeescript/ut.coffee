@@ -340,25 +340,7 @@ decorateJustObject = (test, me2, parent) ->
 #						console.log "i=#{i}: #{_}-#{arguments[i]}"
 
 				unless bEQ
-					s = "@eq values violation!\n"
-					bStrings = true
-					s += "---------------------VALUES----------------------\n"
-					for i in [0..arguments.length-1]
-#						s += "> arg#{i}: #{V.PAIR arguments[i]}\n\n"
-						s += "#{V.PAIR arguments[i]}\n\n"
-						bStrings = false		unless S.IS arguments[i]
-
-					if bStrings
-						s += "---------------------LEN------------------\n"
-						for i in [0..arguments.length-1]
-							s += "length=#{arguments[i].length}\n"
-
-						s += "---------------------DUMP------------------\n"
-						for i in [0..arguments.length-1]
-							s += "#{S.HEX arguments[i]}\n\n"
-
-					s += "-------------------------------------------\n"
-					@logError s
+					@logError "@eq values violation!\n" + S.COMPARE_REPORT arguments[0], arguments[1]
 		else
 			throw new Error "eq: must pass at least two arguments"
 
@@ -953,6 +935,14 @@ OPTIONS:#{S.autoTable(optionList, {bHeader:false})}"""
 #							@log "t: bExpectException=#{bExpectException}"
 
 						if bExpectException or test.opts.expect is "EXCEPTION"
+							if test.opts.exceptionMessage?
+#								@log "ex", ex
+#								@log ""+ex
+								if ex.message is _= test.opts.exceptionMessage		#BRITTLE
+									@log "match!"
+								else
+									@log "not expecting!"
+									@log S.COMPARE_REPORT ex.message, _
 #							@log "restore: eliminate: pass=#{pass} fail=#{fail}"
 							pass = passSave
 							fail = failSave			# restore fail's from eq failures
@@ -1025,8 +1015,10 @@ OPTIONS:#{S.autoTable(optionList, {bHeader:false})}"""
 			if opts = test.opts
 #				@log "opts", opts
 
+				cmds = ["desc","exceptionMessage", "expect","hang","human","internet","mType","onError","onException","onTimeout","SO", "RUNTIME_SECS", "timeout", "url", "USER_CNT"]
+				cmds.push '_' + cmd for cmd in cmds
 				for k of opts
-					unless k in ["desc","expect","hang","human","internet","mType","onError","onException","onTimeout","SO", "RUNTIME_SECS", "timeout", "url", "USER_CNT"]
+					unless k in cmds
 						@logFatal "[[#{test.path}]] UT001 Unknown test option: '#{k}'", opts
 
 				if (opts.onTimeout or opts.timeout) and test.cmd not in ["_a","a","_A","A"]

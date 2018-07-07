@@ -114,9 +114,53 @@ autoTable = (data, opts = {bHeader: true}) ->
 #	process.exit 1
 
 
+
 CAP = (s) -> "#{s[0].toUpperCase()}#{if s.length > 1 then s.slice(1).toLowerCase() else ""}"
 
-	
+
+
+COMPARE_REPORT = (s0, s1) ->		#H: string-oriented or value (V)-oriented?
+	buf = ''
+
+	if s0 is s1
+		buf = "values are the same"
+	else
+		bStrings = true
+		for s in [s0, s1]
+			bStrings = false		unless IS s
+
+		if bStrings
+			buf += "---------------------LEN------------------\n"
+			for s in [s0, s1]
+				buf += "length=#{s.length}\n"
+
+			buf += "---------------------VALUES----------------------\n"
+			for s in [s0, s1]
+				# buf += "> arg#{i}: #{V.PAIR arguments[i]}\n\n"
+				buf += "#{V.PAIR s}\n\n"
+
+			# classify: completely different, pre-pended, appended, middle different
+#			i = 0
+#			if s0.length
+
+
+			buf += "---------------------IDENTICAL PORTION (UP TO [#{}])----------------------\n"
+			for s in [s0, s1]
+				buf += "#{V.PAIR s}\n\n"
+
+			buf += "---------------------HEX------------------\n"
+			for s in [s0, s1]
+				buf += "#{HEX s}\n\n"
+
+			buf += "-------------------------------------------\n"
+		else
+			for s in [s0, s1]
+				buf += "#{V.PAIR s}\n\n"
+
+	buf
+
+
+
 F = (o) ->
 	O = require './O'
 	O.LOG o
@@ -264,6 +308,7 @@ module.exports =
 
 	autoTable: autoTable
 	CAP: CAP
+	COMPARE_REPORT: COMPARE_REPORT
 	DUMP: (s, max=256, bHEX) ->
 		if IS s
 			unless s?

@@ -41,6 +41,9 @@ process = function(code, ENV = {}) {
     lg(`${lineNbr} LINE: ${line}`);
     switch (false) {
       case line.slice(0, 3) !== "#if":
+        if (req.bFoundIF) {
+          throw new Error(`line=${lineNbr + 1} #endif missing (nested)`);
+        }
         //				log "IF: line=#{line}: #{req.bGo}"
 
         // save current requirements for later
@@ -59,6 +62,11 @@ process = function(code, ENV = {}) {
         break;
       //					log "IF: name=#{name} bGo=#{req.bGo}"
       case line.slice(0, 5) !== "#else":
+        if (req.bFoundELSE) {
+          throw new Error(`line=${lineNbr + 1} #else duplicated`);
+        } else {
+          req.bFoundELSE = true;
+        }
         if (!req.bFoundIF) {
           throw new Error(`line=${lineNbr + 1} #else without #if`);
         }
@@ -76,6 +84,9 @@ process = function(code, ENV = {}) {
           a.push(line);
         }
     }
+  }
+  if (req.bFoundIF) {
+    throw new Error(`line=${lineNbr + 1} #endif missing`);
   }
   return a.join('\n');
 };
@@ -127,15 +138,36 @@ module.exports = {
               emily: true
             }, this);
           });
-          return this.T("#else", {
+          this.t("#else", {
             expect: "EXCEPTION"
           }, function() {
-            var c1, c2;
+            var c1;
             c1 = "abc\n#else\ndef";
-            c2 = "abc3\ndef";
-            return fn(c1, c2, {
+            return fn(c1, "", {
               rn: true
             }, this);
+          });
+          this.t("#else duplicated", {
+            expect: "EXCEPTION"
+          }, function() {
+            var c1;
+            c1 = "before\n#if rn\nthis is rn\n#else\nthis is NOT rn\n#else\nafter 2nd else\n#endif\nafter";
+            return fn(c1, "", {}, this);
+          });
+          this.t("#endif missing", {
+            expect: "EXCEPTION"
+          }, function() {
+            var c1;
+            c1 = "before\n#if rn\nthis is rn\n#else\nthis is NOT rn";
+            return fn(c1, "", {}, this);
+          });
+          return this.T("#endif missing (nested)", {
+            expect: "EXCEPTION",
+            exceptionMessage: "line=4 #endif missing (ne sted)"
+          }, function() {
+            var c1;
+            c1 = "before\n#if rn\nthis is rn\n#if ALONE\n#else\nthis is NOT rn\n#endif";
+            return fn(c1, "", {}, this);
           });
         });
       }

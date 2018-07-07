@@ -41,6 +41,9 @@ process = (code, ENV = {}) ->
 
 		switch
 			when line[0..2] is "#if"
+				if req.bFoundIF
+					throw new Error "line=#{lineNbr+1} #endif missing (nested)"
+
 #				log "IF: line=#{line}: #{req.bGo}"
 
 				# save current requirements for later
@@ -61,6 +64,11 @@ process = (code, ENV = {}) ->
 					req.bGo = !!ENV[name]
 #					log "IF: name=#{name} bGo=#{req.bGo}"
 			when line[0..4] is "#else"
+				if req.bFoundELSE
+					throw new Error "line=#{lineNbr+1} #else duplicated"
+				else
+					req.bFoundELSE = true
+
 				unless req.bFoundIF
 					throw new Error "line=#{lineNbr+1} #else without #if"
 
@@ -72,6 +80,9 @@ process = (code, ENV = {}) ->
 				req = stack.pop()
 			else
 				a.push line if req.bGo
+
+	if req.bFoundIF
+		throw new Error "line=#{lineNbr+1} #endif missing"
 
 	a.join '\n'
 
@@ -165,17 +176,46 @@ this is emily
 after
 """
 						fn c1, c2, {emily:true}, this
-					@T "#else", expect:"EXCEPTION", ->
+					@t "#else", expect:"EXCEPTION", ->
 						c1 = """
 abc
 #else
 def
 """
-						c2 = """
-abc3
-def
+						fn c1, "", {rn:true}, this
+					@t "#else duplicated", expect:"EXCEPTION", ->
+						c1 = """
+before
+#if rn
+this is rn
+#else
+this is NOT rn
+#else
+after 2nd else
+#endif
+after
 """
-						fn c1, c2, {rn:true}, this
+						fn c1, "", {}, this
+					@t "#endif missing", expect:"EXCEPTION", ->
+						c1 = """
+before
+#if rn
+this is rn
+#else
+this is NOT rn
+"""
+						fn c1, "", {}, this
+					@T "#endif missing (nested)", expect:"EXCEPTION",exceptionMessage:"line=4 #endif missing (ne sted)", ->
+						c1 = """
+before
+#if rn
+this is rn
+#if ALONE
+#else
+this is NOT rn
+#endif
+"""
+						fn c1, "", {}, this
 		)).run()
 #endif
 

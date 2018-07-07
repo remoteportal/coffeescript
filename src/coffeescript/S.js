@@ -18,7 +18,7 @@ TODOs
 KNOWN BUGS:
 -
 */
-var C, CAP, F, HEX, IS, V, autoTable, stringifySafe, trace;
+var C, CAP, COMPARE_REPORT, F, HEX, IS, V, autoTable, stringifySafe, trace;
 
 C = require('./C');
 
@@ -140,6 +140,61 @@ CAP = function(s) {
   return `${s[0].toUpperCase()}${(s.length > 1 ? s.slice(1).toLowerCase() : "")}`;
 };
 
+COMPARE_REPORT = function(s0, s1) { //H: string-oriented or value (V)-oriented?
+  var bStrings, buf, i, j, l, len1, len2, len3, len4, len5, len6, m, n, p, ref, ref1, ref2, ref3, ref4, ref5, s;
+  buf = '';
+  if (s0 === s1) {
+    buf = "values are the same";
+  } else {
+    bStrings = true;
+    ref = [s0, s1];
+    for (i = 0, len1 = ref.length; i < len1; i++) {
+      s = ref[i];
+      if (!IS(s)) {
+        bStrings = false;
+      }
+    }
+    if (bStrings) {
+      buf += "---------------------LEN------------------\n";
+      ref1 = [s0, s1];
+      for (j = 0, len2 = ref1.length; j < len2; j++) {
+        s = ref1[j];
+        buf += `length=${s.length}\n`;
+      }
+      buf += "---------------------VALUES----------------------\n";
+      ref2 = [s0, s1];
+      for (l = 0, len3 = ref2.length; l < len3; l++) {
+        s = ref2[l];
+        // buf += "> arg#{i}: #{V.PAIR arguments[i]}\n\n"
+        buf += `${V.PAIR(s)}\n\n`;
+      }
+      // classify: completely different, pre-pended, appended, middle different
+      //			i = 0
+      //			if s0.length
+      buf += `---------------------IDENTICAL PORTION (UP TO [])----------------------\n`;
+      ref3 = [s0, s1];
+      for (m = 0, len4 = ref3.length; m < len4; m++) {
+        s = ref3[m];
+        buf += `${V.PAIR(s)}\n\n`;
+      }
+      buf += "---------------------HEX------------------\n";
+      ref4 = [s0, s1];
+      for (n = 0, len5 = ref4.length; n < len5; n++) {
+        s = ref4[n];
+        buf += `${HEX(s)}\n\n`;
+      }
+      buf += "-------------------------------------------\n";
+    } else {
+      ref5 = [s0, s1];
+      for (p = 0, len6 = ref5.length; p < len6; p++) {
+        s = ref5[p];
+        buf += `${V.PAIR(s)}\n\n`;
+      }
+    }
+  }
+  return buf;
+};
+
 F = function(o) {
   var O, item, results, v;
   O = require('./O');
@@ -233,6 +288,7 @@ module.exports = {
   //endif
   autoTable: autoTable,
   CAP: CAP,
+  COMPARE_REPORT: COMPARE_REPORT,
   DUMP: function(s, max = 256, bHEX) {
     var a, buf, c, c2, css, hex, idx, len, special, unicode;
     if (IS(s)) {
