@@ -34,6 +34,7 @@ process = (code, ENV = {}) ->
 
 	#TODO #EASY: add ifdef end
 	#TODO: add switch, elseif?
+	#TODO: residude comment: //if node
 
 	for line,lineNbr in lines
 #		line = line.replace /?harles/, 'Christmas'
@@ -64,11 +65,12 @@ process = (code, ENV = {}) ->
 					req.bFoundELSE = false
 					req.bFoundIF = true
 
-					if req.name not in ["0","ut","node","rn","cs","bin"]
+					if req.name not in ["0","1","ut","node","rn","cs","bin"]
 						th "unknown"
 
 					# only go if this target is one of the environments
 					req.bGo = if req.name is "0" then false else !!ENV[req.name]
+					req.bGo = if req.name is "1" then true else req.bGo
 #					log "IF: name=#{req.name} bGo=#{req.bGo}"
 			when line[0..4] is "#else"
 				if req.bFoundELSE
@@ -91,14 +93,16 @@ process = (code, ENV = {}) ->
 				a.push line if req.bGo
 
 	if req.bFoundIF
-		throw new Error "line=#{lineNbr+1} #endif missing"
+#		throw new Error "line=#{lineNbr+1} #endif missing: #{JSON.stringify stack}"
+#		throw new Error "line=#{lineNbr+1} #endif missing: #{JSON.stringify stack.forEach((o) -> o.name)}"
+		throw new Error "line=#{lineNbr+1} #endif missing: \"#{req.name}\""
 
 	a.join '\n'
 
 
 
 
-
+#TODO: #elseif rn
 
 module.exports =
 #if ut
@@ -158,12 +162,24 @@ module.exports =
 .after
 """
 						fn c1, c2, {}, this
-					@t "if: env=", ->
+					@t "if 0", ->
 						c1 = """
 .#if 0
 .NO
 .#else
 .YES
+.#endif
+"""
+						c2 = """
+.YES
+"""
+						fn c1, c2, {}, this
+					@t "if 1", ->
+						c1 = """
+.#if 1
+.YES
+.#else
+.NO
 .#endif
 """
 						c2 = """
@@ -235,7 +251,7 @@ module.exports =
 .after
 """
 						fn c1, "", {}, this
-					@t "#endif missing", exceptionMessage:"line=6 #endif missing", ->
+					@T "#endif missing", exceptionMessage:"line=6 #endif missing: \"rn\"", ->
 						c1 = """
 .before
 .#if rn
@@ -244,7 +260,7 @@ module.exports =
 .this is NOT rn
 """
 						fn c1, "", {}, this
-					@t "#endif missing (nested)", exceptionMessage:"line=8 #endif missing", ->
+					@t "#endif missing (nested)", exceptionMessage:"line=8 #endif missing: \"rn\"", ->
 						c1 = """
 .before
 .#if rn

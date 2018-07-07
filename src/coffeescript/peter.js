@@ -36,6 +36,7 @@ process = function(code, ENV = {}) {
   lines = code.split('\n');
 //TODO #EASY: add ifdef end
 //TODO: add switch, elseif?
+//TODO: residude comment: //if node
   for (lineNbr = i = 0, len = lines.length; i < len; lineNbr = ++i) {
     line = lines[lineNbr];
     //		line = line.replace /?harles/, 'Christmas'
@@ -60,11 +61,12 @@ process = function(code, ENV = {}) {
           req.bFlipOnElse = true;
           req.bFoundELSE = false;
           req.bFoundIF = true;
-          if ((ref = req.name) !== "0" && ref !== "ut" && ref !== "node" && ref !== "rn" && ref !== "cs" && ref !== "bin") {
+          if ((ref = req.name) !== "0" && ref !== "1" && ref !== "ut" && ref !== "node" && ref !== "rn" && ref !== "cs" && ref !== "bin") {
             th("unknown");
           }
           // only go if this target is one of the environments
           req.bGo = req.name === "0" ? false : !!ENV[req.name];
+          req.bGo = req.name === "1" ? true : req.bGo;
         }
         break;
       //					log "IF: name=#{req.name} bGo=#{req.bGo}"
@@ -96,11 +98,14 @@ process = function(code, ENV = {}) {
     }
   }
   if (req.bFoundIF) {
-    throw new Error(`line=${lineNbr + 1} #endif missing`);
+    //		throw new Error "line=#{lineNbr+1} #endif missing: #{JSON.stringify stack}"
+    //		throw new Error "line=#{lineNbr+1} #endif missing: #{JSON.stringify stack.forEach((o) -> o.name)}"
+    throw new Error(`line=${lineNbr + 1} #endif missing: "${req.name}"`);
   }
   return a.join('\n');
 };
 
+//TODO: #elseif rn
 module.exports = {
   //if ut
   s_ut: function() {
@@ -145,9 +150,15 @@ module.exports = {
             c2 = ".before\n.this is NOT rn\n.after";
             return fn(c1, c2, {}, this);
           });
-          this.t("if: env=", function() {
+          this.t("if 0", function() {
             var c1, c2;
             c1 = ".#if 0\n.NO\n.#else\n.YES\n.#endif";
+            c2 = ".YES";
+            return fn(c1, c2, {}, this);
+          });
+          this.t("if 1", function() {
+            var c1, c2;
+            c1 = ".#if 1\n.YES\n.#else\n.NO\n.#endif";
             c2 = ".YES";
             return fn(c1, c2, {}, this);
           });
@@ -192,15 +203,15 @@ module.exports = {
             c1 = ".before\n.#if rn\n.this is rn\n.#else\n.this is NOT rn\n.#else\n.after 2nd else\n.#endif\n.after";
             return fn(c1, "", {}, this);
           });
-          this.t("#endif missing", {
-            exceptionMessage: "line=6 #endif missing"
+          this.T("#endif missing", {
+            exceptionMessage: "line=6 #endif missing: \"rn\""
           }, function() {
             var c1;
             c1 = ".before\n.#if rn\n.this is rn\n.#else\n.this is NOT rn";
             return fn(c1, "", {}, this);
           });
           this.t("#endif missing (nested)", {
-            exceptionMessage: "line=8 #endif missing"
+            exceptionMessage: "line=8 #endif missing: \"rn\""
           }, function() {
             var c1;
             c1 = ".before\n.#if rn\n.this is rn\n.#if ALONE\n.#else\n.this is NOT rn\n.#endif";
