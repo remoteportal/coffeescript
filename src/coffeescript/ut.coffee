@@ -88,6 +88,18 @@ TODOs
 - capitalize section ("S") overrides to run entire sections
 - purposeful 1000ms delay between tests to let things settle
 - count the number of disabled tests
+- include string diff report functions to make it really easy to ascertain why @eq fails
+#EASY: dump all possible test options... in grid with S T A section/test/asynch columns in front, option, desc, and example
+#EASY: new option def:
+    @t "some test",
+			def:
+				em: "Deanna is beautiful"
+				b: "b-value"
+			exceptionMessage: @em			HOW DO THIS?
+		, ->
+			throw @em
+    should be readable by ut.a, @a, and other parameters.  Ensure don't stomp on system
+
 
 
 KNOWN BUGS:
@@ -926,7 +938,10 @@ OPTIONS:#{S.autoTable(optionList, {bHeader:false})}"""
 
 						--t_depth
 
+						bWasException = true
+
 						bExpectException = false
+						bRestore = false
 
 						#TODO: put stuff in common routine
 						if test.opts.onException?
@@ -935,32 +950,34 @@ OPTIONS:#{S.autoTable(optionList, {bHeader:false})}"""
 #							@log "t: bExpectException=#{bExpectException}"
 
 						if bExpectException or test.opts.expect is "EXCEPTION"
+							bWasException = false
+							bRestore = true
 							if test.opts.exceptionMessage?
 #								@log "ex", ex
 #								@log ""+ex
-								if ex.message is _= test.opts.exceptionMessage		#BRITTLE
-									@log "match!"
-								else
-									@log "not expecting!"
-									@log S.COMPARE_REPORT ex.message, _
-#							@log "restore: eliminate: pass=#{pass} fail=#{fail}"
-							pass = passSave
-							fail = failSave			# restore fail's from eq failures
+								if ex.message isnt _= test.opts.exceptionMessage		#BRITTLE?
+									@log "WRONG EXCEPTION MESSAGE!"
+									@log '^' + S.COMPARE_REPORT ex.message, _, preamble:"ex.message\n\ntest.opts.exceptionMessage"
+									bWasException = true
+
+						if bWasException
+							fail++
+							util.abort "B_FAIL_FAST" if B_FAIL_FAST
+							@logCatch "[#{test.path}] t-handler", ex
+						else
+							if bRestore
+								@log "restore: eliminate: pass=#{pass} fail=#{fail}"
+								pass = passSave
+								fail = failSave			# restore fail's from eq failures
 
 							if pass is passSave
 								# implicit pass
 								pass++
-							@post test, "t-catch"
-						else
-							fail++
-							util.abort "B_FAIL_FAST" if B_FAIL_FAST
-							@logCatch "[#{test.path}] t-handler", ex
-							@post test, "t-catch"
+
+						@post test, "t-catch"
 					return
 				when 's', 'S'
-#					@log "here1"
 					@post null, "s"
-#					@log "here2"
 					return
 				else
 					@logFatal "unknown cmd=#{test.cmd}"
@@ -1014,6 +1031,9 @@ OPTIONS:#{S.autoTable(optionList, {bHeader:false})}"""
 		for test in testList
 			if opts = test.opts
 #				@log "opts", opts
+
+				if opts.exceptionMessage and !opts.expect?
+					opts.expect = "EXCEPTION"
 
 				cmds = ["desc","exceptionMessage", "expect","hang","human","internet","mType","onError","onException","onTimeout","SO", "RUNTIME_SECS", "timeout", "url", "USER_CNT"]
 				cmds.push '_' + cmd for cmd in cmds
@@ -1213,20 +1233,38 @@ class UT_UT extends UT
 					@s "b2c1", (ut) ->
 						@a "b2c1d1", (ut) ->
 							ut.resolve()
-		@a "opts parameter", {timeout:1000}, (ut) ->
-#			@log "opts parameter"
-#			O.LOG ut.opts
-			@eq ut.opts.timeout, 1000
-			ut.resolve()
-		@a "promise timeout", {timeout:10, expect:"TIMEOUT"}, (ut) ->
-#			DO NOT CALL ut.resolve()
-		@a "onTimeout", {
-				timeout:10
-				onTimeout: (ut) ->
-					@log "onTimeout called: #{ut.opts.timeout}=#{@opts.timeout}"
-					true
-			}, (ut) ->
-				@log "do not call ut.resolve to force timeout"
+		@s "options", ->
+			@s "general", ->
+				@t "commented out", _desc:"this is not used", ->
+			@s "specific", ->
+				@T "exceptionMessage", exceptionMessage:"Deanna is beautiful", ->
+					throw new Error "Deanna is beautiful"
+				@s "expect", ->
+					@t "assert", {expect:"ERROR"}, ->
+						@log "hello"
+
+						@assert true, "Saturday"
+						@assert false, "Sunday"
+					@_t "bManual: fatal", {comment:"can't test because it exits node",bManual:true}, ->
+#						TODO: skip if bManual is true
+						@fatal()
+						@fatal "display me on console"
+					@a "promise timeout", {timeout:10, expect:"TIMEOUT"}, (ut) ->
+#						DO NOT CALL ut.resolve()
+				@a "onTimeout", {
+						timeout:10
+						onTimeout: (ut) ->
+							@log "onTimeout called: #{ut.opts.timeout}=#{@opts.timeout}"
+							true
+					}, (ut) ->
+						@log "do not call ut.resolve to force timeout"
+				@a "timeout", {timeout:1000}, (ut) ->
+#							@log "opts parameter"
+#							O.LOG ut.opts
+					@eq ut.opts.timeout, 1000
+					ut.resolve()
+				@_t "seek exception but don't get one", {expect:"EXCEPTION", bManual:true}, ->
+					@log "hello"
 		@s "eq", ->
 			#UT: two pass
 			#UT: two fail
@@ -1241,28 +1279,17 @@ class UT_UT extends UT
 			@t "differing types", {desc:"@eq is NOT strict, i.e, it checks VALUE only (string vs. String is okay and passes"}, ->
 #				@log "in test: *** bRunToCompletion=#{@bRunToCompletion}"
 				@eq "peter", new String "peter"
-		@s "Eq", ->			#H: why repeat
-			@t "single parameter", {
-				onException: (ut, ex) ->
-#					@log "in onException"
-					@pass()
-			}, ->
-				@Eq "I feel alone"
+			@s "HELP WHY CAPITALIZED? Eq", ->			#H: why repeat
+				@t "single parameter", {
+					onException: (ut, ex) ->
+	#					@log "in onException"
+						@pass()
+				}, ->
+					@Eq "I feel alone"
 
-			@t "differing types", {expect:"EXCEPTION", desc:"@Eq is strict!, i.e., VALUE and TYPE must agree!"}, ->
-#				@log "in test: *** bRunToCompletion=#{@bRunToCompletion}"
-				@Eq "peter", new String "peter"
-		@_t "fatal", {comment:"can't test because it exits node",bManual:true}, ->
-			#TODO: skip if bManual is true
-			@fatal()
-			@fatal "display me on console"
-		@t "assert", {expect:"ERROR"}, ->
-			@log "hello"
-
-			@assert true, "Saturday"
-			@assert false, "Sunday"
-		@_t "seek exception but don't get one", {expect:"EXCEPTION", bManual:true}, ->
-			@log "hello"
+				@t "differing types", {expect:"EXCEPTION", desc:"@Eq is strict!, i.e., VALUE and TYPE must agree!"}, ->
+	#				@log "in test: *** bRunToCompletion=#{@bRunToCompletion}"
+					@Eq "peter", new String "peter"
 		@a "@delay", (ut) ->
 			@log "before"
 			@delay 50
@@ -1276,6 +1303,7 @@ class UT_UT extends UT
 			@log()
 			@log "one: #{@test.one}"
 			@eq @test.one, "UT_UT/one"
-#		@A "don't close", (ut) ->
-#			@log "something doesn't stop"
+		@s "misc", ->
+#			@A "don't close", (ut) ->
+#				@log "something doesn't stop"
 #endif

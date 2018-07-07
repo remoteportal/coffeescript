@@ -82,10 +82,21 @@ TODOs
 - capitalize section ("S") overrides to run entire sections
 - purposeful 1000ms delay between tests to let things settle
 - count the number of disabled tests
+- include string diff report functions to make it really easy to ascertain why @eq fails
+#EASY: dump all possible test options... in grid with S T A section/test/asynch columns in front, option, desc, and example
+#EASY: new option def:
+    @t "some test",
+			def:
+				em: "Deanna is beautiful"
+				b: "b-value"
+			exceptionMessage: @em			HOW DO THIS?
+		, ->
+			throw @em
+    should be readable by ut.a, @a, and other parameters.  Ensure don't stomp on system
 
 KNOWN BUGS:
 -
-*/
+ */
 //GITHUB: minimize dependencies!
 Base = require('./Base');
 
@@ -768,7 +779,7 @@ module.exports = UT = (function() {
     }
 
     next() {
-      var _, bExpectException, ex, failSave, fnBoundObjectThis, handle, passSave, prNOT_USED, ref, ref1, rv, test, testThis;
+      var _, bExpectException, bRestore, bWasException, ex, failSave, fnBoundObjectThis, handle, passSave, prNOT_USED, ref, ref1, rv, test, testThis;
       if (!bRunning) {
         return;
       }
@@ -967,7 +978,9 @@ module.exports = UT = (function() {
               ex = error;
               //						@log "t-catch ------", ex		#URGENT #TODO: move the try/catch exactly around the t-function call!
               --t_depth;
+              bWasException = true;
               bExpectException = false;
+              bRestore = false;
               //TODO: put stuff in common routine
               if (test.opts.onException != null) {
                 fnBoundObjectThis = decorate(test, test.opts.onException, testThis, this);
@@ -975,41 +988,45 @@ module.exports = UT = (function() {
               }
               //							@log "t: bExpectException=#{bExpectException}"
               if (bExpectException || test.opts.expect === "EXCEPTION") {
+                bWasException = false;
+                bRestore = true;
                 if (test.opts.exceptionMessage != null) {
                   //								@log "ex", ex
                   //								@log ""+ex
-                  if (ex.message === (_ = test.opts.exceptionMessage)) { //BRITTLE
-                    this.log("match!");
-                  } else {
-                    this.log("not expecting!");
-                    this.log(S.COMPARE_REPORT(ex.message, _));
+                  if (ex.message !== (_ = test.opts.exceptionMessage)) { //BRITTLE?
+                    this.log("WRONG EXCEPTION MESSAGE!");
+                    this.log('^' + S.COMPARE_REPORT(ex.message, _, {
+                      preamble: "ex.message\n\ntest.opts.exceptionMessage"
+                    }));
+                    bWasException = true;
                   }
                 }
-                //							@log "restore: eliminate: pass=#{pass} fail=#{fail}"
-                pass = passSave;
-                fail = failSave; // restore fail's from eq failures
-                if (pass === passSave) {
-                  // implicit pass
-                  pass++;
-                }
-                this.post(test, "t-catch");
-              } else {
+              }
+              if (bWasException) {
                 fail++;
                 if (B_FAIL_FAST) {
                   util.abort("B_FAIL_FAST");
                 }
                 this.logCatch(`[${test.path}] t-handler`, ex);
-                this.post(test, "t-catch");
+              } else {
+                if (bRestore) {
+                  this.log(`restore: eliminate: pass=${pass} fail=${fail}`);
+                  pass = passSave;
+                  fail = failSave; // restore fail's from eq failures
+                }
+                if (pass === passSave) {
+                  // implicit pass
+                  pass++;
+                }
               }
+              this.post(test, "t-catch");
             }
             return;
           case 's':
           case 'S':
-            //					@log "here1"
             this.post(null, "s");
             return;
           default:
-            //					@log "here2"
             this.logFatal(`unknown cmd=${test.cmd}`);
         }
       }
@@ -1057,6 +1074,9 @@ module.exports = UT = (function() {
         test = testList[j];
         if (opts = test.opts) {
           //				@log "opts", opts
+          if (opts.exceptionMessage && (opts.expect == null)) {
+            opts.expect = "EXCEPTION";
+          }
           cmds = ["desc", "exceptionMessage", "expect", "hang", "human", "internet", "mType", "onError", "onException", "onTimeout", "SO", "RUNTIME_SECS", "timeout", "url", "USER_CNT"];
           for (l = 0, len1 = cmds.length; l < len1; l++) {
             cmd = cmds[l];
@@ -1303,27 +1323,64 @@ UT_UT = class UT_UT extends UT {
         });
       });
     });
-    this.a("opts parameter", {
-      timeout: 1000
-    }, function(ut) {
-      //			@log "opts parameter"
-      //			O.LOG ut.opts
-      this.eq(ut.opts.timeout, 1000);
-      return ut.resolve();
-    });
-    this.a("promise timeout", {
-      timeout: 10,
-      expect: "TIMEOUT"
-    }, function(ut) {});
-    //			DO NOT CALL ut.resolve()
-    this.a("onTimeout", {
-      timeout: 10,
-      onTimeout: function(ut) {
-        this.log(`onTimeout called: ${ut.opts.timeout}=${this.opts.timeout}`);
-        return true;
-      }
-    }, function(ut) {
-      return this.log("do not call ut.resolve to force timeout");
+    this.s("options", function() {
+      this.s("general", function() {
+        return this.t("commented out", {
+          _desc: "this is not used"
+        }, function() {});
+      });
+      return this.s("specific", function() {
+        this.T("exceptionMessage", {
+          exceptionMessage: "Deanna is beautiful"
+        }, function() {
+          throw new Error("Deanna is beautiful");
+        });
+        this.s("expect", function() {
+          this.t("assert", {
+            expect: "ERROR"
+          }, function() {
+            this.log("hello");
+            this.assert(true, "Saturday");
+            return this.assert(false, "Sunday");
+          });
+          this._t("bManual: fatal", {
+            comment: "can't test because it exits node",
+            bManual: true
+          }, function() {
+            //						TODO: skip if bManual is true
+            this.fatal();
+            return this.fatal("display me on console");
+          });
+          return this.a("promise timeout", {
+            timeout: 10,
+            expect: "TIMEOUT"
+          }, function(ut) {});
+        });
+        //						DO NOT CALL ut.resolve()
+        this.a("onTimeout", {
+          timeout: 10,
+          onTimeout: function(ut) {
+            this.log(`onTimeout called: ${ut.opts.timeout}=${this.opts.timeout}`);
+            return true;
+          }
+        }, function(ut) {
+          return this.log("do not call ut.resolve to force timeout");
+        });
+        this.a("timeout", {
+          timeout: 1000
+        }, function(ut) {
+          //							@log "opts parameter"
+          //							O.LOG ut.opts
+          this.eq(ut.opts.timeout, 1000);
+          return ut.resolve();
+        });
+        return this._t("seek exception but don't get one", {
+          expect: "EXCEPTION",
+          bManual: true
+        }, function() {
+          return this.log("hello");
+        });
+      });
     });
     this.s("eq", function() {
       //UT: two pass
@@ -1337,50 +1394,29 @@ UT_UT = class UT_UT extends UT {
       }, function() {
         return this.eq("I feel alone");
       });
-      return this.t("differing types", {
+      this.t("differing types", {
         desc: "@eq is NOT strict, i.e, it checks VALUE only (string vs. String is okay and passes"
       }, function() {
         //				@log "in test: *** bRunToCompletion=#{@bRunToCompletion}"
         return this.eq("peter", new String("peter"));
       });
-    });
-    this.s("Eq", function() { //H: why repeat
-      this.t("single parameter", {
-        onException: function(ut, ex) {
-          //					@log "in onException"
-          return this.pass();
-        }
-      }, function() {
-        return this.Eq("I feel alone");
+      return this.s("HELP WHY CAPITALIZED? Eq", function() { //H: why repeat
+        this.t("single parameter", {
+          onException: function(ut, ex) {
+            //					@log "in onException"
+            return this.pass();
+          }
+        }, function() {
+          return this.Eq("I feel alone");
+        });
+        return this.t("differing types", {
+          expect: "EXCEPTION",
+          desc: "@Eq is strict!, i.e., VALUE and TYPE must agree!"
+        }, function() {
+          //				@log "in test: *** bRunToCompletion=#{@bRunToCompletion}"
+          return this.Eq("peter", new String("peter"));
+        });
       });
-      return this.t("differing types", {
-        expect: "EXCEPTION",
-        desc: "@Eq is strict!, i.e., VALUE and TYPE must agree!"
-      }, function() {
-        //				@log "in test: *** bRunToCompletion=#{@bRunToCompletion}"
-        return this.Eq("peter", new String("peter"));
-      });
-    });
-    this._t("fatal", {
-      comment: "can't test because it exits node",
-      bManual: true
-    }, function() {
-      //TODO: skip if bManual is true
-      this.fatal();
-      return this.fatal("display me on console");
-    });
-    this.t("assert", {
-      expect: "ERROR"
-    }, function() {
-      this.log("hello");
-      this.assert(true, "Saturday");
-      return this.assert(false, "Sunday");
-    });
-    this._t("seek exception but don't get one", {
-      expect: "EXCEPTION",
-      bManual: true
-    }, function() {
-      return this.log("hello");
     });
     this.a("@delay", function(ut) {
       this.log("before");
@@ -1392,15 +1428,16 @@ UT_UT = class UT_UT extends UT {
       });
       return this.log("after");
     });
-    return this.t("one", function(ut) {
+    this.t("one", function(ut) {
       this.log();
       this.log(`one: ${this.test.one}`);
       return this.eq(this.test.one, "UT_UT/one");
     });
+    return this.s("misc", function() {});
   }
 
 };
 
-//		@A "don't close", (ut) ->
-//			@log "something doesn't stop"
+//			@A "don't close", (ut) ->
+//				@log "something doesn't stop"
 //endif

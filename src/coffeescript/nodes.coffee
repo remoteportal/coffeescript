@@ -3331,7 +3331,7 @@ exports.Try = class Try extends Base
       tryPart,
       @makeCode("\n#{@tab}}"), catchPart, ensurePart
 
-process.stdout.write "********(nodes)**************"  #PETER
+#process.stdout.write "********(nodes)**************"  #PETER
 
 #### Throw
 

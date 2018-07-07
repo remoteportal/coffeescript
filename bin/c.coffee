@@ -1,10 +1,14 @@
-c="Charles"
-#if nr
-a2=2
-#else
-bElse = true
+#if ut
+bUnitTest=44
 #endif
-a3=3
+
+c="Charles!"
+#if rn
+target="rn2"
+#else
+target="else rn"
+#endif
+
 
 fn = (a) ->
 	for v in a

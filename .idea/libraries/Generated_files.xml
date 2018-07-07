@@ -10,8 +10,8 @@
         <item url="file://$PROJECT_DIR$/src/coffeescript/grammar.js" />
         <item url="file://$PROJECT_DIR$/node_modules/iferr/index.js" />
         <item url="file://$PROJECT_DIR$/src/coffeescript/Date.js" />
-        <item url="file://$PROJECT_DIR$/src/coffeescript/C.js" />
         <item url="file://$PROJECT_DIR$/src/coffeescript/register.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/C.js" />
         <item url="file://$PROJECT_DIR$/src/coffeescript/N.js" />
         <item url="file://$PROJECT_DIR$/src/coffeescript/trace.js" />
         <item url="file://$PROJECT_DIR$/src/coffeescript/A.js" />
@@ -27,9 +27,10 @@
         <item url="file://$PROJECT_DIR$/src/coffeescript/V.js" />
         <item url="file://$PROJECT_DIR$/src/coffeescript/tests.js" />
         <item url="file://$PROJECT_DIR$/src/coffeescript/Base.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/test.js" />
         <item url="file://$PROJECT_DIR$/src/coffeescript/nodes.js" />
-        <item url="file://$PROJECT_DIR$/src/coffeescript/repl.js" />
         <item url="file://$PROJECT_DIR$/src/coffeescript/command.js" />
+        <item url="file://$PROJECT_DIR$/src/coffeescript/repl.js" />
         <item url="file://$PROJECT_DIR$/src/coffeescript/peter.js" />
       </sourceFilesUrls>
     </properties>
@@ -62,8 +63,8 @@
       <root url="file://$PROJECT_DIR$/src/coffeescript/grammar.js" />
       <root url="file://$PROJECT_DIR$/node_modules/iferr/index.js" />
       <root url="file://$PROJECT_DIR$/src/coffeescript/Date.js" />
-      <root url="file://$PROJECT_DIR$/src/coffeescript/C.js" />
       <root url="file://$PROJECT_DIR$/src/coffeescript/register.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/C.js" />
       <root url="file://$PROJECT_DIR$/src/coffeescript/N.js" />
       <root url="file://$PROJECT_DIR$/src/coffeescript/trace.js" />
       <root url="file://$PROJECT_DIR$/src/coffeescript/A.js" />
@@ -79,9 +80,10 @@
       <root url="file://$PROJECT_DIR$/src/coffeescript/V.js" />
       <root url="file://$PROJECT_DIR$/src/coffeescript/tests.js" />
       <root url="file://$PROJECT_DIR$/src/coffeescript/Base.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/test.js" />
       <root url="file://$PROJECT_DIR$/src/coffeescript/nodes.js" />
-      <root url="file://$PROJECT_DIR$/src/coffeescript/repl.js" />
       <root url="file://$PROJECT_DIR$/src/coffeescript/command.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/repl.js" />
       <root url="file://$PROJECT_DIR$/src/coffeescript/peter.js" />
     </CLASSES>
     <SOURCES />

@@ -35,25 +35,34 @@ RE_ISOLATE_TYPE = /\[object ([^\]]*)\]/
 
 
 
-LOG_DELTA = (v1, v2) ->
-	O = require './O'
-	S = require './S'
 
-	t1 = typeof v1
-	t2 = typeof v2
 
-	a = [v1, v2]	#HACK
 
-	if t1 is t2 is "string"
-		s = "@eq values violation:\n"
-		s += "> arg#{a[0]}: #{PAIR a[0]} DUMP: #{S.DUMP a[0], undefined, true}\n"
-		s += "> arg#{a[1]}: #{PAIR a[1]} DUMP: #{S.DUMP a[1], undefined, true}\n"
-		#					@logError s
-		console.log s
+
+
+
+
+
+
+
+COMPARE_REPORT = (v0, v1) ->		#H: string-oriented or value (V)-oriented?
+	buf = ''
+
+	if s0 is s1
+		buf = "values are the same"
 	else
-		console.log "LOG_DELTA: not strings"
-		O.LOG v1
-		O.LOG v2
+		bStrings = true
+		
+		for v in [v0, v1]
+			bStrings = false		unless IS v
+
+		if bStrings
+			S = require './S'
+			buf = S.COMPARE_REPORT v0, v1
+		else
+			#TODO: see if integer and float.... negative/positive: EXPLAIN difference between the values
+			buf = "values are different"		#HACK
+	buf
 
 
 
@@ -108,6 +117,7 @@ DUMP = (v) ->
 	catch ex
 		console.error "V.DUMP exception: #{ex}"
 		process.exit 1
+
 
 
 EQ = (a, opts = {}) ->
@@ -175,6 +185,28 @@ KV = (k, v, bReverse) ->
 		"#{k} = <#{Type v}> #{O.duck v}"
 	else
 		"#{k} = #{O.duck v} <#{Type v}>"		#TODO: distinquish between primative and non-primative
+
+
+
+LOG_DELTA = (v1, v2) ->
+	O = require './O'
+	S = require './S'
+
+	t1 = typeof v1
+	t2 = typeof v2
+
+	a = [v1, v2]	#HACK
+
+	if t1 is t2 is "string"
+		s = "@eq values violation:\n"
+		s += "> arg#{a[0]}: #{PAIR a[0]} DUMP: #{S.DUMP a[0], undefined, true}\n"
+		s += "> arg#{a[1]}: #{PAIR a[1]} DUMP: #{S.DUMP a[1], undefined, true}\n"
+		#					@logError s
+		console.log s
+	else
+		console.log "LOG_DELTA: not strings"
+		O.LOG v1
+		O.LOG v2
 
 
 
@@ -334,11 +366,12 @@ type = (v) ->
 
 
 module.exports =
-	LOG_DELTA: LOG_DELTA
+	COMPARE_REPORT: COMPARE_REPORT
 	DUMP: DUMP
 #	EQ: (v1, v2) -> console.log "COMP: #{v1} vs. #{v2} (#{typeof v1}) vs (#{typeof v2}) #{if v1 is v2 then "YES-MATCH" else "NO-MATCH"}"	#USED?
 	EQ: EQ
 	KV: KV
+	LOG_DELTA: LOG_DELTA
 	LOG_MULTI: LOG_MULTI
 	LOG_SINGLE: LOG_SINGLE
 	NOT_STRING: NOT_STRING

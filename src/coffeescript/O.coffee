@@ -451,7 +451,7 @@ DUMP = (o, opts={maxDepth:5}) ->
 
 
 	if arguments.length is 0
-		console.log "WARNING: LOG wasn't passed anything"
+		console.log "WARNING: DUMP wasn't passed anything"
 	else if arguments.length in [1, 2]
 		dump "", o, 0
 	else
@@ -491,7 +491,7 @@ LOG = (o) ->
 	#				console.log "#{v}"	# echo plain strings out directly as we find them
 					console.log "#{Q}LOGARG[#{i}]: #{V.DUMP v}"
 				else
-					log "LOGARG[#{i}]:", v, 0
+					console.log "LOGARG[#{i}]:", v, 0
 		else
 			#TODO: put on a same line
 			for v,i in arguments
@@ -501,7 +501,7 @@ LOG = (o) ->
 	#				console.log "#{v}"	# echo plain strings out directly as we find them
 					console.log "#{Q}LOGARG[#{i}]: #{V.DUMP v}"
 				else
-					log "LOGARG[#{i}]:", v, 0
+					console.log "LOGARG[#{i}]:", v, 0
 
 	if DEBUG
 		console.log "\n\n\n\n\n\n\n\n\n\n"

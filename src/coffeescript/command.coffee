@@ -1,3 +1,5 @@
+PETER=2
+
 # The `coffee` utility. Handles command-line compilation of CoffeeScript
 # into various forms: saved into `.js` files or printed to stdout
 # or recompiled every time the source is saved,
@@ -73,7 +75,11 @@ ENV = {}
 # Many flags cause us to divert before compiling anything. Flags passed after
 # `--` will be passed verbatim to your script as arguments in `process.argv`
 exports.run = ->
-  printLine "WORK\\src\\command.js exports.run *************************" #PETE
+#  printLine "WORK\\src\\command.js exports.run *************************" #PETER
+  aaa = process.argv.join " "
+  fs.appendFile '/tmp/coffee2.log', "cwd=#{process.cwd()} __dirname=#{__dirname} args=#{aaa}\n", (err) ->
+    printLine "appendFile finished maybe with error"
+
   optionParser = buildCSOptionParser()
   try parseOptions()
   catch err
@@ -92,12 +98,29 @@ exports.run = ->
     opts.arguments = [opts.arguments[0]].concat opts.arguments[2..]
 
   #PETER
-  if opts.node
-    printLine "OUTPUT NODE"
-    OUTPUT="node"
-    ENV.node = true
-    ENV.ut = true
-    
+  #HERE
+  if opts.node or 1
+    printLine "OUTPUT NODE: __dirname=#{__dirname} CWD=#{process.cwd()}"
+    try
+#TODO: climb parents until find env.json
+      _ = fs.readFileSync path.join(process.cwd(), "env.json"), "utf8"
+#      printLine "_=#{_}"
+      for k,v of JSON.parse _
+        ENV[k] = v
+      printLine "ENV: #{JSON.stringify ENV}"
+      fs.appendFile '/tmp/coffee.log', "cwd=#{process.cwd()} __dirname=#{__dirname} args=#{aaa} ENV=#{_}", (err) ->
+        printLine "appendFile finished maybe with error"
+      printLine "LOG..."
+    catch err
+      console.log "read targets: err=#{err}"
+      fs.appendFile '/tmp/coffee-err.log', "cwd=#{process.cwd()} __dirname=#{__dirname} args=#{aaa}\n", (err) ->
+        printLine "appendFile finished maybe with error"
+
+  ENV.rn = true
+  ENV.ut = true
+
+
+
   # Make the REPL *CLI* use the global context so as to (a) be consistent with the
   # `node` REPL CLI and, therefore, (b) make packages that modify native prototypes
   # (such as 'colors' and 'sugar') work as expected.
@@ -160,7 +183,7 @@ makePrelude = (requires) ->
 # is passed, recursively compile all '.coffee', '.litcoffee', and '.coffee.md'
 # extension source files in it and all subdirectories.
 compilePath = (source, topLevel, base) ->
-  printLine "compilePath\n"
+#  printLine "compilePath\n"
 
   return if source in sources   or
             watchedDirs[source] or

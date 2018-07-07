@@ -11,7 +11,7 @@ var path = require('path');
 var fs   = require('fs');
 
 
-process.stdout.write(`HELLO COFFEE: __dirname=${__dirname}\n`);
+// process.stdout.write(`HELLO COFFEE: __dirname=${__dirname}\n`);
 
 
 var fl = [
@@ -28,26 +28,26 @@ var potentialPaths = [
 ];
 
 for (var i = 0, len = potentialPaths.length; i < len; i++) {
-  process.stdout.write(`TRY: ${potentialPaths[i]}\n`);
+  // process.stdout.write(`TRY: ${potentialPaths[i]}\n`);
   if (fs.existsSync(potentialPaths[i])) {
     require(potentialPaths[i] + '/command').run();
     break;
   }
 }
 
-console.log("BEG:delay: NOT SURE WHY THIS IS NECC... ISN'T compile() synchronous?");
-setTimeout(() => {
-  console.log("END:delay");
-
-  var pathSrc = "";
-  var destSrc = "";
-
-  for (var i = 0, len = fl.length; i < len; i++) {
-    fs.copyFileSync(`/Users/pete/gitlab/rn/API/rn/Ladybug/${fl[i]}.coffee`, `/Users/pete/gitlab/rn/API/Shared/${fl[i]}.coffee`);
-    fs.copyFileSync(`/Users/pete/gitlab/rn/API/rn/Ladybug/${fl[i]}.js`, `/Users/pete/gitlab/rn/API/Shared/${fl[i]}.js`);
-    console.log(`copied ${fl[i]}`);
-  }
-}, 2000);
+// console.log("BEG:delay: NOT SURE WHY THIS IS NECC... ISN'T compile() synchronous?");
+// setTimeout(() => {
+//   console.log("END:delay");
+//
+//   var pathSrc = "";
+//   var destSrc = "";
+//
+//   for (var i = 0, len = fl.length; i < len; i++) {
+//     fs.copyFileSync(`/Users/pete/gitlab/rn/API/rn/Ladybug/${fl[i]}.coffee`, `/Users/pete/gitlab/rn/API/Shared/${fl[i]}.coffee`);
+//     fs.copyFileSync(`/Users/pete/gitlab/rn/API/rn/Ladybug/${fl[i]}.js`, `/Users/pete/gitlab/rn/API/Shared/${fl[i]}.js`);
+//     console.log(`copied ${fl[i]}`);
+//   }
+// }, 2000);
 
 
 /*
@@ -57,4 +57,4 @@ setTimeout(() => {
  console.log(`copied ${fl[i]}`);
  }
  */
-console.log('EOL');
+// console.log('EOL');
