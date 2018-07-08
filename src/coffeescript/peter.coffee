@@ -48,12 +48,15 @@ process = (code, ENV = {}) ->
 		th = (msg) -> throw new Error "line=#{lineNbr+1}: depth=#{stack.length}#{if req.name then " name=#{req.name}" else ""}: #{msg}"
 
 		doReq = (name, bFlipIII) ->
-# 			the default is that this #if section is DEAD.  BUT, if bGo is true, then not dead: we need to flip when it else
+# 			the default is that this #if section is DEAD.  BUT, if bGo is true, then not dead: we need to flip inside #else
 			req.bFlipOnElse = false
+
+#			log "bFoundELSE=false for #{name}"
+			req.bFoundELSE = false
+
 			if req.bGo
 				req.name = name
 				req.bFlipOnElse = true
-				req.bFoundELSE = false
 				req.bFoundIF = true
 
 				if req.name not in ["0","1","ut","node","rn","cs","bin"]
@@ -223,7 +226,7 @@ module.exports =
 .after
 """
 						fn c1, c2, {rn:true}, this
-					@T "#elseif: case 1  (chain #if rn)", ->
+					@t "#elseif: case 1  (chain #if rn)", ->
 						c1 = """
 .before
 .#if rn
@@ -241,7 +244,7 @@ module.exports =
 .after
 """
 						fn c1, c2, {rn:true, node:true}, this
-					@T "#elseif: case 2 (chain #elseif node)", ->
+					@t "#elseif: case 2 (chain #elseif node)", ->
 						c1 = """
 .before
 .#if rn
@@ -259,7 +262,7 @@ module.exports =
 .after
 """
 						fn c1, c2, {rn:false, node:true}, this
-					@T "#elseif: case 3 (chain #else)", ->
+					@t "#elseif: case 3 (chain #else)", ->
 						c1 = """
 .before
 .#if rn
@@ -277,7 +280,7 @@ module.exports =
 .after
 """
 						fn c1, c2, {rn:false, node:false}, this
-					@T "#else followed by #elseif", exceptionMessage:"line=6: depth=1 name=rn: #elseif following #else", ->
+					@t "#else followed by #elseif", exceptionMessage:"line=6: depth=1 name=rn: #elseif following #else", ->
 						c1 = """
 .before
 .#if rn
@@ -298,9 +301,9 @@ module.exports =
 .#else
 .this is NOT rn
 .#if node
-.this is emily
+.this is node
 .#else
-.this is NOT emily
+.this is NOT node
 .#endif
 .#endif
 .after
@@ -308,10 +311,53 @@ module.exports =
 						c2 = """
 .before
 .this is NOT rn
-.this is emily
+.this is node
 .after
 """
 						fn c1, c2, {node:true}, this
+					@t "nested if: both false", ->
+						c1 = """
+.before
+.#if rn
+.this is rn
+.#else
+.this is NOT rn
+.#if node
+.this is node
+.#else
+.this is NOT node
+.#endif
+.#endif
+.after
+"""
+						c2 = """
+.before
+.this is NOT rn
+.this is NOT node
+.after
+"""
+						fn c1, c2, {}, this
+					@t "nested if: breaks", ->
+						c1 = """
+.before
+.#if rn
+.this is rn
+.#else
+.this is NOT rn
+.#if node
+.this is node
+.#else
+.this is NOT node
+.#endif
+.#endif
+.after
+"""
+						c2 = """
+.before
+.this is rn
+.after
+"""
+						fn c1, c2, {rn:true}, this
 					@t "double #if", ->
 						c1 = """
 .before
@@ -359,7 +405,7 @@ module.exports =
 .after
 """
 						fn c1, "", {}, this
-					@T "#endif missing", exceptionMessage:"line=6 #endif missing: \"rn\"", ->
+					@t "#endif missing", exceptionMessage:"line=6 #endif missing: \"rn\"", ->
 						c1 = """
 .before
 .#if rn
@@ -379,7 +425,7 @@ module.exports =
 .#endif
 """
 						fn c1, "", {}, this
-					@T "unknown name", exceptionMessage:"line=1: depth=1 name=Michelle: unknown", ->
+					@t "unknown name", exceptionMessage:"line=1: depth=1 name=Michelle: unknown", ->
 						c1 = """
 .#if Michelle
 .inside

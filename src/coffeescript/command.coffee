@@ -116,8 +116,8 @@ exports.run = ->
       fs.appendFile '/tmp/coffee-err.log', "cwd=#{process.cwd()} __dirname=#{__dirname} args=#{aaa}\n", (err) ->
         printLine "appendFile finished maybe with error"
 
-  ENV.rn = true
-  ENV.ut = true
+#  ENV.rn = true
+#  ENV.ut = true
 
 
 

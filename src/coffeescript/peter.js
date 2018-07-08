@@ -49,12 +49,13 @@ process = function(code, ENV = {}) {
     };
     doReq = function(name, bFlipIII) {
       var ref;
-      // 			the default is that this #if section is DEAD.  BUT, if bGo is true, then not dead: we need to flip when it else
+      // 			the default is that this #if section is DEAD.  BUT, if bGo is true, then not dead: we need to flip inside #else
       req.bFlipOnElse = false;
+      //			log "bFoundELSE=false for #{name}"
+      req.bFoundELSE = false;
       if (req.bGo) {
         req.name = name;
         req.bFlipOnElse = true;
-        req.bFoundELSE = false;
         req.bFoundIF = true;
         if ((ref = req.name) !== "0" && ref !== "1" && ref !== "ut" && ref !== "node" && ref !== "rn" && ref !== "cs" && ref !== "bin") {
           th("unknown");
@@ -195,7 +196,7 @@ module.exports = {
               rn: true
             }, this);
           });
-          this.T("#elseif: case 1  (chain #if rn)", function() {
+          this.t("#elseif: case 1  (chain #if rn)", function() {
             var c1, c2;
             c1 = ".before\n.#if rn\n.this is rn\n.#elseif node\n.this is node\n.#else\n.neither\n.#endif\n.after";
             c2 = ".before\n.this is rn\n.after";
@@ -204,7 +205,7 @@ module.exports = {
               node: true
             }, this);
           });
-          this.T("#elseif: case 2 (chain #elseif node)", function() {
+          this.t("#elseif: case 2 (chain #elseif node)", function() {
             var c1, c2;
             c1 = ".before\n.#if rn\n.this is rn\n.#elseif node\n.this is node\n.#else\n.neither\n.#endif\n.after";
             c2 = ".before\n.this is node\n.after";
@@ -213,7 +214,7 @@ module.exports = {
               node: true
             }, this);
           });
-          this.T("#elseif: case 3 (chain #else)", function() {
+          this.t("#elseif: case 3 (chain #else)", function() {
             var c1, c2;
             c1 = ".before\n.#if rn\n.this is rn\n.#elseif node\n.this is node\n.#else\n.neither\n.#endif\n.after";
             c2 = ".before\n.neither\n.after";
@@ -222,7 +223,7 @@ module.exports = {
               node: false
             }, this);
           });
-          this.T("#else followed by #elseif", {
+          this.t("#else followed by #elseif", {
             exceptionMessage: "line=6: depth=1 name=rn: #elseif following #else"
           }, function() {
             var c1;
@@ -234,10 +235,24 @@ module.exports = {
           });
           this.t("nested if: env=node", function() {
             var c1, c2;
-            c1 = ".before\n.#if rn\n.this is rn\n.#else\n.this is NOT rn\n.#if node\n.this is emily\n.#else\n.this is NOT emily\n.#endif\n.#endif\n.after";
-            c2 = ".before\n.this is NOT rn\n.this is emily\n.after";
+            c1 = ".before\n.#if rn\n.this is rn\n.#else\n.this is NOT rn\n.#if node\n.this is node\n.#else\n.this is NOT node\n.#endif\n.#endif\n.after";
+            c2 = ".before\n.this is NOT rn\n.this is node\n.after";
             return fn(c1, c2, {
               node: true
+            }, this);
+          });
+          this.t("nested if: both false", function() {
+            var c1, c2;
+            c1 = ".before\n.#if rn\n.this is rn\n.#else\n.this is NOT rn\n.#if node\n.this is node\n.#else\n.this is NOT node\n.#endif\n.#endif\n.after";
+            c2 = ".before\n.this is NOT rn\n.this is NOT node\n.after";
+            return fn(c1, c2, {}, this);
+          });
+          this.t("nested if: breaks", function() {
+            var c1, c2;
+            c1 = ".before\n.#if rn\n.this is rn\n.#else\n.this is NOT rn\n.#if node\n.this is node\n.#else\n.this is NOT node\n.#endif\n.#endif\n.after";
+            c2 = ".before\n.this is rn\n.after";
+            return fn(c1, c2, {
+              rn: true
             }, this);
           });
           this.t("double #if", function() {
@@ -274,7 +289,7 @@ module.exports = {
             c1 = ".before\n.#if rn\n.this is rn\n.#else\n.this is NOT rn\n.#else\n.after 2nd else\n.#endif\n.after";
             return fn(c1, "", {}, this);
           });
-          this.T("#endif missing", {
+          this.t("#endif missing", {
             exceptionMessage: "line=6 #endif missing: \"rn\""
           }, function() {
             var c1;
@@ -288,7 +303,7 @@ module.exports = {
             c1 = ".before\n.#if rn\n.this is rn\n.#if ALONE\n.#else\n.this is NOT rn\n.#endif";
             return fn(c1, "", {}, this);
           });
-          return this.T("unknown name", {
+          return this.t("unknown name", {
             exceptionMessage: "line=1: depth=1 name=Michelle: unknown"
           }, function() {
             var c1;
