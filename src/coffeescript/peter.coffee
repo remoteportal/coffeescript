@@ -1,3 +1,5 @@
+OUTPUT=0
+
 O = require './O'
 trace = require './trace'
 
@@ -12,7 +14,8 @@ lg = (line) -> console.log line
 
 
 process = (code, ENV = {}) ->
-#	log "process: ENV=#{JSON.stringify ENV}"
+	if OUTPUT
+		log "process: ENV=#{JSON.stringify ENV}"
 
 	code = code.toString()
 
@@ -42,10 +45,18 @@ process = (code, ENV = {}) ->
 	for line,lineNbr in lines
 #		line = line.replace /?harles/, 'Christmas'
 
-		lg "#{lineNbr+1} LINE: #{line}"
+#		lg "BEFORE: LINE #{lineNbr+1}: #{line}"
 
 		#SLOW: set for EACH LINE!
-		th = (msg) -> throw new Error "line=#{lineNbr+1}: depth=#{stack.length}#{if req.name then " name=#{req.name}" else ""}: #{msg}"
+		th = (msg) ->
+			start = Math.max 0, lineNbr-20
+			lg "------------------------"
+			for i in [start..lineNbr]
+				lg "CONTEXT: LINE #{i+1}: #{lines[i]}"
+			if OUTPUT
+				throw new Error "line=#{lineNbr+1}: depth=#{stack.length} ENV=#{JSON.stringify ENV} stack=#{JSON.stringify stack}#{if req.name then " name=#{req.name}" else ""}: #{msg}"
+			else
+				throw new Error "line=#{lineNbr+1}: depth=#{stack.length}#{if req.name then " name=#{req.name}" else ""}: #{msg}"
 
 		doReq = (name, bFlipIII) ->
 # 			the default is that this #if section is DEAD.  BUT, if bGo is true, then not dead: we need to flip inside #else
@@ -69,6 +80,7 @@ process = (code, ENV = {}) ->
 #				log "IF: name=#{req.name} bGo=#{req.bGo}"
 		switch
 			when line[0..2] is "#if"
+				a.push line if OUTPUT
 #				log "IF: line=#{line}: #{req.bGo}"
 				name = arg line
 
@@ -81,6 +93,7 @@ process = (code, ENV = {}) ->
 				doReq name, true
 				req.bChainSatisfied = req.bGo
 			when line[0..6] is "#elseif"
+				a.push line if OUTPUT
 				if req.bFoundELSE
 					th "#elseif following #else"
 
@@ -96,6 +109,7 @@ process = (code, ENV = {}) ->
 					req.bGo = true
 					doReq name
 			when line[0..4] is "#else"
+				a.push line if OUTPUT
 				unless req.bFoundIF
 					th "#else without #if"
 
@@ -108,6 +122,7 @@ process = (code, ENV = {}) ->
 					# we're alive, so flip... whatever the logic was, now it's the opposite
 					req.bGo = ! req.bGo
 			when line[0..5] is "#endif"
+				a.push line if OUTPUT
 				if stack.length > 0
 					# return to requirements before first #if of this current chain was encountered
 					req = stack.pop()
@@ -121,6 +136,10 @@ process = (code, ENV = {}) ->
 #		throw new Error "line=#{lineNbr+1} #endif missing: #{JSON.stringify stack.forEach((o) -> o.name)}"
 		throw new Error "line=#{lineNbr+1} #endif missing: \"#{req.name}\""
 
+	for line,lineNbr in a
+		lg "AFTER: LINE #{lineNbr+1}: #{line}"
+
+#	"# IF-COFFEE: ENV=#{JSON.stringify ENV}\n" + a.join '\n'
 	a.join '\n'
 
 
