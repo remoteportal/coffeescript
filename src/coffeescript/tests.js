@@ -5,7 +5,7 @@ Peter = require('./peter');
 
 UT = require('./UT');
 
-Peter.s_ut();
+Peter.s_ut(0);
 
 ut = new UT();
 

@@ -5,6 +5,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/peter.coffee" afterPath="$PROJECT_DIR$/src/coffeescript/peter.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/peter.js" afterPath="$PROJECT_DIR$/src/coffeescript/peter.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/tests.js" afterPath="$PROJECT_DIR$/src/coffeescript/tests.js" />
     </list>
     <ignored path="coffeescript.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -25,11 +26,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="peter.coffee" pinned="false" current-in-tab="true">
+      <file leaf-file-name="peter.coffee" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/coffeescript/peter.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="17" column="4" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
+            <state relative-caret-position="439">
+              <caret line="172" column="24" selection-start-line="172" selection-start-column="24" selection-end-line="172" selection-end-column="24" />
               <folding />
             </state>
           </provider>
@@ -38,11 +39,22 @@
       <file leaf-file-name="peter.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/coffeescript/peter.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4740">
-              <caret line="318" column="0" selection-start-line="318" selection-start-column="0" selection-end-line="318" selection-end-column="0" />
+            <state relative-caret-position="4875">
+              <caret line="388" column="0" selection-start-line="388" selection-start-column="0" selection-end-line="388" selection-end-column="0" />
               <folding>
-                <marker date="1531225815871" expanded="true" signature="389:397" ph="{...}" />
-                <marker date="1531225815871" expanded="true" signature="5682:5905" ph="{...}" />
+                <marker date="1531259631157" expanded="true" signature="188:235" ph="{...}" />
+                <marker date="1531259631157" expanded="true" signature="259:297" ph="{...}" />
+                <marker date="1531259631157" expanded="true" signature="320:351" ph="{...}" />
+                <marker date="1531259631157" expanded="true" signature="389:397" ph="{...}" />
+                <marker date="1531259631157" expanded="true" signature="389:5982" ph="{...}" />
+                <marker date="1531259631157" expanded="true" signature="4979:5458" ph="{...}" />
+                <marker date="1531259631157" expanded="true" signature="4979:5462" ph="{...}" />
+                <marker date="1531259631157" expanded="true" signature="5417:5452" ph="{...}" />
+                <marker date="1531259631157" expanded="true" signature="5483:5753" ph="{...}" />
+                <marker date="1531259631157" expanded="true" signature="5489:5675" ph="//..." />
+                <marker date="1531259631157" expanded="true" signature="5820:5895" ph="{...}" />
+                <marker date="1531259631157" expanded="true" signature="6021:14322" ph="{...}" />
+                <marker date="1531259631157" expanded="true" signature="6059:14290" ph="{...}" />
               </folding>
             </state>
           </provider>
@@ -81,8 +93,18 @@
       <file leaf-file-name="test.coffee" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/coffeescript/test.coffee">
           <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tests.coffee" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/coffeescript/tests.coffee">
+          <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="45">
-              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+              <caret line="3" column="12" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -143,7 +165,6 @@
         <option value="$PROJECT_DIR$/src/coffeescript/coffeescript.js" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/src/coffeescript/lexer.coffee" />
-        <option value="$PROJECT_DIR$/src/coffeescript/tests.coffee" />
         <option value="$PROJECT_DIR$/src/coffeescript/Util.js" />
         <option value="$PROJECT_DIR$/src/coffeescript/ut.coffee" />
         <option value="$PROJECT_DIR$/src/coffeescript/S.coffee" />
@@ -157,6 +178,7 @@
         <option value="$PROJECT_DIR$/src/coffeescript/coffeescript.coffee" />
         <option value="$PROJECT_DIR$/src/coffeescript/command.coffee" />
         <option value="$PROJECT_DIR$/src/coffeescript/peter.coffee" />
+        <option value="$PROJECT_DIR$/src/coffeescript/tests.coffee" />
       </list>
     </option>
   </component>
@@ -442,12 +464,13 @@
       <workItem from="1530993738864" duration="13705000" />
       <workItem from="1531131646176" duration="881000" />
       <workItem from="1531133906251" duration="6000" />
-      <workItem from="1531225680524" duration="279000" />
+      <workItem from="1531225680524" duration="420000" />
+      <workItem from="1531258007615" duration="1663000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="71049000" />
+    <option name="totallyTimeSpent" value="72853000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="380" y="23" width="1537" height="1120" extended-state="0" />
@@ -482,7 +505,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921028" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15159401" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15369393" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921028" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -817,11 +840,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/coffeescript/peter.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4740">
-          <caret line="318" column="0" selection-start-line="318" selection-start-column="0" selection-end-line="318" selection-end-column="0" />
+        <state relative-caret-position="4875">
+          <caret line="388" column="0" selection-start-line="388" selection-start-column="0" selection-end-line="388" selection-end-column="0" />
           <folding>
-            <marker date="1531225815871" expanded="true" signature="389:397" ph="{...}" />
-            <marker date="1531225815871" expanded="true" signature="5682:5905" ph="{...}" />
+            <marker date="1531259631157" expanded="true" signature="188:235" ph="{...}" />
+            <marker date="1531259631157" expanded="true" signature="259:297" ph="{...}" />
+            <marker date="1531259631157" expanded="true" signature="320:351" ph="{...}" />
+            <marker date="1531259631157" expanded="true" signature="389:397" ph="{...}" />
+            <marker date="1531259631157" expanded="true" signature="389:5982" ph="{...}" />
+            <marker date="1531259631157" expanded="true" signature="4979:5458" ph="{...}" />
+            <marker date="1531259631157" expanded="true" signature="4979:5462" ph="{...}" />
+            <marker date="1531259631157" expanded="true" signature="5417:5452" ph="{...}" />
+            <marker date="1531259631157" expanded="true" signature="5483:5753" ph="{...}" />
+            <marker date="1531259631157" expanded="true" signature="5489:5675" ph="//..." />
+            <marker date="1531259631157" expanded="true" signature="5820:5895" ph="{...}" />
+            <marker date="1531259631157" expanded="true" signature="6021:14322" ph="{...}" />
+            <marker date="1531259631157" expanded="true" signature="6059:14290" ph="{...}" />
           </folding>
         </state>
       </provider>
@@ -857,22 +891,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/coffeescript/tests.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="8" selection-start-line="6" selection-start-column="8" selection-end-line="6" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/coffeescript/test.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bin/coffee">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="675">
@@ -881,10 +899,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/coffeescript/test.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/coffeescript/peter.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="4" selection-start-line="17" selection-start-column="4" selection-end-line="17" selection-end-column="4" />
+        <state relative-caret-position="439">
+          <caret line="172" column="24" selection-start-line="172" selection-start-column="24" selection-end-line="172" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/coffeescript/tests.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="12" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="12" />
           <folding />
         </state>
       </provider>

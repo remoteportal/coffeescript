@@ -128,6 +128,26 @@ process = (code, ENV = {}) ->
 					req = stack.pop()
 				else
 					th "#endif without #if"
+			when line[0..6] is "#import"
+				a.push line if OUTPUT
+				name = arg line
+				if ENV.node
+					out = "#{name} = require './#{name}'"
+				else if ENV.rn
+					out = "import #{name} from './#{name}';"
+				else
+					th "#import: neither node nor rn"
+				a.push out
+			when line[0..6] is "#export"
+				a.push line if OUTPUT
+				name = arg line
+				if ENV.node
+					out = "module.exports = #{name}"
+				else if ENV.rn
+					out = "export default #{name};"
+				else
+					th "#export: neither node nor rn"
+				a.push out
 			else
 				a.push line if req.bGo
 
@@ -149,7 +169,8 @@ process = (code, ENV = {}) ->
 
 module.exports =
 #if ut
-	s_ut: ->
+	s_ut: (_OUTPUT) ->
+		OUTPUT = _OUTPUT
 		UT = require './UT'
 
 		(new (class PeterUT extends UT
@@ -451,6 +472,55 @@ module.exports =
 .#endif
 """
 						fn c1, "", {}, this
+
+
+
+#
+##if node
+#			trace = require './trace'
+#			V = require './V'
+#			O = require './O'
+##else
+#			import trace from './trace';
+#			import V from './V';
+#			import O from './O';
+##endif
+#
+##HERE
+##TODO
+##import trace
+##import V
+##import O
+#
+##if node
+#			module.exports = EXPORTED
+##else
+#			export default EXPORTED
+##endif
+#
+
+					@t "#import #export (node)", ->
+						c1 = """
+.#import V
+.#export EXPORTED
+"""
+						c2 = """
+V = require './V'
+module.exports = EXPORTED
+"""
+						fn c1, c2, {node:true}, this
+					@t "#import #export (rn)", ->
+						c1 = """
+.#import V
+.#export EXPORTED
+"""
+						c2 = """
+import V from './V';
+export default EXPORTED;
+"""
+						fn c1, c2, {rn:true}, this
+
+
 		)).run()
 #endif
 

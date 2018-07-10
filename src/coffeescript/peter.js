@@ -20,7 +20,7 @@ lg = function(line) {
 };
 
 process = function(code, ENV = {}) {
-  var a, arg, doReq, j, k, len, len1, line, lineNbr, lines, name, req, stack, th;
+  var a, arg, doReq, j, k, len, len1, line, lineNbr, lines, name, out, req, stack, th;
   if (OUTPUT) {
     log(`process: ENV=${JSON.stringify(ENV)}`);
   }
@@ -145,6 +145,34 @@ process = function(code, ENV = {}) {
           th("#endif without #if");
         }
         break;
+      case line.slice(0, 7) !== "#import":
+        if (OUTPUT) {
+          a.push(line);
+        }
+        name = arg(line);
+        if (ENV.node) {
+          out = `${name} = require './${name}'`;
+        } else if (ENV.rn) {
+          out = `import ${name} from './${name}';`;
+        } else {
+          th("#import: neither node nor rn");
+        }
+        a.push(out);
+        break;
+      case line.slice(0, 7) !== "#export":
+        if (OUTPUT) {
+          a.push(line);
+        }
+        name = arg(line);
+        if (ENV.node) {
+          out = `module.exports = ${name}`;
+        } else if (ENV.rn) {
+          out = `export default ${name};`;
+        } else {
+          th("#export: neither node nor rn");
+        }
+        a.push(out);
+        break;
       default:
         if (req.bGo) {
           a.push(line);
@@ -167,8 +195,9 @@ process = function(code, ENV = {}) {
 //TODO: #elseif rn
 module.exports = {
   //if ut
-  s_ut: function() {
+  s_ut: function(_OUTPUT) {
     var PeterUT, UT;
+    OUTPUT = _OUTPUT;
     UT = require('./UT');
     return (new (PeterUT = class PeterUT extends UT {
       run() {
@@ -336,12 +365,51 @@ module.exports = {
             c1 = ".before\n.#if rn\n.this is rn\n.#if ALONE\n.#else\n.this is NOT rn\n.#endif";
             return fn(c1, "", {}, this);
           });
-          return this.t("unknown name", {
+          this.t("unknown name", {
             exceptionMessage: "line=1: depth=1 name=Michelle: unknown"
           }, function() {
             var c1;
             c1 = ".#if Michelle\n.inside\n.#endif";
             return fn(c1, "", {}, this);
+          });
+          
+          //#if node
+          //			trace = require './trace'
+          //			V = require './V'
+          //			O = require './O'
+          //#else
+          //			import trace from './trace';
+          //			import V from './V';
+          //			import O from './O';
+          //#endif
+
+          //#HERE
+          //#TODO
+          //#import trace
+          //#import V
+          //#import O
+
+          //#if node
+          //			module.exports = EXPORTED
+          //#else
+          //			export default EXPORTED
+          //#endif
+
+          this.t("#import #export (node)", function() {
+            var c1, c2;
+            c1 = ".#import V\n.#export EXPORTED";
+            c2 = "V = require './V'\nmodule.exports = EXPORTED";
+            return fn(c1, c2, {
+              node: true
+            }, this);
+          });
+          return this.t("#import #export (rn)", function() {
+            var c1, c2;
+            c1 = ".#import V\n.#export EXPORTED";
+            c2 = "import V from './V';\nexport default EXPORTED;";
+            return fn(c1, c2, {
+              rn: true
+            }, this);
           });
         });
       }
