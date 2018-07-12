@@ -3,9 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="11dbedff-929c-41ba-92e0-c0b43c9dffab" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/coffeescript.coffee" afterPath="$PROJECT_DIR$/src/coffeescript/coffeescript.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/coffeescript.js" afterPath="$PROJECT_DIR$/src/coffeescript/coffeescript.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/peter.coffee" afterPath="$PROJECT_DIR$/src/coffeescript/peter.coffee" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/peter.js" afterPath="$PROJECT_DIR$/src/coffeescript/peter.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/tests.js" afterPath="$PROJECT_DIR$/src/coffeescript/tests.js" />
     </list>
     <ignored path="coffeescript.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,8 +30,30 @@
       <file leaf-file-name="peter.coffee" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/coffeescript/peter.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="439">
-              <caret line="172" column="24" selection-start-line="172" selection-start-column="24" selection-end-line="172" selection-end-column="24" />
+            <state relative-caret-position="690">
+              <caret line="159" column="19" selection-start-line="159" selection-start-column="19" selection-end-line="159" selection-end-column="19" />
+              <folding>
+                <marker date="1531398237551" expanded="true" signature="3749:3937" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="nodes.coffee" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/coffeescript/nodes.coffee">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1428">
+              <caret line="2795" column="0" selection-start-line="2795" selection-start-column="0" selection-end-line="2795" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="coffeescript.coffee" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/coffeescript/coffeescript.coffee">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="15" column="69" selection-start-line="15" selection-start-column="69" selection-end-line="15" selection-end-column="69" />
               <folding />
             </state>
           </provider>
@@ -39,22 +62,77 @@
       <file leaf-file-name="peter.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/coffeescript/peter.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4875">
-              <caret line="388" column="0" selection-start-line="388" selection-start-column="0" selection-end-line="388" selection-end-column="0" />
+            <state relative-caret-position="5820">
+              <caret line="394" column="0" selection-start-line="394" selection-start-column="0" selection-end-line="394" selection-end-column="0" />
               <folding>
-                <marker date="1531259631157" expanded="true" signature="188:235" ph="{...}" />
-                <marker date="1531259631157" expanded="true" signature="259:297" ph="{...}" />
-                <marker date="1531259631157" expanded="true" signature="320:351" ph="{...}" />
-                <marker date="1531259631157" expanded="true" signature="389:397" ph="{...}" />
-                <marker date="1531259631157" expanded="true" signature="389:5982" ph="{...}" />
-                <marker date="1531259631157" expanded="true" signature="4979:5458" ph="{...}" />
-                <marker date="1531259631157" expanded="true" signature="4979:5462" ph="{...}" />
-                <marker date="1531259631157" expanded="true" signature="5417:5452" ph="{...}" />
-                <marker date="1531259631157" expanded="true" signature="5483:5753" ph="{...}" />
-                <marker date="1531259631157" expanded="true" signature="5489:5675" ph="//..." />
-                <marker date="1531259631157" expanded="true" signature="5820:5895" ph="{...}" />
-                <marker date="1531259631157" expanded="true" signature="6021:14322" ph="{...}" />
-                <marker date="1531259631157" expanded="true" signature="6059:14290" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="320:351" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="389:397" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="389:6126" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="4910:5602" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="4910:5606" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="4930:4990" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="5008:5071" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="5077:5134" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="5143:5602" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="5298:5353" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="5371:5425" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="5431:5488" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="5561:5596" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="5627:5897" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="5633:5819" ph="//..." />
+                <marker date="1531398237954" expanded="true" signature="5964:6039" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="6203:14434" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="6326:14421" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="6340:14414" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="6386:14404" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="6460:6845" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="6624:6796" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="6717:6782" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="6885:7396" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="6989:7313" ph="//..." />
+                <marker date="1531398237954" expanded="true" signature="7437:7577" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="7620:7843" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="7882:8040" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="8079:8237" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="8282:8537" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="8479:8517" ph="{&quot;rn&quot;: true...}" />
+                <marker date="1531398237954" expanded="true" signature="8603:8907" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="8823:8887" ph="{&quot;rn&quot;: true...}" />
+                <marker date="1531398237954" expanded="true" signature="8978:9285" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="9200:9265" ph="{&quot;rn&quot;: false...}" />
+                <marker date="1531398237954" expanded="true" signature="9349:9652" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="9566:9632" ph="{&quot;rn&quot;: false...}" />
+                <marker date="1531398237954" expanded="true" signature="9701:9795" ph="{&quot;exceptionMessage&quot;: &quot;line=6: depth=1 name=rn: ##elseif following ##else&quot;...}" />
+                <marker date="1531398237954" expanded="true" signature="9808:10059" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="9975:10039" ph="{&quot;rn&quot;: true...}" />
+                <marker date="1531398237954" expanded="true" signature="10113:10451" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="10391:10431" ph="{&quot;node&quot;: true...}" />
+                <marker date="1531398237954" expanded="true" signature="10507:10811" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="10863:11180" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="11122:11160" ph="{&quot;rn&quot;: true...}" />
+                <marker date="1531398237954" expanded="true" signature="11225:11557" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="11472:11537" ph="{&quot;rn&quot;: true...}" />
+                <marker date="1531398237954" expanded="true" signature="11586:11666" ph="{&quot;exceptionMessage&quot;: &quot;line=2: depth=0: ##else without ##if&quot;...}" />
+                <marker date="1531398237954" expanded="true" signature="11679:11828" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="11770:11808" ph="{&quot;rn&quot;: true...}" />
+                <marker date="1531398237954" expanded="true" signature="11858:11939" ph="{&quot;exceptionMessage&quot;: &quot;line=2: depth=0: ##endif without ##if&quot;...}" />
+                <marker date="1531398237954" expanded="true" signature="11952:12102" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="12044:12082" ph="{&quot;rn&quot;: true...}" />
+                <marker date="1531398237954" expanded="true" signature="12142:12229" ph="{&quot;exceptionMessage&quot;: &quot;line=6: depth=1 name=rn: ##else duplicated&quot;...}" />
+                <marker date="1531398237954" expanded="true" signature="12242:12433" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="12471:12546" ph="{&quot;exceptionMessage&quot;: &quot;line=6 ##endif missing: \&quot;rn\&quot;&quot;...}" />
+                <marker date="1531398237954" expanded="true" signature="12559:12708" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="12755:12830" ph="{&quot;exceptionMessage&quot;: &quot;line=8 ##endif missing: \&quot;rn\&quot;&quot;...}" />
+                <marker date="1531398237954" expanded="true" signature="12843:13013" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="13049:13133" ph="{&quot;exceptionMessage&quot;: &quot;line=1: depth=1 name=Michelle: unknown&quot;...}" />
+                <marker date="1531398237954" expanded="true" signature="13146:13272" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="13296:13566" ph="//..." />
+                <marker date="1531398237954" expanded="true" signature="13578:13673" ph="//..." />
+                <marker date="1531398237954" expanded="true" signature="13685:13812" ph="//..." />
+                <marker date="1531398237954" expanded="true" signature="13868:14099" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="14039:14079" ph="{&quot;node&quot;: true...}" />
+                <marker date="1531398237954" expanded="true" signature="14161:14392" ph="{...}" />
+                <marker date="1531398237954" expanded="true" signature="14334:14372" ph="{&quot;rn&quot;: true...}" />
               </folding>
             </state>
           </provider>
@@ -63,8 +141,8 @@
       <file leaf-file-name="command.coffee" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/coffeescript/command.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1575">
-              <caret line="105" column="70" selection-start-line="105" selection-start-column="70" selection-end-line="105" selection-end-column="70" />
+            <state relative-caret-position="916">
+              <caret line="229" column="11" selection-start-line="229" selection-start-column="11" selection-end-line="229" selection-end-column="11" />
               <folding />
             </state>
           </provider>
@@ -85,26 +163,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="270">
               <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="test.coffee" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/coffeescript/test.coffee">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tests.coffee" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/coffeescript/tests.coffee">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="12" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -175,10 +233,10 @@
         <option value="$PROJECT_DIR$/src/coffeescript/test.coffee" />
         <option value="$PROJECT_DIR$/src/coffeescript/env.json" />
         <option value="$PROJECT_DIR$/bin/env.json" />
-        <option value="$PROJECT_DIR$/src/coffeescript/coffeescript.coffee" />
         <option value="$PROJECT_DIR$/src/coffeescript/command.coffee" />
-        <option value="$PROJECT_DIR$/src/coffeescript/peter.coffee" />
         <option value="$PROJECT_DIR$/src/coffeescript/tests.coffee" />
+        <option value="$PROJECT_DIR$/src/coffeescript/coffeescript.coffee" />
+        <option value="$PROJECT_DIR$/src/coffeescript/peter.coffee" />
       </list>
     </option>
   </component>
@@ -465,12 +523,13 @@
       <workItem from="1531131646176" duration="881000" />
       <workItem from="1531133906251" duration="6000" />
       <workItem from="1531225680524" duration="420000" />
-      <workItem from="1531258007615" duration="1663000" />
+      <workItem from="1531258007615" duration="2907000" />
+      <workItem from="1531327151514" duration="4379000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="72853000" />
+    <option name="totallyTimeSpent" value="78476000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="380" y="23" width="1537" height="1120" extended-state="0" />
@@ -479,6 +538,7 @@
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15369393" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921028" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921028" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -491,7 +551,6 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921028" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -795,13 +854,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/coffeescript/nodes.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="356">
-          <caret line="3334" column="0" selection-start-line="3334" selection-start-column="0" selection-end-line="3334" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/coffeescript/S.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="630">
@@ -813,14 +865,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="630">
           <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/coffeescript/test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -838,24 +882,94 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/coffeescript/tests.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/coffeescript/test.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/coffeescript/peter.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4875">
-          <caret line="388" column="0" selection-start-line="388" selection-start-column="0" selection-end-line="388" selection-end-column="0" />
+        <state relative-caret-position="5820">
+          <caret line="394" column="0" selection-start-line="394" selection-start-column="0" selection-end-line="394" selection-end-column="0" />
           <folding>
-            <marker date="1531259631157" expanded="true" signature="188:235" ph="{...}" />
-            <marker date="1531259631157" expanded="true" signature="259:297" ph="{...}" />
-            <marker date="1531259631157" expanded="true" signature="320:351" ph="{...}" />
-            <marker date="1531259631157" expanded="true" signature="389:397" ph="{...}" />
-            <marker date="1531259631157" expanded="true" signature="389:5982" ph="{...}" />
-            <marker date="1531259631157" expanded="true" signature="4979:5458" ph="{...}" />
-            <marker date="1531259631157" expanded="true" signature="4979:5462" ph="{...}" />
-            <marker date="1531259631157" expanded="true" signature="5417:5452" ph="{...}" />
-            <marker date="1531259631157" expanded="true" signature="5483:5753" ph="{...}" />
-            <marker date="1531259631157" expanded="true" signature="5489:5675" ph="//..." />
-            <marker date="1531259631157" expanded="true" signature="5820:5895" ph="{...}" />
-            <marker date="1531259631157" expanded="true" signature="6021:14322" ph="{...}" />
-            <marker date="1531259631157" expanded="true" signature="6059:14290" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="320:351" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="389:397" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="389:6126" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="4910:5602" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="4910:5606" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="4930:4990" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="5008:5071" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="5077:5134" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="5143:5602" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="5298:5353" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="5371:5425" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="5431:5488" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="5561:5596" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="5627:5897" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="5633:5819" ph="//..." />
+            <marker date="1531398237954" expanded="true" signature="5964:6039" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="6203:14434" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="6326:14421" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="6340:14414" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="6386:14404" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="6460:6845" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="6624:6796" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="6717:6782" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="6885:7396" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="6989:7313" ph="//..." />
+            <marker date="1531398237954" expanded="true" signature="7437:7577" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="7620:7843" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="7882:8040" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="8079:8237" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="8282:8537" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="8479:8517" ph="{&quot;rn&quot;: true...}" />
+            <marker date="1531398237954" expanded="true" signature="8603:8907" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="8823:8887" ph="{&quot;rn&quot;: true...}" />
+            <marker date="1531398237954" expanded="true" signature="8978:9285" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="9200:9265" ph="{&quot;rn&quot;: false...}" />
+            <marker date="1531398237954" expanded="true" signature="9349:9652" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="9566:9632" ph="{&quot;rn&quot;: false...}" />
+            <marker date="1531398237954" expanded="true" signature="9701:9795" ph="{&quot;exceptionMessage&quot;: &quot;line=6: depth=1 name=rn: ##elseif following ##else&quot;...}" />
+            <marker date="1531398237954" expanded="true" signature="9808:10059" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="9975:10039" ph="{&quot;rn&quot;: true...}" />
+            <marker date="1531398237954" expanded="true" signature="10113:10451" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="10391:10431" ph="{&quot;node&quot;: true...}" />
+            <marker date="1531398237954" expanded="true" signature="10507:10811" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="10863:11180" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="11122:11160" ph="{&quot;rn&quot;: true...}" />
+            <marker date="1531398237954" expanded="true" signature="11225:11557" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="11472:11537" ph="{&quot;rn&quot;: true...}" />
+            <marker date="1531398237954" expanded="true" signature="11586:11666" ph="{&quot;exceptionMessage&quot;: &quot;line=2: depth=0: ##else without ##if&quot;...}" />
+            <marker date="1531398237954" expanded="true" signature="11679:11828" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="11770:11808" ph="{&quot;rn&quot;: true...}" />
+            <marker date="1531398237954" expanded="true" signature="11858:11939" ph="{&quot;exceptionMessage&quot;: &quot;line=2: depth=0: ##endif without ##if&quot;...}" />
+            <marker date="1531398237954" expanded="true" signature="11952:12102" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="12044:12082" ph="{&quot;rn&quot;: true...}" />
+            <marker date="1531398237954" expanded="true" signature="12142:12229" ph="{&quot;exceptionMessage&quot;: &quot;line=6: depth=1 name=rn: ##else duplicated&quot;...}" />
+            <marker date="1531398237954" expanded="true" signature="12242:12433" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="12471:12546" ph="{&quot;exceptionMessage&quot;: &quot;line=6 ##endif missing: \&quot;rn\&quot;&quot;...}" />
+            <marker date="1531398237954" expanded="true" signature="12559:12708" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="12755:12830" ph="{&quot;exceptionMessage&quot;: &quot;line=8 ##endif missing: \&quot;rn\&quot;&quot;...}" />
+            <marker date="1531398237954" expanded="true" signature="12843:13013" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="13049:13133" ph="{&quot;exceptionMessage&quot;: &quot;line=1: depth=1 name=Michelle: unknown&quot;...}" />
+            <marker date="1531398237954" expanded="true" signature="13146:13272" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="13296:13566" ph="//..." />
+            <marker date="1531398237954" expanded="true" signature="13578:13673" ph="//..." />
+            <marker date="1531398237954" expanded="true" signature="13685:13812" ph="//..." />
+            <marker date="1531398237954" expanded="true" signature="13868:14099" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="14039:14079" ph="{&quot;node&quot;: true...}" />
+            <marker date="1531398237954" expanded="true" signature="14161:14392" ph="{...}" />
+            <marker date="1531398237954" expanded="true" signature="14334:14372" ph="{&quot;rn&quot;: true...}" />
           </folding>
         </state>
       </provider>
@@ -868,25 +982,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/coffeescript/command.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1575">
-          <caret line="105" column="70" selection-start-line="105" selection-start-column="70" selection-end-line="105" selection-end-column="70" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/coffeescript/coffeescript.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="933">
-          <caret line="358" column="0" selection-start-line="358" selection-start-column="0" selection-end-line="358" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bin/c.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/coffeescript/test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -899,26 +1006,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/coffeescript/test.coffee">
+    <entry file="file://$PROJECT_DIR$/src/coffeescript/coffeescript.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
+        <state relative-caret-position="225">
+          <caret line="15" column="69" selection-start-line="15" selection-start-column="69" selection-end-line="15" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/coffeescript/command.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="916">
+          <caret line="229" column="11" selection-start-line="229" selection-start-column="11" selection-end-line="229" selection-end-column="11" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/coffeescript/peter.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="439">
-          <caret line="172" column="24" selection-start-line="172" selection-start-column="24" selection-end-line="172" selection-end-column="24" />
-          <folding />
+        <state relative-caret-position="690">
+          <caret line="159" column="19" selection-start-line="159" selection-start-column="19" selection-end-line="159" selection-end-column="19" />
+          <folding>
+            <marker date="1531398237551" expanded="true" signature="3749:3937" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/coffeescript/tests.coffee">
+    <entry file="file://$PROJECT_DIR$/src/coffeescript/nodes.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="12" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="12" />
+        <state relative-caret-position="1428">
+          <caret line="2795" column="0" selection-start-line="2795" selection-start-column="0" selection-end-line="2795" selection-end-column="0" />
           <folding />
         </state>
       </provider>

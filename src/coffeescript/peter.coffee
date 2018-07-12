@@ -1,4 +1,5 @@
-OUTPUT=0
+OUTPUT=1
+
 
 O = require './O'
 trace = require './trace'
@@ -22,6 +23,9 @@ process = (code, ENV = {}) ->
 #	log "FILE: SRC1: #{code}\n"
 
 	a = []
+
+	if OUTPUT
+		a.push "# process: ENV=#{JSON.stringify ENV}"
 
 	stack = []
 
@@ -131,7 +135,9 @@ process = (code, ENV = {}) ->
 			when line[0..6] is "#import"
 				a.push line if OUTPUT
 				name = arg line
-				if ENV.node
+				if ENV.server
+					out = "#{name} = require './Flexbase/#{name}'"
+				else if ENV.node
 					out = "#{name} = require './#{name}'"
 				else if ENV.rn
 					out = "import #{name} from './#{name}';"
@@ -139,7 +145,7 @@ process = (code, ENV = {}) ->
 					th "#import: neither node nor rn"
 				a.push out
 			when line[0..6] is "#export"
-				a.push line if OUTPUT
+#				a.push line if OUTPUT
 				name = arg line
 				if ENV.node
 					out = "module.exports = #{name}"
