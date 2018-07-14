@@ -146,7 +146,7 @@ COMPARE_REPORT = (s1, s2, options = {}) ->		#H: string-oriented or value (V)-ori
 				_ += "#{s2[i..]} (#{s2[i..].length})"
 				_
 		else
-			throw new Error "xxxxxxx"
+			throw new Error "endsDifferReport: one string is empty"
 
 
 
@@ -176,6 +176,10 @@ COMPARE_REPORT = (s1, s2, options = {}) ->		#H: string-oriented or value (V)-ori
 			# classify: completely different, pre-pended, appended, middle different
 			switch
 #EASY
+				when s1.length is 0
+					buf += "s1 is empty"
+				when s2.length is 0
+					buf += "s2 is empty"
 				when _=endsDifferReport s1, s2
 					buf += _
 				when s1.toUpperCase() is s2

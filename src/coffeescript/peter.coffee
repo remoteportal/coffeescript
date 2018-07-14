@@ -32,7 +32,7 @@ process = (code, ENV = {}) ->
 	arg = (line) ->
 		tokens = line.split ' '
 #		log "arg: #{tokens[1]}"
-		tokens[1]
+		tokens[1].trim()
 
 	req =
 		bGo: true
@@ -133,29 +133,38 @@ process = (code, ENV = {}) ->
 				else
 					th "#endif without #if"
 			when line[0..6] is "#import"
-				a.push line if OUTPUT
-				name = arg line
-				if ENV.server
-					out = "#{name} = require './Flexbase/#{name}'"
-				else if ENV.node
-					out = "#{name} = require './#{name}'"
-				else if ENV.rn
-					out = "import #{name} from './#{name}';"
-				else
-					th "#import: neither node nor rn"
-				a.push out
+				if req.bGo
+					a.push line if OUTPUT
+					name = arg line
+					if name is "UT" and !ENV.ut
+						a.push "# UT import is disabled"
+					else
+						if ENV.server
+							out = "#{name} = require './Flexbase/#{name}'"
+						else if ENV.node
+							out = "#{name} = require './#{name}'"
+						else if ENV.rn
+							out = "import #{name} from './#{name}';"
+						else
+							th "#import: neither node nor rn"
+						a.push out
 			when line[0..6] is "#export"
-#				a.push line if OUTPUT
-				name = arg line
-				if ENV.node
-					out = "module.exports = #{name}"
-				else if ENV.rn
-					out = "export default #{name};"
-				else
-					th "#export: neither node nor rn"
-				a.push out
+				if req.bGo
+#					a.push line if OUTPUT
+					name = arg line
+					if name is "UT" and !ENV.ut
+						a.push "# UT import is disabled"
+					else
+						if ENV.node
+							out = "module.exports = #{name}"
+						else if ENV.rn
+							out = "export default #{name};"
+						else
+							th "#export: neither node nor rn"
+						a.push out
 			else
-				a.push line if req.bGo
+				if req.bGo
+					a.push PROC line, ENV
 
 	if req.bFoundIF
 #		throw new Error "line=#{lineNbr+1} #endif missing: #{JSON.stringify stack}"
@@ -170,8 +179,28 @@ process = (code, ENV = {}) ->
 
 
 
+PROC = (line, ENV) ->
+#	console.log "PROC: #{JSON.stringify ENV}:#{line} "
 
-#TODO: #elseif rn
+#	if line.length is 0
+#		if ENV.rn
+#			line = "#DO_NOT_EDIT"
+#	else
+	if line.length > 0
+		if line.includes '#'
+			line = line.replace /\#RECENT.*/g, ""
+			line = line.replace /\#TODO.*/g, ""
+			line = line.replace /\#PREV.*/g, ""
+			line = line.replace /\#HERE.*/g, ""
+
+	line
+
+#	if line.includes "?"
+#		line	#+ "!"
+#	else
+#		line
+
+
 
 module.exports =
 #if ut
@@ -525,7 +554,21 @@ import V from './V';
 export default EXPORTED;
 """
 						fn c1, c2, {rn:true}, this
-
+					@_t "??", ->
+						c1 = """
+console.log "#{true ? "true" : "false"} and that is it!"
+"""
+						c2 = """
+HELP
+"""
+						fn c1, c2, {}, this
+					@s "PROC", ->
+						@_t "PROC", ->
+							@eq PROC("abc def ? hello there : test monkey",{}), "hello"
+						@t "#RECENT", ->
+							@eq PROC("abc#RECENTdef",{}), "abc"
+						@_t "rn empty line", ->
+							@eq PROC("",{rn:true}), "#DO_NOT_EDIT"
 
 		)).run()
 #endif

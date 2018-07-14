@@ -91,6 +91,11 @@ SWITCHES = [
   ['-p',
   '--print',
   'print out the compiled JavaScript'],
+  [
+    '-R',
+    '--rn',
+    'RN output' //PETER
+  ],
   ['-r',
   '--require [MODULE*]',
   'require the given module before eval or REPL'],
@@ -183,7 +188,15 @@ exports.run = function() {
   }
   //  ENV.rn = true
   //  ENV.ut = true
-
+  if (opts.rn) {
+    printLine("REACT NATIVE *************");
+    ENV = {
+      node: false,
+      rn: true,
+      ut: false
+    };
+    opts.output = "/Users/pete/gitlab/rn/API/rn/Flexbase";
+  }
   // Make the REPL *CLI* use the global context so as to (a) be consistent with the
   // `node` REPL CLI and, therefore, (b) make packages that modify native prototypes
   // (such as 'colors' and 'sugar') work as expected.
@@ -220,6 +233,8 @@ exports.run = function() {
   process.argv = process.argv.slice(0, 2).concat(literals);
   process.argv[0] = 'coffee';
   if (opts.output) {
+    //PETER
+    printLine(`opts.output=${opts.output}`);
     outputBasename = path.basename(opts.output);
     if (indexOf.call(outputBasename, '.') >= 0 && (outputBasename !== '.' && outputBasename !== '..') && !helpers.ends(opts.output, path.sep)) {
       // An output filename was specified, e.g. `/dist/scripts.js`.
