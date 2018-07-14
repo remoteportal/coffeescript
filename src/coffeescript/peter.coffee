@@ -16,7 +16,7 @@ lg = (line) -> console.log line
 
 process = (code, ENV = {}) ->
 	if OUTPUT
-		log "process: ENV=#{JSON.stringify ENV}"
+		lg "process: ENV=#{JSON.stringify ENV}"
 
 	code = code.toString()
 
@@ -171,15 +171,15 @@ process = (code, ENV = {}) ->
 #		throw new Error "line=#{lineNbr+1} #endif missing: #{JSON.stringify stack.forEach((o) -> o.name)}"
 		throw new Error "line=#{lineNbr+1} #endif missing: \"#{req.name}\""
 
-	for line,lineNbr in a
-		lg "AFTER: LINE #{lineNbr+1}: #{line}"
+#	for line,lineNbr in a
+#		lg "AFTER: LINE #{lineNbr+1}: #{line}"
 
 #	"# IF-COFFEE: ENV=#{JSON.stringify ENV}\n" + a.join '\n'
 	a.join '\n'
 
 
 
-PROC = (line, ENV) ->
+PROC = (line, ENV, spath) ->
 #	console.log "PROC: #{JSON.stringify ENV}:#{line} "
 
 #	if line.length is 0

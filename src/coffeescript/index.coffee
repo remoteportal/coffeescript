@@ -26,6 +26,7 @@ CoffeeScript.compile = (code, options) ->
   # require Babel.
   if options?.transpile
     options.transpile.transpile = CoffeeScript.transpile
+#PETER #PATH: to compilation
   universalCompile.call CoffeeScript, code, options
 
 # Compile and execute a string of CoffeeScript (on the server), correctly

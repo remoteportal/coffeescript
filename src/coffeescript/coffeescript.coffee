@@ -68,6 +68,34 @@ sourceMaps = {}
 exports.compile = compile = withPrettyErrors (code, options = {}) ->
   # Clone `options`, to avoid mutating the `options` object passed in.
   options = Object.assign {}, options
+  #PETER
+#  process.stdout.write "COMPILE WORKS: #{JSON.stringify options}\n"
+#  throw new Error "xxx"
+###
+COMPILE: {
+    "filename":"/Users/pete/gitlab/rn/API/Flexbase/S.coffee",
+    "literate":false,
+    "header":true,
+    "transpile":false,
+    "jsPath":"/Users/pete/gitlab/rn/API/rn/Flexbase/S.js",
+    "sourceRoot":"../../Flexbase",
+    "sourceFiles":["S.coffee"],
+    "generatedFile":"S.js"
+}
+
+    at Object.<anonymous> (/Users/pete/work/coffeescript/src/coffeescript/coffeescript.js:92:9)
+    at Object.<anonymous> (/Users/pete/work/coffeescript/src/coffeescript/coffeescript.js:53:17)
+    at Object.CoffeeScript.compile (/Users/pete/work/coffeescript/src/coffeescript/index.js:40:27)
+    at compileScript (/Users/pete/work/coffeescript/src/coffeescript/command.js:401:31)
+    at compilePath (/Users/pete/work/coffeescript/src/coffeescript/command.js:346:12)
+    at compilePath (/Users/pete/work/coffeescript/src/coffeescript/command.js:316:20)
+    at Object.exports.run (/Users/pete/work/coffeescript/src/coffeescript/command.js:256:18)
+    at Object.<anonymous> (/Users/pete/work/coffeescript/bin/coffee:33:45)
+###
+
+
+
+
   # Always generate a source map if no filename is passed in, since without a
   # a filename we have no way to retrieve this source later in the event that
   # we need to recompile it to get a source map for `prepareStackTrace`.

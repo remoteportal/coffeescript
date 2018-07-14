@@ -76,7 +76,7 @@ SWITCHES = [
   [
     '-N',
     '--node',
-    'NODE output' //PETER
+    'NODE output' //PETER    #NOTUSED
   ],
   ['-n',
   '--nodes',
@@ -142,11 +142,11 @@ ENV = {};
 // `--` will be passed verbatim to your script as arguments in `process.argv`
 exports.run = function() {
   var _, aaa, err, i, k, len, literals, outputBasename, ref, ref1, replCliOpts, results, source, v;
+  //PETER #PATH: to compile: entry point from bin/coffee
   //  printLine "WORK\\src\\command.js exports.run *************************" #PETER
   aaa = process.argv.join(" ");
-  fs.appendFile('/tmp/coffee2.log', `cwd=${process.cwd()} __dirname=${__dirname} args=${aaa}\n`, function(err) {
-    return printLine("appendFile finished maybe with error");
-  });
+  fs.appendFile('/tmp/coffee2.log', `cwd=${process.cwd()} __dirname=${__dirname} args=${aaa}\n`, function(err) {});
+  //    printLine "appendFile finished maybe with error"
   optionParser = buildCSOptionParser();
   try {
     parseOptions();
@@ -163,9 +163,9 @@ exports.run = function() {
   //PETER
   //HERE
   if (opts.node || 1) {
-    printLine(`OUTPUT NODE: __dirname=${__dirname} CWD=${process.cwd()}`);
     try {
       //TODO: climb parents until find env.json
+      //    printLine "OUTPUT NODE: __dirname=#{__dirname} CWD=#{process.cwd()}"
       _ = fs.readFileSync(path.join(process.cwd(), "env.json"), "utf8");
       ref = JSON.parse(_);
       //      printLine "_=#{_}"
@@ -174,29 +174,33 @@ exports.run = function() {
         ENV[k] = v;
       }
       printLine(`ENV: ${JSON.stringify(ENV)}`);
-      fs.appendFile('/tmp/coffee.log', `cwd=${process.cwd()} __dirname=${__dirname} args=${aaa} ENV=${_}`, function(err) {
-        return printLine("appendFile finished maybe with error");
-      });
-      printLine("LOG...");
+      fs.appendFile('/tmp/coffee.log', `cwd=${process.cwd()} __dirname=${__dirname} args=${aaa} ENV=${_}`, function(err) {});
     } catch (error) {
+      //        printLine "appendFile finished maybe with error"
+      //      printLine "LOG..."
       err = error;
       console.log(`read targets: err=${err}`);
-      fs.appendFile('/tmp/coffee-err.log', `cwd=${process.cwd()} __dirname=${__dirname} args=${aaa}\n`, function(err) {
-        return printLine("appendFile finished maybe with error");
-      });
+      fs.appendFile('/tmp/coffee-err.log', `cwd=${process.cwd()} __dirname=${__dirname} args=${aaa}\n`, function(err) {});
     }
   }
+  //        printLine "appendFile finished maybe with error"
   //  ENV.rn = true
   //  ENV.ut = true
   if (opts.rn) {
-    printLine("REACT NATIVE *************");
+    //    printLine "REACT NATIVE *************: compile=#{opts.compile}"
+    //    printLine "opts.arguments=#{JSON.stringify opts.arguments}"
     ENV = {
       node: false,
       rn: true,
       ut: false
     };
+    opts.compile = true;
+    opts.run = false;
+    opts.arguments = ['.'];
     opts.output = "/Users/pete/gitlab/rn/API/rn/Flexbase";
   }
+  //PETER: trying to fix: Missing index.coffee or index.litcoffee in /Users/pete/gitlab/rn/API/Flexbase
+
   // Make the REPL *CLI* use the global context so as to (a) be consistent with the
   // `node` REPL CLI and, therefore, (b) make packages that modify native prototypes
   // (such as 'colors' and 'sugar') work as expected.
@@ -232,9 +236,10 @@ exports.run = function() {
   literals = opts.run ? opts.arguments.splice(1) : [];
   process.argv = process.argv.slice(0, 2).concat(literals);
   process.argv[0] = 'coffee';
+  //  printLine "literals=#{JSON.stringify literals}"
   if (opts.output) {
     //PETER
-    printLine(`opts.output=${opts.output}`);
+    //    printLine "opts.output=#{opts.output}"
     outputBasename = path.basename(opts.output);
     if (indexOf.call(outputBasename, '.') >= 0 && (outputBasename !== '.' && outputBasename !== '..') && !helpers.ends(opts.output, path.sep)) {
       // An output filename was specified, e.g. `/dist/scripts.js`.
@@ -251,10 +256,12 @@ exports.run = function() {
     console.error('\nThe --join option is deprecated and will be removed in a future version.\n\nIf for some reason it\'s necessary to share local variables between files,\nreplace...\n\n    $ coffee --compile --join bundle.js -- a.coffee b.coffee c.coffee\n\nwith...\n\n    $ cat a.coffee b.coffee c.coffee | coffee --compile --stdio > bundle.js\n');
   }
   ref1 = opts.arguments;
+  //  printLine "opts.arguments=#{opts.arguments}"  #PETER
   results = [];
   for (i = 0, len = ref1.length; i < len; i++) {
     source = ref1[i];
     source = path.resolve(source);
+    //PETER #PATH: to compile: topLevel=true
     results.push(compilePath(source, true, source));
   }
   return results;
@@ -276,7 +283,7 @@ makePrelude = function(requires) {
 // extension source files in it and all subdirectories.
 compilePath = function(source, topLevel, base) {
   var code, err, file, files, i, len, results, stats;
-  //  printLine "compilePath\n"
+  //  printLine "compilePath: source=#{source} topLevel=#{topLevel} base=#{base}"
   if (indexOf.call(sources, source) >= 0 || watchedDirs[source] || !topLevel && (notSources[source] || hidden(source))) {
     return;
   }
@@ -291,6 +298,7 @@ compilePath = function(source, topLevel, base) {
     throw err;
   }
   if (stats.isDirectory()) {
+    //    printLine "stats.isDirectory(): opts.run=#{opts.run}"
     if (path.basename(source) === 'node_modules') {
       notSources[source] = true;
       return;
@@ -303,6 +311,7 @@ compilePath = function(source, topLevel, base) {
       watchDir(source, base);
     }
     try {
+      //PETER: read directory
       files = fs.readdirSync(source);
     } catch (error) {
       err = error;
@@ -312,13 +321,15 @@ compilePath = function(source, topLevel, base) {
         throw err;
       }
     }
+//PETER #PATH: to compile: directory TO files
     results = [];
     for (i = 0, len = files.length; i < len; i++) {
       file = files[i];
-      results.push(compilePath(path.join(source, file), false, base));
+      results.push(compilePath(path.join(source, file), false, base)); //PETER #REC #RECURSIVE
     }
     return results;
   } else if (topLevel || helpers.isCoffee(source)) {
+    //PETER: reached concrete coffee file
     sources.push(source);
     sourceCode.push(null);
     delete notSources[source];
@@ -326,10 +337,11 @@ compilePath = function(source, topLevel, base) {
       watch(source, base);
     }
     try {
+      //PETER: read file contents into string
       code = fs.readFileSync(source);
     } catch (error) {
       err = error;
-      if (err.code === 'ENOENT2') {
+      if (err.code === 'ENOENT') {
         return;
       } else {
         throw err;
@@ -344,7 +356,9 @@ compilePath = function(source, topLevel, base) {
     //      process.stdout.write "LINE: #{line}\n"
     //    code = lines.join '\n'
     //#    process.stdout.write "FILE: SRC2: #{code}\n"    #PETER
+    ENV.source = source;
     code = peter.process(code, ENV);
+    //PETER #PATH: to compilation
     return compileScript(source, code, base);
   } else {
     return notSources[source] = true;
@@ -353,6 +367,7 @@ compilePath = function(source, topLevel, base) {
 
 findDirectoryIndex = function(source) {
   var err, ext, i, index, len, ref;
+  printLine(`findDirectoryIndex: source=${source}`);
   ref = CoffeeScript.FILE_EXTENSIONS;
   for (i = 0, len = ref.length; i < len; i++) {
     ext = ref[i];
@@ -368,7 +383,9 @@ findDirectoryIndex = function(source) {
       }
     }
   }
-  console.error(`Missing index.coffee or index.litcoffee in ${source}`);
+  console.error(`Missing index.coffee or index.litcoffee in ${source
+  //PETER
+}!!!`);
   return process.exit(1);
 };
 
@@ -398,6 +415,7 @@ compileScript = function(file, input, base = null) {
       sourceCode[sources.indexOf(task.file)] = task.input;
       return compileJoin();
     } else {
+      //PETER #PATH: to compilation
       compiled = CoffeeScript.compile(task.input, task.options);
       task.output = compiled;
       if (opts.map) {
@@ -728,6 +746,7 @@ printTokens = function(tokens) {
 
 // Use the [OptionParser module](optparse.html) to extract all options from
 // `process.argv` that are specified in `SWITCHES`.
+//PETER: calls optparse
 parseOptions = function() {
   var o;
   o = opts = optionParser.parse(process.argv.slice(2));
