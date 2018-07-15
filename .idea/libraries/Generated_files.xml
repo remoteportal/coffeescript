@@ -74,7 +74,7 @@
       <root url="file://$PROJECT_DIR$/src/coffeescript/browser.js" />
       <root url="file://$PROJECT_DIR$/src/coffeescript/S.js" />
       <root url="file://$PROJECT_DIR$/src/coffeescript/helpers.js" />
-      <root url="file://$PROJECT_DIR$/src/coffeescript/ut.js" />
+      <root url="file://$PROJECT_DIR$/src/coffeescript/UT.js" />
       <root url="file://$PROJECT_DIR$/src/coffeescript/O.js" />
       <root url="file://$PROJECT_DIR$/src/coffeescript/optparse.js" />
       <root url="file://$PROJECT_DIR$/src/coffeescript/Util.js" />

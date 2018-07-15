@@ -36,6 +36,7 @@ BANNER = '''
 # The list of all the valid option flags that `coffee` knows how to handle.
 SWITCHES = [
   ['-b', '--bare',              'compile without a top-level function wrapper']
+  ['-Z', '--peter',             'CS peter extension output']    #PETER
   ['-c', '--compile',           'compile to JavaScript and save as .js files']
   ['-e', '--eval',              'pass a string from the command line as input']
   ['-h', '--help',              'display this help message!']
@@ -133,6 +134,18 @@ exports.run = ->
     opts.run = false
     opts.arguments = ['.']
     opts.output = "/Users/pete/gitlab/rn/API/rn/Flexbase"
+
+  if opts.peter
+    ENV =
+      node: true
+      rn: false
+      ut: true
+
+    opts.compile = true
+    opts.run = false
+    opts.arguments = ['.']
+    opts.output = "/Users/pete/work/coffeescript/src/coffeescript"
+
 #PETER: trying to fix: Missing index.coffee or index.litcoffee in /Users/pete/gitlab/rn/API/Flexbase
 
 

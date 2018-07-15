@@ -1,4 +1,4 @@
-INFINITE_LOOP_DETECTION_ITERATIONS = 100
+INFINITE_LOOP_DETECTION_ITERATIONS = 200		#HC
 B_FAIL_FAST = false
 T = true
 
@@ -22,6 +22,7 @@ yajut -s conffile			save current code-specified configuration into confifile for
 EXTENDS: Base
 
 
+    
 
 DESCRIPTION:
 The goal of JAJUT is to be absolutely the least-friction most-terse easiest to use JS unit test system.
@@ -110,13 +111,14 @@ KNOWN BUGS:
 
 
 
-#GITHUB: minimize dependencies!
-Base = require './Base'
-O = require './O'
-S = require './S'
-trace = require './trace'
-util = require './Util'
-V = require './V'
+#GITHUB: #TODO: create new repo called AlvinUtils and put these in there
+#import Base
+#import O
+#import S
+#import trace
+#import Util
+#import V
+
 
 
 
@@ -143,6 +145,7 @@ msStart = null
 
 TESTNBR = null
 
+fnCallback = null
 
 
 bag = Object.create
@@ -187,15 +190,15 @@ handler =	# "traps"
 		bag[pn] = pv
 
 
+
 proxyBag = new Proxy target, handler
+
 
 
 decorate = (test, fn, testThis, parent) ->
 	unless fn
 		console.error "#{test.tn}: function body is required"
-#if node
-		process.exit 1
-#endif
+		fnCallback "exit-failure"
 
 #	me2 = Object.create testThis
 
@@ -233,7 +236,7 @@ decorateJustObject = (test, me2, parent) ->
 	me2.throw = (v) -> throw new Error v
 
 
-	me2.abort = (msg) -> util.abort msg
+	me2.abort = (msg) -> Util.abort msg
 
 
 	me2.assert = (b, msg) ->
@@ -246,7 +249,7 @@ decorateJustObject = (test, me2, parent) ->
 		else
 			@log "ASSERTION FAILURE#{_}"
 			fail++
-			util.abort "B_FAIL_FAST" if B_FAIL_FAST
+			Util.abort "B_FAIL_FAST" if B_FAIL_FAST
 
 		b
 
@@ -266,7 +269,7 @@ decorateJustObject = (test, me2, parent) ->
 
 			#TODO: put in subroutine
 			fail++
-			util.abort "B_FAIL_FAST" if B_FAIL_FAST
+			Util.abort "B_FAIL_FAST" if B_FAIL_FAST
 
 		b
 
@@ -315,7 +318,7 @@ decorateJustObject = (test, me2, parent) ->
 #			console.log "---CHECK typeS---"
 			bEQ = true
 			_ = V.type arguments[0]
-#			process.exit 1
+#			fnCallback "exit-failure"
 			for i in [0..arguments.length-1]
 #				@log "arg#{i}: #{V.PAIR arguments[i]} #{typeof arguments[i]}"
 #				@log "arg#{i}: #{V.PAIR arguments[i]} #{typeof arguments[i]} --> #{S.DUMP V.type(arguments[i]), true}"
@@ -361,7 +364,7 @@ decorateJustObject = (test, me2, parent) ->
 		else
 			@log "fail++"
 			fail++
-			util.abort "B_FAIL_FAST" if B_FAIL_FAST
+			Util.abort "B_FAIL_FAST" if B_FAIL_FAST
 
 		bEQ
 
@@ -371,10 +374,10 @@ decorateJustObject = (test, me2, parent) ->
 		new Promise (resolve, reject) =>
 			size_a = null
 
-			util.size_pr a
+			Util.size_pr a
 			.then (size) =>
 				size_a = size
-				util.size_pr b
+				Util.size_pr b
 			.then (size_b) =>
 				@eq size_a, size_b
 				resolve()
@@ -398,7 +401,7 @@ decorateJustObject = (test, me2, parent) ->
 	me2.fail = (msg) ->
 		@log "me2.fail"
 		fail++
-		util.abort "B_FAIL_FAST" if B_FAIL_FAST
+		Util.abort "B_FAIL_FAST" if B_FAIL_FAST
 		if msg
 			@logError msg
 		false		# so cal call @fail as last statement of onException, onTimeout, etc.
@@ -410,14 +413,14 @@ decorateJustObject = (test, me2, parent) ->
 		clearInterval g_timer
 		bHappy = false
 		bRunning = false
-		util.exit msg
+		Util.exit msg
 
 
 	#DUP
 	#TODO: manufacture?
 	me2.log			= ->
 		if trace.UT_TEST_LOG_ENABLED
-			util.logBase.apply this, ["#{test.cname}/#{test.tn}", arguments...]
+			Util.logBase.apply this, ["#{test.cname}/#{test.tn}", arguments...]
 
 	me2.logError	= (s, o, opt)		->
 #		console.log "logError: bRunToCompletion=#{@bRunToCompletion}"
@@ -428,10 +431,10 @@ decorateJustObject = (test, me2, parent) ->
 			s = ""
 
 		if @bRunToCompletion
-			util.logBase "#{test.cname}/#{test.tn}", "ERROR: #{s}", o, opt
+			Util.logBase "#{test.cname}/#{test.tn}", "ERROR: #{s}", o, opt
 		else
-			util.logBase "#{test.cname}/#{test.tn}", "FATAL_ERROR: #{s}", o, opt
-			util.exit "logError called with @bRunToCompletion=false"
+			Util.logBase "#{test.cname}/#{test.tn}", "FATAL_ERROR: #{s}", o, opt
+			Util.exit "logError called with @bRunToCompletion=false"
 	me2.logCatch	= (s, o, opt)		->
 #		console.log "ooo #{@bRunToCompletion}"
 
@@ -446,10 +449,10 @@ decorateJustObject = (test, me2, parent) ->
 			s = ""
 
 		if @bRunToCompletion and !B_FAIL_FAST
-			util.logBase "#{test.cname}/#{test.tn}", "CATCH: #{s}", o, opt
+			Util.logBase "#{test.cname}/#{test.tn}", "CATCH: #{s}", o, opt
 		else
 #			O.LOG "XXXXXXXXXXXXX", s, o, opt
-			util.logBase "#{test.cname}/#{test.tn}", "FATAL_CATCH: #{s}", o, opt
+			Util.logBase "#{test.cname}/#{test.tn}", "FATAL_CATCH: #{s}", o, opt
 #if node
 #			console.log "ooo #{@bRunToCompletion}"
 			@abort "logCatch bRunToCompletion=false"
@@ -462,21 +465,21 @@ decorateJustObject = (test, me2, parent) ->
 			opt = o
 			s = ""
 
-		util.logBase "#{test.cname}/#{test.tn}", "FATAL: #{s}", o, opt
-		util.exit()
+		Util.logBase "#{test.cname}/#{test.tn}", "FATAL: #{s}", o, opt
+		Util.exit()
 
-	me2.logSilent	= (s, o, opt)		-> util.logBase "#{test.cname}/#{test.tn}", s, o, bVisible:false
+	me2.logSilent	= (s, o, opt)		-> Util.logBase "#{test.cname}/#{test.tn}", s, o, bVisible:false
 
 	me2.logTransient = (s, o, opt)		->
 		if @bRunToCompletion
-			util.logBase "#{test.cname}/#{test.tn}", "TRANSIENT: #{s}", o, opt
+			Util.logBase "#{test.cname}/#{test.tn}", "TRANSIENT: #{s}", o, opt
 		else
-			util.logBase "#{test.cname}/#{test.tn}", "FATAL_TRANSIENT: #{s}", o, opt
-			util.exit "logError called with @bRunToCompletion=false"
+			Util.logBase "#{test.cname}/#{test.tn}", "FATAL_TRANSIENT: #{s}", o, opt
+			Util.exit "logError called with @bRunToCompletion=false"
 
-#	me2.logWarning	= (s, o, opt)		->	util.logBase "#{test.cname}/#{test.tn}", "WARNING: #{s}", o, opt
-#	me2.logWarning	= (s, o, opt)		->	util.logBase.apply this, ["#{test.cname}/#{test.tn}", "WARNING2", arguments...]
-	me2.logWarning	= (s, o, opt)		->	util.logBase.apply this, ["#{test.cname}/#{test.tn}", "WARNING2", arguments...]
+#	me2.logWarning	= (s, o, opt)		->	Util.logBase "#{test.cname}/#{test.tn}", "WARNING: #{s}", o, opt
+#	me2.logWarning	= (s, o, opt)		->	Util.logBase.apply this, ["#{test.cname}/#{test.tn}", "WARNING2", arguments...]
+	me2.logWarning	= (s, o, opt)		->	Util.logBase.apply this, ["#{test.cname}/#{test.tn}", "WARNING2", arguments...]
 
 	me2.pass = ->
 		pass++
@@ -516,7 +519,7 @@ aGenerate = (cmd) =>
 			fn = arguments[2]
 
 		unless typeof fn is "function"
-			util.abort "MISSING fn"
+			Util.abort "MISSING fn"
 
 		if bRunning and t_depth is 1
 			@logFatal "NESTED t: the parent of '#{tn}' is also a test; change to 's' (section)"
@@ -549,7 +552,7 @@ aGenerate = (cmd) =>
 #			for pn in a
 #				@log pn	#, this[pn]
 #			O.LOG_DRILL o, true
-#			util.abort()
+#			Util.abort()
 #		@log "xxxxxxxxxxx", Object.getOwnPropertyNames Object.getPrototypeOf(this)
 
 
@@ -560,7 +563,7 @@ testGenerate = (cmd) =>
 			fn = arguments[2]
 
 		unless typeof fn is "function"
-			util.abort "MISSING fn"
+			Util.abort "MISSING fn"
 
 		if bRunning
 			if ++t_depth is 2
@@ -594,10 +597,10 @@ sectionGenerate = (cmd) =>
 			fn = arguments[2]
 
 		unless typeof fn is "function"
-			util.abort "MISSING fn"
+			Util.abort "MISSING fn"
 
 		if bRunning and t_depth is 1
-			util.abort "NESTED t: the parent of '#{tn}' is also a test; change to 's' (section)"
+			Util.abort "NESTED t: the parent of '#{tn}' is also a test; change to 's' (section)"
 
 #		@log "found section: #{tn}"
 		testStack.push tn
@@ -619,12 +622,13 @@ sectionGenerate = (cmd) =>
 
 
 #H: overloaded between UT runner and superclass
-module.exports = class UT extends Base
-	constructor: (@bRunToCompletion, @fnCallback, @opts = {}, @WORK_AROUND_UT_CLASS_NAME_OVERRIDE) ->
+EXPORTED = class UT extends Base
+	constructor: (@argv=["",""], @bRunToCompletion=false, @opts={}, @fnCallback=(->), @WORK_AROUND_UT_CLASS_NAME_OVERRIDE) ->
 		super "I DO NOT UNDERSTAND WHY I CANNOT PASS @__CLASS_NAME HERE and I don't know why it works when I don't!!!"
 #		console.log "UT CONSTRUCTOR IMPLICIT CALL: #{@WORK_AROUND_UT_CLASS_NAME_OVERRIDE} #{@constructor.name}"
 #		@log "bRunToCompletion=#{@bRunToCompletion}"
 #		O.LOG @opts
+		fnCallback = @fnCallback
 		@__OPTS = @opts	#HACK
 		@__CLASS_NAME = @WORK_AROUND_UT_CLASS_NAME_OVERRIDE ? @constructor.name
 		testIndex = "pre"
@@ -661,6 +665,7 @@ module.exports = class UT extends Base
 
 
 
+	#TODO: make this a subroutine to be shared with deamon.coffee?
 	argsProcess: (a) ->
 		optionList = [
 				o: "-all"
@@ -688,6 +693,10 @@ module.exports = class UT extends Base
 				d: "test number from 1 to the (number of tests)"
 		]
 
+		er = (msg) ->
+			console.log msg
+			fnCallback "exit-success"
+
 		i = 0
 		while i < a.length
 			item = a[i++]
@@ -697,15 +706,12 @@ module.exports = class UT extends Base
 					@__OPTS.allForce = true
 				when "-grep"
 					pattern = a[i++]
-					console.log S.autoTable(testList, {bHeader:true, grep:pattern, ignore:"bEnabled,common,fn,parent,path,one,opts"})
-					process.exit 0
+					er S.autoTable(testList, {bHeader:true, grep:pattern, ignore:"bEnabled,common,fn,parent,path,one,opts"})
 				when "-h"
-					console.log """
+					er """
 node tests.js [options]
 
 OPTIONS:#{S.autoTable(optionList, {bHeader:false})}"""
-					console.log
-					process.exit 1
 				when "-l"
 #			bEnabled: false
 #			cmd: cmd
@@ -717,8 +723,7 @@ OPTIONS:#{S.autoTable(optionList, {bHeader:false})}"""
 #			parent: this
 #			common: Object.getOwnPropertyNames(Object.getPrototypeOf(this)).filter (mn) -> mn not in ["constructor","run"]
 #			path: "#{@__CLASS_NAME}#{path}/#{tn}"
-					console.log S.autoTable(testList, {bHeader:true, ignore:"bEnabled,common,fn,parent,path,one,opts"})
-					process.exit 0
+					er S.autoTable(testList, {bHeader:true, ignore:"bEnabled,common,fn,parent,path,one,opts"})
 				when "-tn"
 					@__OPTS.traceOverride = false
 					T = false
@@ -728,9 +733,10 @@ OPTIONS:#{S.autoTable(optionList, {bHeader:false})}"""
 					if Number.isInteger(item * 1)
 						TESTNBR = item * 1
 					else
-						console.error "UT: Illegal option: \"#{item}\""
-						process.exit 1
-		return
+						er "UT: Illegal option: \"#{item}\""
+
+		if TESTNBR and @__OPTS.allForce
+			er "Can't specity both -all and #"
 
 
 
@@ -744,15 +750,17 @@ OPTIONS:#{S.autoTable(optionList, {bHeader:false})}"""
 
 		#H: is this while loop even used anymore?
 		while testIndex < testList.length
-			if iterations++ > INFINITE_LOOP_DETECTION_ITERATIONS
-				@logFatal "infinite loop detected (stopped at #{iterations} iterations)"
+#			console.log "TEMP: #{testIndex} < #{testList.length}"
+#			if iterations++ > INFINITE_LOOP_DETECTION_ITERATIONS
+#				@logFatal "infinite loop detected (stopped at #{iterations} iterations)"
+			iterations++
+			@assert iterations < INFINITE_LOOP_DETECTION_ITERATIONS, "infinite loop detected (stopped at #{iterations} iterations)"
 
-			#TODO: @assert
+			#EASY: @assert
 #			@log "#{testListSaved} VS #{testList.length}"
 			if testListSaved isnt testList.length
 				@logFatal "testList corruption"
 
-				
 			if TESTNBR and TESTNBR isnt (testIndex+1)
 				@post null, null
 				return
@@ -764,7 +772,7 @@ OPTIONS:#{S.autoTable(optionList, {bHeader:false})}"""
 #			O.LOG "next.opts:", test.opts
 
 			if fail
-				util.abort "something failed"
+				Util.abort "something failed"
 
 			# iter=#{iterations}
 			@logg trace.UT_TEST_PRE_ONE_LINER, "================== ##{testIndex+1} #{test.path}"		# ##{testIndex+1}/#{testList.length} #{test.cname} #{test.cmd}:#{test.tn}#{if trace.DETAIL then ": path=#{test.path}" else ""}"
@@ -797,7 +805,7 @@ OPTIONS:#{S.autoTable(optionList, {bHeader:false})}"""
 						testThis.reject = reject
 
 						testThis.testIndex = testThis.testIndex = testIndex
-						@fnCallback? "pre", "a", testThis, @__OPTS
+						@fnCallback "pre", "a", testThis, @__OPTS
 						#TODO: return Promise
 						#TODO: do post
 						
@@ -822,7 +830,7 @@ OPTIONS:#{S.autoTable(optionList, {bHeader:false})}"""
 
 								@log "[[#{test.path}]] TIMEOUT: ut.{resolve,reject} not called within #{ms}ms in asynch test"
 								fail++
-								util.abort "B_FAIL_FAST" if B_FAIL_FAST
+								Util.abort "B_FAIL_FAST" if B_FAIL_FAST
 								reject "TIMEOUT"
 							,
 								ms
@@ -845,8 +853,8 @@ OPTIONS:#{S.autoTable(optionList, {bHeader:false})}"""
 #
 #									if fail and !@bRunToCompletion
 #										@log "if fail and !@bRunToCompletion"
-#										util.abort "fail=#{fail}"
-#										process.exit 1
+#										Util.abort "fail=#{fail}"
+#										fnCallback "exit-failure"
 #
 #									@post test, "a-then: #{test.cname}/#{test.tn}"
 #								.catch (ex) =>
@@ -856,7 +864,7 @@ OPTIONS:#{S.autoTable(optionList, {bHeader:false})}"""
 							#YES_CODE_PATH
 							@logCatch "async exception in '#{test.cname}/#{test.tn}'", ex
 							unless @bRunToCompletion
-								process.exit 1
+								@fnCallback "exit-failure"
 					.then (resolved) =>
 						if resolved
 							@logg trace.UT_RESOLVED, "#{test.one} result", resolved
@@ -865,8 +873,7 @@ OPTIONS:#{S.autoTable(optionList, {bHeader:false})}"""
 
 						if fail and !@bRunToCompletion
 							@log "if fail and !@bRunToCompletion"
-							util.abort "fail=#{fail}"
-							process.exit 1
+							@fnCallback "exit-failure", "fail=#{fail}", testThis
 
 						@post test, "a-then: #{test.cname}/#{test.tn}"
 					.catch (ex) =>
@@ -879,11 +886,11 @@ OPTIONS:#{S.autoTable(optionList, {bHeader:false})}"""
 						unless ex is "TIMEOUT"
 							@log "fail++ NOT TIMEOUT"
 							fail++
-							util.abort "B_FAIL_FAST" if B_FAIL_FAST
+							Util.abort "B_FAIL_FAST" if B_FAIL_FAST
 							@logCatch "a-cmd", ex
 
 						unless @bRunToCompletion
-							process.exit 1		#H
+							return @fnCallback "exit-failure", "fail=#{fail}", testThis
 
 						@post test, "a-catch"
 					return		#IMPORTANT
@@ -900,7 +907,7 @@ OPTIONS:#{S.autoTable(optionList, {bHeader:false})}"""
 
 						testThis.testIndex = testThis.testIndex = testIndex
 						#TODO: also have coffeeScript scan for documentation if -doc flag passed or whatever
-						@fnCallback? "pre", "t", testThis, @__OPTS
+						@fnCallback "pre", "t", testThis, @__OPTS
 
 #						O.LOG "objectThis", objectThis
 
@@ -916,7 +923,7 @@ OPTIONS:#{S.autoTable(optionList, {bHeader:false})}"""
 							pass = passSave
 							fail = failSave
 
-						@fnCallback? "post", "t", testThis, @__OPTS
+						@fnCallback "post", "t", testThis, @__OPTS
 
 #						@log "say something meaningful here"										if trace.UT_TEST_POST_ONE_LINER	#TODO
 
@@ -926,7 +933,7 @@ OPTIONS:#{S.autoTable(optionList, {bHeader:false})}"""
 							
 							#TODO: general failure routine
 							fail++
-							util.abort "B_FAIL_FAST" if B_FAIL_FAST
+							Util.abort "B_FAIL_FAST" if B_FAIL_FAST
 						else if pass is passSave
 							# implicit pass
 							pass++
@@ -962,11 +969,11 @@ OPTIONS:#{S.autoTable(optionList, {bHeader:false})}"""
 
 						if bWasException
 							fail++
-							util.abort "B_FAIL_FAST" if B_FAIL_FAST
+							Util.abort "B_FAIL_FAST" if B_FAIL_FAST
 							@logCatch "[#{test.path}] t-handler", ex
 						else
 							if bRestore
-								@log "restore: eliminate: pass=#{pass} fail=#{fail}"
+#								@log "restore: eliminate: pass=#{pass} fail=#{fail}"
 								pass = passSave
 								fail = failSave			# restore fail's from eq failures
 
@@ -1000,7 +1007,7 @@ OPTIONS:#{S.autoTable(optionList, {bHeader:false})}"""
 
 		if Base.openCntGet()
 			Base.logOpenMap()
-			util.abort "INTERMEDIATE RESOURCES LEFT OPEN!"
+			Util.abort "INTERMEDIATE RESOURCES LEFT OPEN!"
 
 		if ++testIndex is testList.length
 #			@log "UT-DONE: who=#{who}"
@@ -1015,12 +1022,12 @@ OPTIONS:#{S.autoTable(optionList, {bHeader:false})}"""
 
 
 
-	run: ->			#H: UT should know NOTHING about "TestHub"
+	run: ->
 		@["@who"] = "UNIT TEST RUNNER"
 
-		@argsProcess process.argv.slice 2
+		@argsProcess @argv.slice 2
 
-		@fnCallback? "init", "UT", null, @__OPTS
+		@fnCallback "init", "UT", null, @__OPTS
 
 		@stackReset()
 
@@ -1086,13 +1093,12 @@ OPTIONS:#{S.autoTable(optionList, {bHeader:false})}"""
 
 				testListSaved = testList.length
 
-				if bFoundOverride
+				if bFoundOverride and !TESTNBR?
 					testList = testList.filter (test) => test.bEnabled
-#					console.log "FIRST"
 #					@log "test", a:"a", false
 #					@log "test", a:"a", true
 #					@log "ONE", "TWO", "THREE"
-#					util.abort "NOW"
+#					Util.abort "NOW"
 
 #					fn = (a, b) ->
 #						O.LOG arguments
@@ -1115,7 +1121,7 @@ OPTIONS:#{S.autoTable(optionList, {bHeader:false})}"""
 
 									if Base.openCntGet()
 										#PARAMS: eventName, primative, objectThis
-										@fnCallback? "left-open", "ut", this
+										@fnCallback "left-open", "ut", this
 
 									if fail
 										resolve "[#{secs}s] fail=#{fail}"
@@ -1237,7 +1243,7 @@ class UT_UT extends UT
 			@s "general", ->
 				@t "commented out", _desc:"this is not used", ->
 			@s "specific", ->
-				@T "exceptionMessage", exceptionMessage:"Deanna is beautiful", ->
+				@t "exceptionMessage", exceptionMessage:"Deanna is beautiful", ->
 					throw new Error "Deanna is beautiful"
 				@s "expect", ->
 					@t "assert", {expect:"ERROR"}, ->
@@ -1306,4 +1312,8 @@ class UT_UT extends UT
 		@s "misc", ->
 #			@A "don't close", (ut) ->
 #				@log "something doesn't stop"
-#endif
+
+
+
+
+#export EXPORTED
