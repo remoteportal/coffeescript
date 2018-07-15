@@ -20,7 +20,7 @@ lg = function(line) {
 };
 
 process = function(code, ENV = {}) {
-  var a, arg, doReq, j, len, line, lineNbr, lines, name, out, req, stack, th;
+  var a, arg, doReq, j, k, len, len1, line, lineNbr, lines, name, out, req, stack, th;
   if (OUTPUT) {
     lg(`process: ENV=${JSON.stringify(ENV)}`);
   }
@@ -199,9 +199,12 @@ process = function(code, ENV = {}) {
     //		throw new Error "line=#{lineNbr+1} #endif missing: #{JSON.stringify stack.forEach((o) -> o.name)}"
     throw new Error(`line=${lineNbr + 1} #endif missing: "${req.name}"`);
   }
-  //	for line,lineNbr in a
-  //		lg "AFTER: LINE #{lineNbr+1}: #{line}"
-
+  if (false) {
+    for (lineNbr = k = 0, len1 = a.length; k < len1; lineNbr = ++k) {
+      line = a[lineNbr];
+      lg(`AFTER: LINE ${lineNbr + 1}: ${line}`);
+    }
+  }
   //	"# IF-COFFEE: ENV=#{JSON.stringify ENV}\n" + a.join '\n'
   return a.join('\n');
 };
