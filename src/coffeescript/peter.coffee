@@ -50,18 +50,19 @@ process = (code, ENV = {}) ->
 	for line,lineNbr in lines
 #		line = line.replace /?harles/, 'Christmas'
 
-		lg "------------------------------------ LINE #{lineNbr+1}: #{line}"
+#		lg "------------------------------------ LINE #{lineNbr+1}: #{line}"
 
 		#SLOW: set for EACH LINE!
 		th = (msg) ->
 			start = Math.max 0, lineNbr-20
-			lg "------------------------"
+			lg "------------------------ #{msg}"
 			for i in [start..lineNbr]
 				lg "CONTEXT: LINE #{i+1}: #{lines[i]}"
 			if OUTPUT
 				throw new Error "line=#{lineNbr+1}: depth=#{stack.length} ENV=#{JSON.stringify ENV} stack=#{JSON.stringify stack}#{if req.name then " name=#{req.name}" else ""}: #{msg}"
 			else
 				throw new Error "line=#{lineNbr+1}: depth=#{stack.length}#{if req.name then " name=#{req.name}" else ""}: #{msg}"
+			process.exit 1
 
 		doReq = (name, bFlipIII) ->
 			req.name = name
@@ -81,10 +82,10 @@ process = (code, ENV = {}) ->
 
 			if req.bAlive
 				req.bChainAlive = false			# no FURTHER action (after this #{else}if) of this chain
-			log ">>> doReq: name=#{req.name} bChainAlive=#{req.bChainAlive} bAlive=#{req.bAlive}"
+			# log ">>> doReq: name=#{req.name} bChainAlive=#{req.bChainAlive} bAlive=#{req.bAlive}"
 		switch
 			when line[0..2] is "#if"
-				log ">>> if: bChainAlive=#{req.bChainAlive} bAlive=#{req.bAlive}"
+				# log ">>> if: bChainAlive=#{req.bChainAlive} bAlive=#{req.bAlive}"
 
 				a.push line if OUTPUT
 				name = arg line
@@ -97,7 +98,7 @@ process = (code, ENV = {}) ->
 				req = Object.assign {}, req
 
 				if req.bAlive
-					log "bAlive SETS bChainAlive"
+#					log "bAlive SETS bChainAlive"
 					req.bChainAlive = true
 					doReq name, true
 				else
@@ -109,7 +110,7 @@ process = (code, ENV = {}) ->
 				if req.bFoundELSE
 					th "#elseif following #else"
 
-				lg "elseif: bChainAlive=#{req.bChainAlive}"
+#				lg "elseif: bChainAlive=#{req.bChainAlive}"
 				req.bAlive = false
 				if req.bChainAlive
 					name = arg line
@@ -127,9 +128,9 @@ process = (code, ENV = {}) ->
 					req.bFoundELSE = true
 
 				req.bAlive = req.bChainAlive
-				log ">>> else: name=#{req.name} bChainAlive=#{req.bChainAlive} bAlive=#{req.bAlive}"
+				# log ">>> else: name=#{req.name} bChainAlive=#{req.bChainAlive} bAlive=#{req.bAlive}"
 			when line[0..5] is "#endif"
-				log ">>> endif: name=#{req.name} bChainAlive=#{req.bChainAlive} bAlive=#{req.bAlive}"
+				# log ">>> endif: name=#{req.name} bChainAlive=#{req.bChainAlive} bAlive=#{req.bAlive}"
 
 				a.push line if OUTPUT
 				if stack.length > 0
@@ -168,7 +169,8 @@ process = (code, ENV = {}) ->
 							th "#export: neither node nor rn"
 						a.push out
 			else
-				console.log "@@@@@@@@@@ #{req.bAlive} => #{line}"
+#				console.log "@@@@@@@@@@ #{req.bAlive} => #{line}"
+
 				if req.bAlive
 					a.push PROC line, ENV
 
@@ -502,21 +504,21 @@ module.exports =
 .after
 """
 						fn c1, c2, {ut:false, node:false, rn:true}, this
-					@t "#else", exceptionMessage:"line=2: depth=0: #else without #if", ->
+					@t "NEG: #else", exceptionMessage:"line=2: depth=0: #else without #if", ->
 						c1 = """
 .abc
 .#else
 .def
 """
 						fn c1, "", {rn:true}, this
-					@t "#endif", exceptionMessage:"line=2: depth=0: #endif without #if", ->
+					@t "NEG: #endif", exceptionMessage:"line=2: depth=0: #endif without #if", ->
 						c1 = """
 .abc
 .#endif
 .def
 """
 						fn c1, "", {rn:true}, this
-					@t "#else duplicated", exceptionMessage:"line=6: depth=1 name=rn: #else duplicated", ->
+					@t "NEG: #else duplicated", exceptionMessage:"line=6: depth=1 name=rn: #else duplicated", ->
 						c1 = """
 .before
 .#if rn
@@ -529,7 +531,7 @@ module.exports =
 .after
 """
 						fn c1, "", {}, this
-					@t "#endif missing", exceptionMessage:"line=6 #endif missing: \"rn\"", ->
+					@t "NEG: #endif missing", exceptionMessage:"line=6 #endif missing: \"rn\"", ->
 						c1 = """
 .before
 .#if rn
@@ -538,7 +540,7 @@ module.exports =
 .this is NOT rn
 """
 						fn c1, "", {}, this
-					@t "#endif missing (nested)", exceptionMessage:"line=8 #endif missing: \"rn\"", ->
+					@t "NEG: #endif missing (nested)", exceptionMessage:"line=8 #endif missing: \"rn\"", ->
 						c1 = """
 .before
 .#if rn
@@ -549,7 +551,7 @@ module.exports =
 .#endif
 """
 						fn c1, "", {}, this
-					@t "unknown name", exceptionMessage:"line=1: depth=1 name=Michelle: unknown", ->
+					@t "NEG: unknown name", exceptionMessage:"line=1: depth=1 name=Michelle: unknown", ->
 						c1 = """
 .#if Michelle
 .inside

@@ -50,12 +50,14 @@ process = function(code, ENV = {}) {
   for (lineNbr = j = 0, len = lines.length; j < len; lineNbr = ++j) {
     line = lines[lineNbr];
     //		line = line.replace /?harles/, 'Christmas'
-    lg(`------------------------------------ LINE ${lineNbr + 1}: ${line}`);
+
+    //		lg "------------------------------------ LINE #{lineNbr+1}: #{line}"
+
     //SLOW: set for EACH LINE!
     th = function(msg) {
       var i, k, ref, ref1, start;
       start = Math.max(0, lineNbr - 20);
-      lg("------------------------");
+      lg(`------------------------ ${msg}`);
       for (i = k = ref = start, ref1 = lineNbr; (ref <= ref1 ? k <= ref1 : k >= ref1); i = ref <= ref1 ? ++k : --k) {
         lg(`CONTEXT: LINE ${i + 1}: ${lines[i]}`);
       }
@@ -64,6 +66,7 @@ process = function(code, ENV = {}) {
       } else {
         throw new Error(`line=${lineNbr + 1}: depth=${stack.length}${(req.name ? ` name=${req.name}` : "")}: ${msg}`);
       }
+      return process.exit(1);
     };
     doReq = function(name, bFlipIII) {
       var ref;
@@ -84,14 +87,14 @@ process = function(code, ENV = {}) {
         }
       })();
       if (req.bAlive) {
-        req.bChainAlive = false; // no FURTHER action (after this #{else}if) of this chain
+        return req.bChainAlive = false; // no FURTHER action (after this #{else}if) of this chain
       }
-      return log(`>>> doReq: name=${req.name} bChainAlive=${req.bChainAlive} bAlive=${req.bAlive}`);
     };
     switch (false) {
+      // log ">>> doReq: name=#{req.name} bChainAlive=#{req.bChainAlive} bAlive=#{req.bAlive}"
       case line.slice(0, 3) !== "#if":
-        log(`>>> if: bChainAlive=${req.bChainAlive} bAlive=${req.bAlive}`);
         if (OUTPUT) {
+          // log ">>> if: bChainAlive=#{req.bChainAlive} bAlive=#{req.bAlive}"
           a.push(line);
         }
         name = arg(line);
@@ -101,7 +104,7 @@ process = function(code, ENV = {}) {
         // clone (otherwise side offect of messing with requirements object just saved)
         req = Object.assign({}, req);
         if (req.bAlive) {
-          log("bAlive SETS bChainAlive");
+          //					log "bAlive SETS bChainAlive"
           req.bChainAlive = true;
           doReq(name, true);
         } else {
@@ -116,7 +119,7 @@ process = function(code, ENV = {}) {
         if (req.bFoundELSE) {
           th("#elseif following #else");
         }
-        lg(`elseif: bChainAlive=${req.bChainAlive}`);
+        //				lg "elseif: bChainAlive=#{req.bChainAlive}"
         req.bAlive = false;
         if (req.bChainAlive) {
           name = arg(line);
@@ -137,11 +140,11 @@ process = function(code, ENV = {}) {
           req.bFoundELSE = true;
         }
         req.bAlive = req.bChainAlive;
-        log(`>>> else: name=${req.name} bChainAlive=${req.bChainAlive} bAlive=${req.bAlive}`);
         break;
+      // log ">>> else: name=#{req.name} bChainAlive=#{req.bChainAlive} bAlive=#{req.bAlive}"
       case line.slice(0, 6) !== "#endif":
-        log(`>>> endif: name=${req.name} bChainAlive=${req.bChainAlive} bAlive=${req.bAlive}`);
         if (OUTPUT) {
+          // log ">>> endif: name=#{req.name} bChainAlive=#{req.bChainAlive} bAlive=#{req.bAlive}"
           a.push(line);
         }
         if (stack.length > 0) {
@@ -192,7 +195,7 @@ process = function(code, ENV = {}) {
         }
         break;
       default:
-        console.log(`@@@@@@@@@@ ${req.bAlive} => ${line}`);
+        //				console.log "@@@@@@@@@@ #{req.bAlive} => #{line}"
         if (req.bAlive) {
           a.push(PROC(line, ENV));
         }
@@ -388,7 +391,7 @@ module.exports = {
               rn: true
             }, this);
           });
-          this.t("#else", {
+          this.t("NEG: #else", {
             exceptionMessage: "line=2: depth=0: #else without #if"
           }, function() {
             var c1;
@@ -397,7 +400,7 @@ module.exports = {
               rn: true
             }, this);
           });
-          this.t("#endif", {
+          this.t("NEG: #endif", {
             exceptionMessage: "line=2: depth=0: #endif without #if"
           }, function() {
             var c1;
@@ -406,28 +409,28 @@ module.exports = {
               rn: true
             }, this);
           });
-          this.t("#else duplicated", {
+          this.t("NEG: #else duplicated", {
             exceptionMessage: "line=6: depth=1 name=rn: #else duplicated"
           }, function() {
             var c1;
             c1 = ".before\n.#if rn\n.this is rn\n.#else\n.this is NOT rn\n.#else\n.after 2nd else\n.#endif\n.after";
             return fn(c1, "", {}, this);
           });
-          this.t("#endif missing", {
+          this.t("NEG: #endif missing", {
             exceptionMessage: "line=6 #endif missing: \"rn\""
           }, function() {
             var c1;
             c1 = ".before\n.#if rn\n.this is rn\n.#else\n.this is NOT rn";
             return fn(c1, "", {}, this);
           });
-          this.t("#endif missing (nested)", {
+          this.t("NEG: #endif missing (nested)", {
             exceptionMessage: "line=8 #endif missing: \"rn\""
           }, function() {
             var c1;
             c1 = ".before\n.#if rn\n.this is rn\n.#if ALONE\n.#else\n.this is NOT rn\n.#endif";
             return fn(c1, "", {}, this);
           });
-          this.t("unknown name", {
+          this.t("NEG: unknown name", {
             exceptionMessage: "line=1: depth=1 name=Michelle: unknown"
           }, function() {
             var c1;
