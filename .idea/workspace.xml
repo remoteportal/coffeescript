@@ -2,21 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="11dbedff-929c-41ba-92e0-c0b43c9dffab" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/Generated_files.xml" afterPath="$PROJECT_DIR$/.idea/libraries/Generated_files.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/A.js" afterPath="$PROJECT_DIR$/src/coffeescript/A.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/Base.js" afterPath="$PROJECT_DIR$/src/coffeescript/Base.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/C.js" afterPath="$PROJECT_DIR$/src/coffeescript/C.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/Date.js" afterPath="$PROJECT_DIR$/src/coffeescript/Date.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/N.js" afterPath="$PROJECT_DIR$/src/coffeescript/N.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/O.js" afterPath="$PROJECT_DIR$/src/coffeescript/O.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/S.js" afterPath="$PROJECT_DIR$/src/coffeescript/S.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/Util.js" afterPath="$PROJECT_DIR$/src/coffeescript/Util.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/V.js" afterPath="$PROJECT_DIR$/src/coffeescript/V.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/command.coffee" afterPath="$PROJECT_DIR$/src/coffeescript/command.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/command.js" afterPath="$PROJECT_DIR$/src/coffeescript/command.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/peter.coffee" afterPath="$PROJECT_DIR$/src/coffeescript/peter.coffee" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/peter.js" afterPath="$PROJECT_DIR$/src/coffeescript/peter.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/tests.js" afterPath="$PROJECT_DIR$/src/coffeescript/tests.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/trace.js" afterPath="$PROJECT_DIR$/src/coffeescript/trace.js" />
     </list>
     <ignored path="coffeescript.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -37,22 +26,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="peter.coffee" pinned="false" current-in-tab="false">
+      <file leaf-file-name="peter.coffee" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/coffeescript/peter.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2235">
-              <caret line="149" column="34" selection-start-line="149" selection-start-column="34" selection-end-line="149" selection-end-column="34" />
+            <state relative-caret-position="600">
+              <caret line="103" column="43" selection-start-line="103" selection-start-column="43" selection-end-line="103" selection-end-column="43" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tests.coffee" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/coffeescript/tests.coffee">
+      <file leaf-file-name="peter.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/coffeescript/peter.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="75">
-              <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-              <folding />
+              <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+              <folding>
+                <marker date="1531849752259" expanded="true" signature="4241:6195" ph="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -70,7 +61,7 @@
       <file leaf-file-name="coffeescript.coffee" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/coffeescript/coffeescript.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
+            <state relative-caret-position="1560">
               <caret line="104" column="8" selection-start-line="104" selection-start-column="3" selection-end-line="104" selection-end-column="8" />
               <folding />
             </state>
@@ -80,7 +71,7 @@
       <file leaf-file-name="command.coffee" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/coffeescript/command.coffee">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
+            <state relative-caret-position="2370">
               <caret line="158" column="40" selection-start-line="158" selection-start-column="40" selection-end-line="158" selection-end-column="40" />
               <folding />
             </state>
@@ -134,10 +125,10 @@
         <option value="$PROJECT_DIR$/src/coffeescript/coffeescript.js" />
         <option value="$PROJECT_DIR$/src/coffeescript/index.coffee" />
         <option value="$PROJECT_DIR$/src/coffeescript/coffeescript.coffee" />
-        <option value="$PROJECT_DIR$/src/coffeescript/peter.coffee" />
         <option value="$PROJECT_DIR$/src/coffeescript/UT.coffee" />
         <option value="$PROJECT_DIR$/src/coffeescript/command.coffee" />
         <option value="$PROJECT_DIR$/src/coffeescript/tests.coffee" />
+        <option value="$PROJECT_DIR$/src/coffeescript/peter.coffee" />
       </list>
     </option>
   </component>
@@ -180,6 +171,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -372,8 +365,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -463,12 +454,13 @@
       <workItem from="1531475200366" duration="2788000" />
       <workItem from="1531507255021" duration="13559000" />
       <workItem from="1531652131307" duration="592000" />
-      <workItem from="1531661516168" duration="3633000" />
+      <workItem from="1531661516168" duration="5577000" />
+      <workItem from="1531823576302" duration="7107000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="100429000" />
+    <option name="totallyTimeSpent" value="109480000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="380" y="23" width="1537" height="1120" extended-state="0" />
@@ -683,14 +675,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="FIRST">
-          <first_editor relative-caret-position="616">
-            <caret line="93" column="2" selection-start-line="93" selection-start-column="2" selection-end-line="93" selection-end-column="2" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
       <provider editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="0">
@@ -699,6 +683,14 @@
           <second_editor>
             <js_state />
           </second_editor>
+        </state>
+      </provider>
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="616">
+            <caret line="93" column="2" selection-start-line="93" selection-start-column="2" selection-end-line="93" selection-end-column="2" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
@@ -762,13 +754,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="122">
           <caret line="121" column="16" selection-start-line="121" selection-start-column="4" selection-end-line="121" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/coffeescript/peter.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -840,13 +825,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3765">
           <caret line="251" column="3" selection-start-line="251" selection-start-column="3" selection-end-line="251" selection-end-column="3" />
-          <folding>
-            <marker date="1531674931885" expanded="true" signature="5348:5731" ph="{...}" />
-            <marker date="1531674931885" expanded="true" signature="5846:6041" ph="{...}" />
-            <marker date="1531674931885" expanded="true" signature="6518:7079" ph="//..." />
-            <marker date="1531674931885" expanded="true" signature="11579:11647" ph="{...}" />
-            <marker date="1531674931885" expanded="true" signature="23123:23250" ph="//..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -854,7 +832,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="7" column="16" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -862,21 +839,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="8" column="16" selection-start-line="8" selection-start-column="16" selection-end-line="8" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/coffeescript/peter.coffee">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2235">
-          <caret line="149" column="34" selection-start-line="149" selection-start-column="34" selection-end-line="149" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/coffeescript/coffeescript.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
+        <state relative-caret-position="1560">
           <caret line="104" column="8" selection-start-line="104" selection-start-column="3" selection-end-line="104" selection-end-column="8" />
           <folding />
         </state>
@@ -884,7 +852,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/coffeescript/command.coffee">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
+        <state relative-caret-position="2370">
           <caret line="158" column="40" selection-start-line="158" selection-start-column="40" selection-end-line="158" selection-end-column="40" />
           <folding />
         </state>
@@ -894,7 +862,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="315">
           <caret line="125" column="0" selection-start-line="125" selection-start-column="0" selection-end-line="125" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -902,14 +869,31 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="8175">
           <caret line="629" column="0" selection-start-line="629" selection-start-column="0" selection-end-line="629" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/coffeescript/tests.coffee">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/coffeescript/peter.js">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
-          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+          <caret line="57" column="0" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+          <folding>
+            <marker date="1531849752259" expanded="true" signature="4241:6195" ph="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/coffeescript/peter.coffee">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="103" column="43" selection-start-line="103" selection-start-column="43" selection-end-line="103" selection-end-column="43" />
           <folding />
         </state>
       </provider>

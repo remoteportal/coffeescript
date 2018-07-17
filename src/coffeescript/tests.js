@@ -7,7 +7,7 @@ UT = require('./UT');
 
 Peter.s_ut(0);
 
-ut = new UT(process.argv, true, {}, (eventName, primative, testThis, OPTS) => {
+ut = new UT(process.argv, true, {}, (eventName) => {
   if (eventName.startsWith("exit-")) {
     return process.exit(0);
   }

@@ -35,7 +35,8 @@ process = (code, ENV = {}) ->
 		tokens[1].trim()
 
 	req =
-		bGo: true
+		bAlive: true
+		bChainAlive: true
 		bFoundIF: false
 		bFoundELSE: false
 
@@ -49,7 +50,7 @@ process = (code, ENV = {}) ->
 	for line,lineNbr in lines
 #		line = line.replace /?harles/, 'Christmas'
 
-#		lg "BEFORE: LINE #{lineNbr+1}: #{line}"
+		lg "------------------------------------ LINE #{lineNbr+1}: #{line}"
 
 		#SLOW: set for EACH LINE!
 		th = (msg) ->
@@ -63,29 +64,29 @@ process = (code, ENV = {}) ->
 				throw new Error "line=#{lineNbr+1}: depth=#{stack.length}#{if req.name then " name=#{req.name}" else ""}: #{msg}"
 
 		doReq = (name, bFlipIII) ->
-# 			the default is that this #if section is DEAD.  BUT, if bGo is true, then not dead: we need to flip inside #else
-			req.bFlipOnElse = false
+			req.name = name
+			req.bFoundIF = true
 
-#			log "bFoundELSE=false for #{name}"
-			req.bFoundELSE = false
+			if req.name not in ["0","1","ut","node","rn","cs","bin"]
+				th "unknown"
 
-			if req.bGo
-				req.name = name
-				req.bFlipOnElse = true
-				req.bFoundIF = true
+			# only go if this target is one of the environments
+			req.bAlive = switch req.name
+				when "0"
+					false
+				when "1"
+					true
+				else
+					!!ENV[req.name]
 
-				if req.name not in ["0","1","ut","node","rn","cs","bin"]
-					th "unknown"
-
-				# only go if this target is one of the environments
-				req.bGo = if req.name is "0" then false else !!ENV[req.name]
-				req.bGo = if req.name is "1" then true else req.bGo
-#				req.bAlive = ! req.bGo
-#				log "IF: name=#{req.name} bGo=#{req.bGo}"
+			if req.bAlive
+				req.bChainAlive = false			# no FURTHER action (after this #{else}if) of this chain
+			log ">>> doReq: name=#{req.name} bChainAlive=#{req.bChainAlive} bAlive=#{req.bAlive}"
 		switch
 			when line[0..2] is "#if"
+				log ">>> if: bChainAlive=#{req.bChainAlive} bAlive=#{req.bAlive}"
+
 				a.push line if OUTPUT
-#				log "IF: line=#{line}: #{req.bGo}"
 				name = arg line
 
 				# save current requirements for later
@@ -94,23 +95,26 @@ process = (code, ENV = {}) ->
 				#CHALLENGE: why clone?  appears to break if just set req={}   !!!
 				# clone (otherwise side offect of messing with requirements object just saved)
 				req = Object.assign {}, req
-				doReq name, true
-				req.bChainSatisfied = req.bGo
+
+				if req.bAlive
+					log "bAlive SETS bChainAlive"
+					req.bChainAlive = true
+					doReq name, true
+				else
+					req.bChainAlive = false
+
+				req.bFoundELSE = false
 			when line[0..6] is "#elseif"
 				a.push line if OUTPUT
 				if req.bFoundELSE
 					th "#elseif following #else"
 
-#				lg "elseif: satis=#{req.bChainSatisfied}"
-				if req.bChainSatisfied
-					# chain is henceforth DEAD!
-					req.bGo = false
-					req.bFlipOnElse = false			# turn off '#else'
-				else
+				lg "elseif: bChainAlive=#{req.bChainAlive}"
+				req.bAlive = false
+				if req.bChainAlive
 					name = arg line
 
 					# replace requirements with new name, keep same requirement object
-					req.bGo = true
 					doReq name
 			when line[0..4] is "#else"
 				a.push line if OUTPUT
@@ -122,10 +126,11 @@ process = (code, ENV = {}) ->
 				else
 					req.bFoundELSE = true
 
-				if req.bFlipOnElse
-					# we're alive, so flip... whatever the logic was, now it's the opposite
-					req.bGo = ! req.bGo
+				req.bAlive = req.bChainAlive
+				log ">>> else: name=#{req.name} bChainAlive=#{req.bChainAlive} bAlive=#{req.bAlive}"
 			when line[0..5] is "#endif"
+				log ">>> endif: name=#{req.name} bChainAlive=#{req.bChainAlive} bAlive=#{req.bAlive}"
+
 				a.push line if OUTPUT
 				if stack.length > 0
 					# return to requirements before first #if of this current chain was encountered
@@ -133,7 +138,7 @@ process = (code, ENV = {}) ->
 				else
 					th "#endif without #if"
 			when line[0..6] is "#import"
-				if req.bGo
+				if req.bAlive
 					a.push line if OUTPUT
 					name = arg line
 					if name is "UT" and !ENV.ut
@@ -149,7 +154,7 @@ process = (code, ENV = {}) ->
 							th "#import: neither node nor rn"
 						a.push out
 			when line[0..6] is "#export"
-				if req.bGo
+				if req.bAlive
 #					a.push line if OUTPUT
 					name = arg line
 					if name is "UT" and !ENV.ut
@@ -163,7 +168,8 @@ process = (code, ENV = {}) ->
 							th "#export: neither node nor rn"
 						a.push out
 			else
-				if req.bGo
+				console.log "@@@@@@@@@@ #{req.bAlive} => #{line}"
+				if req.bAlive
 					a.push PROC line, ENV
 
 	if req.bFoundIF
@@ -171,7 +177,7 @@ process = (code, ENV = {}) ->
 #		throw new Error "line=#{lineNbr+1} #endif missing: #{JSON.stringify stack.forEach((o) -> o.name)}"
 		throw new Error "line=#{lineNbr+1} #endif missing: \"#{req.name}\""
 
-	if false
+	if true
 		for line,lineNbr in a
 			lg "AFTER: LINE #{lineNbr+1}: #{line}"
 
@@ -306,17 +312,17 @@ module.exports =
 						c1 = """
 .before
 .#if rn
-.this is rn
+.rn
 .#elseif node
-.this is node
+.node
 .#else
-.neither
+.else
 .#endif
 .after
 """
 						c2 = """
 .before
-.this is rn
+.rn
 .after
 """
 						fn c1, c2, {rn:true, node:true}, this
@@ -438,10 +444,11 @@ module.exports =
 						c1 = """
 .before
 .#if rn
+.rn
 .#if node
-.this is node
+.node
 .#else
-.this is NOT node
+.NOT node
 .#endif
 .between
 .#endif
@@ -449,11 +456,52 @@ module.exports =
 """
 						c2 = """
 .before
-.this is NOT node
+.rn
+.NOT node
 .between
 .after
 """
 						fn c1, c2, {rn:true, node:false}, this
+					@t "double #if address real issue", ->
+						c1 = """
+.before
+.#if ut
+.ut
+.#if node
+.ut node
+.#elseif rn
+.ut !node rn
+.#endif
+.between
+.#endif
+.after
+"""
+						c2 = """
+.before
+.after
+"""
+						fn c1, c2, {ut:false, node:false, rn:true}, this
+					@t "double #if: just added: make sure not covered by another test", ->
+						c1 = """
+.before
+.#if ut
+.ut
+.#if node
+.ut node
+.#elseif rn
+.ut !node rn
+.#endif
+#else
+.ut else
+.#endif
+.after
+"""
+						c2 = """
+.before
+.ut else
+.after
+"""
+						fn c1, c2, {ut:false, node:false, rn:true}, this
 					@t "#else", exceptionMessage:"line=2: depth=0: #else without #if", ->
 						c1 = """
 .abc
