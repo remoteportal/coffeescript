@@ -35,6 +35,7 @@ BANNER = '''
 
 # The list of all the valid option flags that `coffee` knows how to handle.
 SWITCHES = [
+  ['-a', '--aws',               'AWS output']    #PETER
   ['-b', '--bare',              'compile without a top-level function wrapper']
   ['-Z', '--peter',             'CS peter extension output']    #PETER
   ['-c', '--compile',           'compile to JavaScript and save as .js files']
@@ -116,35 +117,62 @@ exports.run = ->
 #      printLine "LOG..."
     catch err
       console.log "read targets: err=#{err}"
+      process.exit 1
       fs.appendFile '/tmp/coffee-err.log', "cwd=#{process.cwd()} __dirname=#{__dirname} args=#{aaa}\n", (err) ->
 #        printLine "appendFile finished maybe with error"
   #  ENV.rn = true
   #  ENV.ut = true
 
   if opts.rn
+    console.log "\n\n\n\n\n\n\n\n\n\n"
 #    printLine "REACT NATIVE *************: compile=#{opts.compile}"
 #    printLine "opts.arguments=#{JSON.stringify opts.arguments}"
 
     ENV =
-      node: false
+#      aws: false
+#      fuse: false
+#      node: false
+      node8: true
       rn: true
-      ut: false
+      ut: true
+#      web: false
 
     opts.compile = true
     opts.run = false
     opts.arguments = ['.']
+    opts.ignoreList = "daemon,Flexbase,FlexbaseCoffee,proof,pub,Server,ServerBase,ServerFB,ServerS3,ServerStore,ServerSync,StoreServer,SQL,TestClient,tests,trace"
     opts.output = "/Users/pete/gitlab/rn/API/rn/Flexbase"
 
-  if opts.peter
+  if opts.aws
+    console.log "\n\n\n\n\n\n\n\n\n\n"
+#    printLine "REACT NATIVE *************: compile=#{opts.compile}"
+#    printLine "opts.arguments=#{JSON.stringify opts.arguments}"
+
     ENV =
+      aws: true
+#      fuse: false
       node: true
-      rn: false
+#      node8: false
+#      rn: false
       ut: true
+#      web: false
 
     opts.compile = true
     opts.run = false
     opts.arguments = ['.']
-    opts.output = "/Users/pete/work/coffeescript/src/coffeescript"
+    opts.ignoreList = "Flexbase,FlexbaseCoffee,UTFBRN"
+    opts.output = "/Users/pete/gitlab/rn/API/daemon"
+
+#  if opts.peter
+#    ENV =
+#      node: true
+#      rn: false
+#      ut: true
+#
+#    opts.compile = true
+#    opts.run = false
+#    opts.arguments = ['.']
+#    opts.output = "/Users/pete/work/coffeescript/src/coffeescript"
 
 #PETER: trying to fix: Missing index.coffee or index.litcoffee in /Users/pete/gitlab/rn/API/Flexbase
 
@@ -246,8 +274,24 @@ compilePath = (source, topLevel, base) ->
     catch err
       if err.code is 'ENOENT' then return else throw err
 #PETER #PATH: to compile: directory TO files
+    ignoreMap = {}
+    if opts.ignoreList
+      for k in opts.ignoreList.split ','
+        ignoreMap["#{k}.coffee"] = true
     for file in files
-      compilePath (path.join source, file), no, base      #PETER #REC #RECURSIVE
+#      printLine "test #{file}"
+      # if file in ignoreMap
+#      if file.includes()
+#        printLine "SKIP #{file}"
+#        continue
+      bSkip = false
+      for k in opts.ignoreList.split ','
+        if "#{k}.coffee" is file
+          printLine "SKIP #{file}"
+          bSkip = true
+          break
+      unless bSkip
+        compilePath (path.join source, file), no, base      #PETER #REC #RECURSIVE
   else if topLevel or helpers.isCoffee source
 #PETER: reached concrete coffee file
     sources.push source

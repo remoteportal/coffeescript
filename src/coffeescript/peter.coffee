@@ -16,7 +16,7 @@ lg = (line) -> console.log line
 
 process = (code, ENV = {}) ->
 	if OUTPUT
-		lg "process: ENV=#{JSON.stringify ENV}"
+		lg "ENV=#{JSON.stringify ENV}"
 
 	code = code.toString()
 
@@ -55,7 +55,7 @@ process = (code, ENV = {}) ->
 		#SLOW: set for EACH LINE!
 		th = (msg) ->
 			start = Math.max 0, lineNbr-20
-			lg "------------------------ #{msg}"
+			lg "----------------------- #{msg}"
 			for i in [start..lineNbr]
 				lg "CONTEXT: LINE #{i+1}: #{lines[i]}"
 			if OUTPUT
@@ -68,8 +68,9 @@ process = (code, ENV = {}) ->
 			req.name = name
 			req.bFoundIF = true
 
-			if req.name not in ["0","1","ut","node","rn","cs","bin"]
-				th "unknown"
+#			"client" needs to be turned on for node for unit testing
+			if req.name not in ["0","1","aws","client","daemon","dev","fuse","mac","node","node8","rn","ut","web","win"]
+				th "unknown transpile target"
 
 			# only go if this target is one of the environments
 			req.bAlive = switch req.name
@@ -179,7 +180,7 @@ process = (code, ENV = {}) ->
 #		throw new Error "line=#{lineNbr+1} #endif missing: #{JSON.stringify stack.forEach((o) -> o.name)}"
 		throw new Error "line=#{lineNbr+1} #endif missing: \"#{req.name}\""
 
-	if true
+	if false		#POPULAR
 		for line,lineNbr in a
 			lg "AFTER: LINE #{lineNbr+1}: #{line}"
 

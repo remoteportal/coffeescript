@@ -22,7 +22,7 @@ lg = function(line) {
 process = function(code, ENV = {}) {
   var a, arg, doReq, j, k, len, len1, line, lineNbr, lines, name, out, req, stack, th;
   if (OUTPUT) {
-    lg(`process: ENV=${JSON.stringify(ENV)}`);
+    lg(`ENV=${JSON.stringify(ENV)}`);
   }
   code = code.toString();
   //	log "FILE: SRC1: #{code}\n"
@@ -57,7 +57,7 @@ process = function(code, ENV = {}) {
     th = function(msg) {
       var i, k, ref, ref1, start;
       start = Math.max(0, lineNbr - 20);
-      lg(`------------------------ ${msg}`);
+      lg(`----------------------- ${msg}`);
       for (i = k = ref = start, ref1 = lineNbr; (ref <= ref1 ? k <= ref1 : k >= ref1); i = ref <= ref1 ? ++k : --k) {
         lg(`CONTEXT: LINE ${i + 1}: ${lines[i]}`);
       }
@@ -72,8 +72,9 @@ process = function(code, ENV = {}) {
       var ref;
       req.name = name;
       req.bFoundIF = true;
-      if ((ref = req.name) !== "0" && ref !== "1" && ref !== "ut" && ref !== "node" && ref !== "rn" && ref !== "cs" && ref !== "bin") {
-        th("unknown");
+      //			"client" needs to be turned on for node for unit testing
+      if ((ref = req.name) !== "0" && ref !== "1" && ref !== "aws" && ref !== "client" && ref !== "daemon" && ref !== "dev" && ref !== "fuse" && ref !== "mac" && ref !== "node" && ref !== "node8" && ref !== "rn" && ref !== "ut" && ref !== "web" && ref !== "win") {
+        th("unknown transpile target");
       }
       // only go if this target is one of the environments
       req.bAlive = (function() {
@@ -206,7 +207,7 @@ process = function(code, ENV = {}) {
     //		throw new Error "line=#{lineNbr+1} #endif missing: #{JSON.stringify stack.forEach((o) -> o.name)}"
     throw new Error(`line=${lineNbr + 1} #endif missing: "${req.name}"`);
   }
-  if (true) {
+  if (false) { //POPULAR
     for (lineNbr = k = 0, len1 = a.length; k < len1; lineNbr = ++k) {
       line = a[lineNbr];
       lg(`AFTER: LINE ${lineNbr + 1}: ${line}`);

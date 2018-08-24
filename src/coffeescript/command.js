@@ -49,6 +49,11 @@ BANNER = 'Usage: coffee [options] path/to/script.coffee [args]\n\nIf called with
 
 // The list of all the valid option flags that `coffee` knows how to handle.
 SWITCHES = [
+  [
+    '-a',
+    '--aws',
+    'AWS output' //PETER
+  ],
   ['-b',
   '--bare',
   'compile without a top-level function wrapper'],
@@ -185,6 +190,7 @@ exports.run = function() {
       //      printLine "LOG..."
       err = error;
       console.log(`read targets: err=${err}`);
+      process.exit(1);
       fs.appendFile('/tmp/coffee-err.log', `cwd=${process.cwd()} __dirname=${__dirname} args=${aaa}\n`, function(err) {});
     }
   }
@@ -192,29 +198,54 @@ exports.run = function() {
   //  ENV.rn = true
   //  ENV.ut = true
   if (opts.rn) {
+    console.log("\n\n\n\n\n\n\n\n\n\n");
     //    printLine "REACT NATIVE *************: compile=#{opts.compile}"
     //    printLine "opts.arguments=#{JSON.stringify opts.arguments}"
     ENV = {
-      node: false,
+      //      aws: false
+      //      fuse: false
+      //      node: false
+      node8: true,
       rn: true,
-      ut: false
-    };
-    opts.compile = true;
-    opts.run = false;
-    opts.arguments = ['.'];
-    opts.output = "/Users/pete/gitlab/rn/API/rn/Flexbase";
-  }
-  if (opts.peter) {
-    ENV = {
-      node: true,
-      rn: false,
       ut: true
     };
+    //      web: false
     opts.compile = true;
     opts.run = false;
     opts.arguments = ['.'];
-    opts.output = "/Users/pete/work/coffeescript/src/coffeescript";
+    opts.ignoreList = "daemon,Flexbase,FlexbaseCoffee,proof,pub,Server,ServerBase,ServerFB,ServerS3,ServerStore,ServerSync,StoreServer,SQL,TestClient,tests,trace";
+    opts.output = "/Users/pete/gitlab/rn/API/rn/Flexbase";
   }
+  if (opts.aws) {
+    console.log("\n\n\n\n\n\n\n\n\n\n");
+    //    printLine "REACT NATIVE *************: compile=#{opts.compile}"
+    //    printLine "opts.arguments=#{JSON.stringify opts.arguments}"
+    ENV = {
+      aws: true,
+      //      fuse: false
+      node: true,
+      //      node8: false
+      //      rn: false
+      ut: true
+    };
+    //      web: false
+    opts.compile = true;
+    opts.run = false;
+    opts.arguments = ['.'];
+    opts.ignoreList = "Flexbase,FlexbaseCoffee,UTFBRN";
+    opts.output = "/Users/pete/gitlab/rn/API/daemon";
+  }
+  //  if opts.peter
+  //    ENV =
+  //      node: true
+  //      rn: false
+  //      ut: true
+
+  //    opts.compile = true
+  //    opts.run = false
+  //    opts.arguments = ['.']
+  //    opts.output = "/Users/pete/work/coffeescript/src/coffeescript"
+
   //PETER: trying to fix: Missing index.coffee or index.litcoffee in /Users/pete/gitlab/rn/API/Flexbase
 
   // Make the REPL *CLI* use the global context so as to (a) be consistent with the
@@ -298,7 +329,7 @@ makePrelude = function(requires) {
 // is passed, recursively compile all '.coffee', '.litcoffee', and '.coffee.md'
 // extension source files in it and all subdirectories.
 compilePath = function(source, topLevel, base) {
-  var code, err, file, files, i, len, results, stats;
+  var bSkip, code, err, file, files, i, ignoreMap, j, k, l, len, len1, len2, ref, ref1, results, stats;
   //  printLine "compilePath: source=#{source} topLevel=#{topLevel} base=#{base}"
   if (indexOf.call(sources, source) >= 0 || watchedDirs[source] || !topLevel && (notSources[source] || hidden(source))) {
     return;
@@ -337,11 +368,38 @@ compilePath = function(source, topLevel, base) {
         throw err;
       }
     }
-//PETER #PATH: to compile: directory TO files
+    //PETER #PATH: to compile: directory TO files
+    ignoreMap = {};
+    if (opts.ignoreList) {
+      ref = opts.ignoreList.split(',');
+      for (i = 0, len = ref.length; i < len; i++) {
+        k = ref[i];
+        ignoreMap[`${k}.coffee`] = true;
+      }
+    }
     results = [];
-    for (i = 0, len = files.length; i < len; i++) {
-      file = files[i];
-      results.push(compilePath(path.join(source, file), false, base)); //PETER #REC #RECURSIVE
+    for (j = 0, len1 = files.length; j < len1; j++) {
+      file = files[j];
+      //      printLine "test #{file}"
+      // if file in ignoreMap
+      //      if file.includes()
+      //        printLine "SKIP #{file}"
+      //        continue
+      bSkip = false;
+      ref1 = opts.ignoreList.split(',');
+      for (l = 0, len2 = ref1.length; l < len2; l++) {
+        k = ref1[l];
+        if (`${k}.coffee` === file) {
+          printLine(`SKIP ${file}`);
+          bSkip = true;
+          break;
+        }
+      }
+      if (!bSkip) {
+        results.push(compilePath(path.join(source, file), false, base)); //PETER #REC #RECURSIVE
+      } else {
+        results.push(void 0);
+      }
     }
     return results;
   } else if (topLevel || helpers.isCoffee(source)) {
