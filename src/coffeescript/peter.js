@@ -55,16 +55,17 @@ process = function(code, ENV = {}) {
 
     //SLOW: set for EACH LINE!
     th = function(msg) {
-      var i, k, ref, ref1, start;
+      var env, i, k, ref, ref1, start;
+      env = Object.keys(ENV).sort().join(',');
       start = Math.max(0, lineNbr - 20);
       lg(`----------------------- ${msg}`);
       for (i = k = ref = start, ref1 = lineNbr; (ref <= ref1 ? k <= ref1 : k >= ref1); i = ref <= ref1 ? ++k : --k) {
         lg(`CONTEXT: LINE ${i + 1}: ${lines[i]}`);
       }
       if (OUTPUT) {
-        throw new Error(`line=${lineNbr + 1}: depth=${stack.length} ENV=${JSON.stringify(ENV)} stack=${JSON.stringify(stack)}${(req.name ? ` name=${req.name}` : "")}: ${msg}`);
+        throw Error(`line=${lineNbr + 1}: depth=${stack.length} ENV=${env} stack=${JSON.stringify(stack)}${(req.name ? ` name=${req.name}` : "")}: ${msg}`);
       } else {
-        throw new Error(`line=${lineNbr + 1}: depth=${stack.length}${(req.name ? ` name=${req.name}` : "")}: ${msg}`);
+        throw Error(`line=${lineNbr + 1}: depth=${stack.length}${(req.name ? ` name=${req.name}` : "")}: ${msg}`);
       }
       return process.exit(1);
     };
@@ -73,8 +74,8 @@ process = function(code, ENV = {}) {
       req.name = name;
       req.bFoundIF = true;
       //			"client" needs to be turned on for node for unit testing
-      if ((ref = req.name) !== "0" && ref !== "1" && ref !== "aws" && ref !== "client" && ref !== "daemon" && ref !== "dev" && ref !== "fuse" && ref !== "mac" && ref !== "node" && ref !== "node8" && ref !== "rn" && ref !== "ut" && ref !== "web" && ref !== "win") {
-        th("unknown transpile target");
+      if ((ref = req.name) !== "0" && ref !== "1" && ref !== "aws" && ref !== "client" && ref !== "daemon" && ref !== "dev" && ref !== "fuse" && ref !== "instrumentation" && ref !== "mac" && ref !== "node" && ref !== "node8" && ref !== "rn" && ref !== "ut" && ref !== "web" && ref !== "win") {
+        th("unknown env target");
       }
       // only go if this target is one of the environments
       req.bAlive = (function() {

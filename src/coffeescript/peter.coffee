@@ -54,14 +54,15 @@ process = (code, ENV = {}) ->
 
 		#SLOW: set for EACH LINE!
 		th = (msg) ->
+			env = Object.keys(ENV).sort().join ','
 			start = Math.max 0, lineNbr-20
 			lg "----------------------- #{msg}"
 			for i in [start..lineNbr]
 				lg "CONTEXT: LINE #{i+1}: #{lines[i]}"
 			if OUTPUT
-				throw new Error "line=#{lineNbr+1}: depth=#{stack.length} ENV=#{JSON.stringify ENV} stack=#{JSON.stringify stack}#{if req.name then " name=#{req.name}" else ""}: #{msg}"
+				throw Error "line=#{lineNbr+1}: depth=#{stack.length} ENV=#{env} stack=#{JSON.stringify stack}#{if req.name then " name=#{req.name}" else ""}: #{msg}"
 			else
-				throw new Error "line=#{lineNbr+1}: depth=#{stack.length}#{if req.name then " name=#{req.name}" else ""}: #{msg}"
+				throw Error "line=#{lineNbr+1}: depth=#{stack.length}#{if req.name then " name=#{req.name}" else ""}: #{msg}"
 			process.exit 1
 
 		doReq = (name, bFlipIII) ->
@@ -69,8 +70,8 @@ process = (code, ENV = {}) ->
 			req.bFoundIF = true
 
 #			"client" needs to be turned on for node for unit testing
-			if req.name not in ["0","1","aws","client","daemon","dev","fuse","mac","node","node8","rn","ut","web","win"]
-				th "unknown transpile target"
+			if req.name not in ["0","1","aws","client","daemon","dev","fuse","instrumentation","mac","node","node8","rn","ut","web","win"]
+				th "unknown env target"
 
 			# only go if this target is one of the environments
 			req.bAlive = switch req.name
