@@ -140,7 +140,7 @@ exports.run = ->
     opts.compile = true
     opts.run = false
     opts.arguments = ['.']
-    opts.ignoreList = "daemon,Flexbase,FlexbaseCoffee,proof,pub,Server,ServerBase,ServerFB,ServerS3,ServerStore,ServerSync,StoreServer,SQL,TestClient,tests,trace"
+    opts.ignoreList = "daemon,Flexbase,FlexbaseCoffee,proof,pub,Server,ServerBase,ServerFB,ServerS3,ServerStore,ServerSync,StoreServer,SQL,TestClient,tests" # trace #POP
     opts.output = "/Users/pete/gitlab/rn/API/rn/Flexbase"
 
   if opts.aws
