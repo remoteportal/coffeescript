@@ -29,6 +29,7 @@ process = function(code, ENV = {}) {
   a = [];
   if (OUTPUT) {
     a.push(`# process: ENV=${JSON.stringify(ENV)}`);
+    a.push("# cooked: " + new Date());
   }
   stack = [];
   arg = function(line) {

@@ -198,13 +198,14 @@ exports.run = function() {
   //  ENV.rn = true
   //  ENV.ut = true
   if (opts.rn) {
-    console.log("\n\n\n\n\n\n\n\n\n\n");
+    console.log("\n\n\n\n\n\n\n\n\n");
     //    printLine "REACT NATIVE *************: compile=#{opts.compile}"
     //    printLine "opts.arguments=#{JSON.stringify opts.arguments}"
-    ENV = {
+    ENV = { //TARGET:RN #RN
       //      aws: false
       //      fuse: false
       //      node: false
+      instrumentation: true,
       node8: true,
       rn: true,
       ut: true

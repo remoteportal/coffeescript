@@ -26,6 +26,7 @@ process = (code, ENV = {}) ->
 
 	if OUTPUT
 		a.push "# process: ENV=#{JSON.stringify ENV}"
+		a.push "# cooked: "+new Date()
 
 	stack = []
 
