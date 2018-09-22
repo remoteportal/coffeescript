@@ -26,7 +26,7 @@ process = (code, ENV = {}) ->
 
 	if OUTPUT
 		a.push "# process: ENV=#{JSON.stringify ENV}"
-		a.push "# cooked: "+new Date()
+#		a.push "# cooked: "+new Date()		#GIT-NOISE
 
 	stack = []
 
@@ -157,6 +157,23 @@ process = (code, ENV = {}) ->
 						else
 							th "#import: neither node nor rn"
 						a.push out
+			when line[0..7] is "#IMPORT "
+				if req.bAlive
+					a.push line if OUTPUT
+					name = arg line
+
+					if ENV.server
+						out = "#{name} = require './Flexbase/#{name}'"
+					else if ENV.node
+						out = "#{name} = require './#{name}'"
+					else if ENV.rn
+						out = "import #{name} from './#{name}';"
+					else
+						th "#import: neither node nor rn"
+					a.push out
+					a.push "BB=Context.BB; GG=Context.GG;"
+					a.push "modMap=Context.modMap;"
+					a.push "A=modMap.A; ASS=modMap.ASS; DATE=modMap.DATE; IS=modMap.IS; N=modMap.N; O=modMap.O; SNEW=modMap.SNEW; textFormat=modMap.textFormat; V=modMap.V;"
 			when line[0..6] is "#export"
 				if req.bAlive
 #					a.push line if OUTPUT
