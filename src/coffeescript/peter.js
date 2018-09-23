@@ -197,7 +197,7 @@ process = function(code, ENV = {}) {
           a.push(out);
           a.push("BB=Context.BB; GG=Context.GG;");
           a.push("modMap=Context.modMap;");
-          a.push("A=modMap.A; ASS=modMap.ASS; DATE=modMap.DATE; IS=modMap.IS; N=modMap.N; O=modMap.O; SNEW=modMap.SNEW; textFormat=modMap.textFormat; V=modMap.V;");
+          a.push("A=modMap.A; ASS=modMap.ASS; DATE=modMap.DATE; IS=modMap.IS; NNEW=modMap.NNEW; ONEW=modMap.ONEW; SNEW=modMap.SNEW; textFormat=modMap.textFormat; V=modMap.V;");
         }
         break;
       case line.slice(0, 7) !== "#export":
