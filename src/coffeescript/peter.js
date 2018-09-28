@@ -195,7 +195,7 @@ process = function(code, ENV = {}) {
             th("#import: neither node nor rn");
           }
           a.push(out);
-          a.push("BB=Context.BB; GG=Context.GG");
+          a.push("BB=Context.BB; GG=Context.GG; HM=Context.HM");
           a.push("KT=Context.kt; KVT=Context.kvt; VT=Context.vt");
           a.push("modMap=Context.modMap");
           a.push("A=modMap.A; ASS=modMap.ASS; DATE=modMap.DATE; IS=modMap.IS; NNEW=modMap.NNEW; ONEW=modMap.ONEW; SNEW=modMap.SNEW; textFormat=modMap.textFormat; V=modMap.V");
