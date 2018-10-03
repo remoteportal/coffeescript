@@ -199,6 +199,7 @@ process = function(code, ENV = {}) {
           a.push("KT=Context.kt; KVT=Context.kvt; VT=Context.vt");
           a.push("modMap=Context.modMap");
           a.push("ANEW=modMap.ANEW; ASS=modMap.ASS; C=modMap.C; DATE=modMap.DATE; IS=modMap.IS; NNEW=modMap.NNEW; ONEW=modMap.ONEW; SNEW=modMap.SNEW; textFormat=modMap.textFormat; VNEW=modMap.VNEW");
+          a.push("duck=VNEW.duck; drill=ONEW.drill; json=VNEW.json");
         }
         break;
       case line.slice(0, 7) !== "#export":
