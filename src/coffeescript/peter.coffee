@@ -171,6 +171,7 @@ process = (code, ENV = {}) ->
 					else
 						th "#import: neither node nor rn"
 					a.push out
+					a.push "abort=Context.abort"
 					a.push "BB=Context.BB; GG=Context.GG; HM=Context.HM"
 					a.push "KT=Context.kt; KVT=Context.kvt; VT=Context.vt"
 					a.push "modMap=Context.modMap"
