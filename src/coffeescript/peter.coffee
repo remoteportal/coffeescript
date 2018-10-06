@@ -7,10 +7,22 @@ trace = require './trace'
 
 
 
-log = (line) -> process.stdout.write line + '\n'
+#log = (line) -> process.stdout.write line + '\n'
 log = (line) -> console.log line + '\n'
 
 lg = (line) -> console.log line
+
+
+
+tr = []
+tr.push "abort=Context.abort"
+tr.push "BB=Context.BB; GG=Context.GG; HM=Context.HM"
+tr.push "kt=Context.kt; kvt=Context.kvt; vt=Context.vt"
+tr.push "modMap=Context.modMap"
+tr.push "ANEW=modMap.ANEW; ASS=modMap.ASS; C=modMap.C; DATE=modMap.DATE; IS=modMap.IS; NNEW=modMap.NNEW; ONEW=modMap.ONEW; SNEW=modMap.SNEW; textFormat=modMap.textFormat; VNEW=modMap.VNEW"
+tr.push "duck=VNEW.duck; drill=ONEW.drill; json=VNEW.json"
+
+
 
 
 
@@ -162,6 +174,8 @@ process = (code, ENV = {}) ->
 					a.push line if OUTPUT
 					name = arg line
 
+					a.push line
+
 					if ENV.server
 						out = "#{name} = require './Flexbase/#{name}'"
 					else if ENV.node
@@ -171,12 +185,11 @@ process = (code, ENV = {}) ->
 					else
 						th "#import: neither node nor rn"
 					a.push out
-					a.push "abort=Context.abort"
-					a.push "BB=Context.BB; GG=Context.GG; HM=Context.HM"
-					a.push "kt=Context.kt; kvt=Context.kvt; vt=Context.vt"
-					a.push "modMap=Context.modMap"
-					a.push "ANEW=modMap.ANEW; ASS=modMap.ASS; C=modMap.C; DATE=modMap.DATE; IS=modMap.IS; NNEW=modMap.NNEW; ONEW=modMap.ONEW; SNEW=modMap.SNEW; textFormat=modMap.textFormat; VNEW=modMap.VNEW"
-					a.push "duck=VNEW.duck; drill=ONEW.drill; json=VNEW.json"
+
+#					a.push "t1"
+#					a.push "t2"
+					a.push "#ORIGIN: ~/github/coffeescript/peter.coffee: tr array"
+					a.push ...tr
 			when line[0..6] is "#export"
 				if req.bAlive
 #					a.push line if OUTPUT
@@ -191,6 +204,10 @@ process = (code, ENV = {}) ->
 						else
 							th "#export: neither node nor rn"
 						a.push out
+			when line is "#Context2local"
+				a.push "#Context2local"
+				a.push "#ORIGIN: ~/github/coffeescript/peter.coffee: tr array"
+				a.push ...tr
 			else
 #				console.log "@@@@@@@@@@ #{req.bAlive} => #{line}"
 
@@ -202,7 +219,7 @@ process = (code, ENV = {}) ->
 #		throw new Error "line=#{lineNbr+1} #endif missing: #{JSON.stringify stack.forEach((o) -> o.name)}"
 		throw new Error "line=#{lineNbr+1} #endif missing: \"#{req.name}\""
 
-	if false		#POPULAR
+	if 0		#POP
 		for line,lineNbr in a
 			lg "AFTER: LINE #{lineNbr+1}: #{line}"
 
