@@ -18,8 +18,9 @@ tr = []
 tr.push "abort=Context.abort"
 tr.push "BB=Context.BB; GG=Context.GG; HM=Context.HM"
 tr.push "kt=Context.kt; kvt=Context.kvt; vt=Context.vt"
+tr.push "TYPE=Context.TYPE; Type=Context.Type; type=Context.type"
 tr.push "modMap=Context.modMap"
-tr.push "ANEW=modMap.ANEW; ASS=modMap.ASS; C=modMap.C; DATE=modMap.DATE; IS=modMap.IS; NNEW=modMap.NNEW; ONEW=modMap.ONEW; SNEW=modMap.SNEW; textFormat=modMap.textFormat; VNEW=modMap.VNEW"
+tr.push "ANEW=modMap.ANEW; ASS=modMap.ASS; C=modMap.C; DATE=modMap.DATE; IS=modMap.IS; N=modMap.N; ONEW=modMap.ONEW; SNEW=modMap.SNEW; textFormat=modMap.textFormat; VNEW=modMap.VNEW"
 tr.push "duck=VNEW.duck; drill=ONEW.drill; json=VNEW.json"
 
 
@@ -66,6 +67,16 @@ process = (code, ENV = {}) ->
 #		lg "------------------------------------ LINE #{lineNbr+1}: #{line}"
 
 		#SLOW: set for EACH LINE!
+		im = (name) ->
+			if ENV.server
+				a.push "#{name} = require './Flexbase/#{name}'"
+			else if ENV.node
+				a.push "#{name} = require './#{name}'"
+			else if ENV.rn
+				a.push "import #{name} from './#{name}';"
+			else
+				th "#import: neither node nor rn"
+
 		th = (msg) ->
 			env = Object.keys(ENV).sort().join ','
 			start = Math.max 0, lineNbr-20
@@ -171,23 +182,26 @@ process = (code, ENV = {}) ->
 						a.push out
 			when line[0..7] is "#IMPORT "
 				if req.bAlive
-					a.push line if OUTPUT
 					name = arg line
 
+					a.push "# *** #IMPORT"
 					a.push line
 
-					if ENV.server
-						out = "#{name} = require './Flexbase/#{name}'"
-					else if ENV.node
-						out = "#{name} = require './#{name}'"
-					else if ENV.rn
-						out = "import #{name} from './#{name}';"
-					else
-						th "#import: neither node nor rn"
-					a.push out
+					im name
 
-#					a.push "t1"
-#					a.push "t2"
+					a.push "#ORIGIN: ~/github/coffeescript/peter.coffee: tr array"
+					a.push ...tr
+			when line[0..8] is "#IMPORT2 "
+				if req.bAlive
+					name = arg line
+
+					a.push "# *** #IMPORT2"
+					a.push line
+
+					im "Base"
+					im "Context"
+					im "trace"
+
 					a.push "#ORIGIN: ~/github/coffeescript/peter.coffee: tr array"
 					a.push ...tr
 			when line[0..6] is "#export"
@@ -204,7 +218,7 @@ process = (code, ENV = {}) ->
 						else
 							th "#export: neither node nor rn"
 						a.push out
-			when line is "#Context2local"
+			when line[0..13] is "#Context2local"
 				a.push "#Context2local"
 				a.push "#ORIGIN: ~/github/coffeescript/peter.coffee: tr array"
 				a.push ...tr

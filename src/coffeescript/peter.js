@@ -24,14 +24,16 @@ tr.push("BB=Context.BB; GG=Context.GG; HM=Context.HM");
 
 tr.push("kt=Context.kt; kvt=Context.kvt; vt=Context.vt");
 
+tr.push("TYPE=Context.TYPE; Type=Context.Type; type=Context.type");
+
 tr.push("modMap=Context.modMap");
 
-tr.push("ANEW=modMap.ANEW; ASS=modMap.ASS; C=modMap.C; DATE=modMap.DATE; IS=modMap.IS; NNEW=modMap.NNEW; ONEW=modMap.ONEW; SNEW=modMap.SNEW; textFormat=modMap.textFormat; VNEW=modMap.VNEW");
+tr.push("ANEW=modMap.ANEW; ASS=modMap.ASS; C=modMap.C; DATE=modMap.DATE; IS=modMap.IS; N=modMap.N; ONEW=modMap.ONEW; SNEW=modMap.SNEW; textFormat=modMap.textFormat; VNEW=modMap.VNEW");
 
 tr.push("duck=VNEW.duck; drill=ONEW.drill; json=VNEW.json");
 
 process = function(code, ENV = {}) {
-  var a, arg, doReq, j, k, len, len1, line, lineNbr, lines, name, out, req, stack, th;
+  var a, arg, doReq, im, j, k, len, len1, line, lineNbr, lines, name, out, req, stack, th;
   if (OUTPUT) {
     lg(`ENV=${JSON.stringify(ENV)}`);
   }
@@ -66,6 +68,17 @@ process = function(code, ENV = {}) {
     //		lg "------------------------------------ LINE #{lineNbr+1}: #{line}"
 
     //SLOW: set for EACH LINE!
+    im = function(name) {
+      if (ENV.server) {
+        return a.push(`${name} = require './Flexbase/${name}'`);
+      } else if (ENV.node) {
+        return a.push(`${name} = require './${name}'`);
+      } else if (ENV.rn) {
+        return a.push(`import ${name} from './${name}';`);
+      } else {
+        return th("#import: neither node nor rn");
+      }
+    };
     th = function(msg) {
       var env, i, k, ref, ref1, start;
       env = Object.keys(ENV).sort().join(',');
@@ -192,23 +205,22 @@ process = function(code, ENV = {}) {
         break;
       case line.slice(0, 8) !== "#IMPORT ":
         if (req.bAlive) {
-          if (OUTPUT) {
-            a.push(line);
-          }
           name = arg(line);
+          a.push("# *** #IMPORT");
           a.push(line);
-          if (ENV.server) {
-            out = `${name} = require './Flexbase/${name}'`;
-          } else if (ENV.node) {
-            out = `${name} = require './${name}'`;
-          } else if (ENV.rn) {
-            out = `import ${name} from './${name}';`;
-          } else {
-            th("#import: neither node nor rn");
-          }
-          a.push(out);
-          //					a.push "t1"
-          //					a.push "t2"
+          im(name);
+          a.push("#ORIGIN: ~/github/coffeescript/peter.coffee: tr array");
+          a.push(...tr);
+        }
+        break;
+      case line.slice(0, 9) !== "#IMPORT2 ":
+        if (req.bAlive) {
+          name = arg(line);
+          a.push("# *** #IMPORT2");
+          a.push(line);
+          im("Base");
+          im("Context");
+          im("trace");
           a.push("#ORIGIN: ~/github/coffeescript/peter.coffee: tr array");
           a.push(...tr);
         }
@@ -231,7 +243,7 @@ process = function(code, ENV = {}) {
           }
         }
         break;
-      case line !== "#Context2local":
+      case line.slice(0, 14) !== "#Context2local":
         a.push("#Context2local");
         a.push("#ORIGIN: ~/github/coffeescript/peter.coffee: tr array");
         a.push(...tr);
