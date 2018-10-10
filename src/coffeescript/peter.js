@@ -32,6 +32,8 @@ tr.push("ANEW=modMap.ANEW; AP=modMap.AP; ASS=modMap.ASS; C=modMap.C; DATE=modMap
 
 tr.push("duck=VNEW.duck; drill=ONEW.drill; json=VNEW.json");
 
+tr.push("IF=AP.IF;");
+
 process = function(code, ENV = {}) {
   var a, arg, doReq, im, j, k, len, len1, line, lineNbr, lines, name, out, req, stack, th;
   if (OUTPUT) {
