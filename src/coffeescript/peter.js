@@ -28,7 +28,7 @@ tr.push("TYPE=Context.TYPE; Type=Context.Type; type=Context.type");
 
 tr.push("modMap=Context.modMap");
 
-tr.push("ANEW=modMap.ANEW; AP=modMap.AP; ASS=modMap.ASS; C=modMap.C; DATE=modMap.DATE; IS=modMap.IS; LL=modMap.LL; N=modMap.N; ONEW=modMap.ONEW; SNEW=modMap.SNEW; textFormat=modMap.textFormat; VNEW=modMap.VNEW");
+tr.push("ANEW=modMap.ANEW; AP=modMap.AP; ASS=modMap.ASS; C=modMap.C; DATE=modMap.DATE; IS=modMap.IS; LL=modMap.LL; N=modMap.N; ONEW=modMap.ONEW; S=modMap.S; textFormat=modMap.textFormat; VNEW=modMap.VNEW");
 
 tr.push("duck=VNEW.duck; drill=ONEW.drill; json=VNEW.json");
 
