@@ -20,8 +20,8 @@ tr.push "BB=Context.BB; GG=Context.GG; HM=Context.HM"
 tr.push "kt=Context.kt; kvt=Context.kvt; vt=Context.vt"
 tr.push "TYPE=Context.TYPE; Type=Context.Type; type=Context.type"
 tr.push "modMap=Context.modMap"
-tr.push "A=modMap.A; AP=modMap.AP; ASS=modMap.ASS; C=modMap.C; DATE=modMap.DATE; IS=modMap.IS; LL=modMap.LL; N=modMap.N; ONEW=modMap.ONEW; S=modMap.S; SP=modMap.SP; textFormat=modMap.textFormat; VNEW=modMap.VNEW"
-tr.push "duck=VNEW.duck; drill=ONEW.drill; json=VNEW.json"
+tr.push "A=modMap.A; AP=modMap.AP; ASS=modMap.ASS; C=modMap.C; DATE=modMap.DATE; IS=modMap.IS; LL=modMap.LL; N=modMap.N; ONEW=modMap.ONEW; S=modMap.S; SP=modMap.SP; textFormat=modMap.textFormat; V=modMap.V"
+tr.push "duck=V.duck; drill=ONEW.drill; json=V.json"
 tr.push "IF=AP.IF;"
 
 

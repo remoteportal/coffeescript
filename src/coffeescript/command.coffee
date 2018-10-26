@@ -123,6 +123,8 @@ exports.run = ->
   #  ENV.rn = true
   #  ENV.ut = true
 
+  opts.ignoreList = ""
+
   if opts.rn
     console.log "\n\n\n\n\n\n\n\n\n"
 #    printLine "REACT NATIVE *************: compile=#{opts.compile}"
