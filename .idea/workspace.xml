@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="11dbedff-929c-41ba-92e0-c0b43c9dffab" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/command.coffee" afterPath="$PROJECT_DIR$/src/coffeescript/command.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/command.js" afterPath="$PROJECT_DIR$/src/coffeescript/command.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/peter.coffee" afterPath="$PROJECT_DIR$/src/coffeescript/peter.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/peter.js" afterPath="$PROJECT_DIR$/src/coffeescript/peter.js" />
-    </list>
+    <list default="true" id="11dbedff-929c-41ba-92e0-c0b43c9dffab" name="Default" comment="" />
     <ignored path="coffeescript.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -649,12 +644,12 @@
       <workItem from="1539941769239" duration="4000" />
       <workItem from="1540053530761" duration="38000" />
       <workItem from="1540473994679" duration="1083000" />
-      <workItem from="1540550795074" duration="2247000" />
+      <workItem from="1540550795074" duration="2858000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="145834000" />
+    <option name="totallyTimeSpent" value="146445000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="185" y="23" width="1537" height="1113" extended-state="0" />
