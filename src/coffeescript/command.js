@@ -214,7 +214,8 @@ exports.run = function() {
     opts.compile = true;
     opts.run = false;
     opts.arguments = ['.'];
-    opts.ignoreList = "daemon,Flexbase,FlexbaseCoffee,proof,pub,Server,ServerBase,ServerFB,ServerS3,ServerStore,ServerSync,StoreServer,SQL,TestClient,tests"; // trace #POP
+    //DESTINATION: Expo RN client
+    opts.ignoreList = "CLI,daemon,Flexbase,FlexbaseCoffee,proof,Server,ServerBase,ServerConnMgr,ServerFB,ServerS3,ServerStore,ServerSync,StoreServer,SQL,TestClient,tests"; // trace #POP
     opts.output = "/Users/pete/gitlab/rn/API/rn/Flexbase";
   }
   if (opts.aws) {
@@ -233,6 +234,7 @@ exports.run = function() {
     opts.compile = true;
     opts.run = false;
     opts.arguments = ['.'];
+    //DESTINATION: AWS / daemon
     opts.ignoreList = "Flexbase,FlexbaseCoffee,UTFBRN";
     opts.output = "/Users/pete/gitlab/rn/API/daemon";
   }
