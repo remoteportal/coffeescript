@@ -28,11 +28,11 @@ tr.push("TYPE=Context.TYPE; Type=Context.Type; type=Context.type");
 
 tr.push("modMap=Context.modMap");
 
-tr.push("A=modMap.A; AP=modMap.AP; ASS=modMap.ASS; C=modMap.C; DATE=modMap.DATE; IS=modMap.IS; LL=modMap.LL; N=modMap.N; ONEW=modMap.ONEW; S=modMap.S; SP=modMap.SP; textFormat=modMap.textFormat; V=modMap.V");
+tr.push("A=modMap.A; AP=modMap.AP; ASS=modMap.ASS; C=modMap.C; DATE=modMap.DATE; IS=modMap.IS; LL=modMap.LL; N=modMap.N; O=modMap.O; S=modMap.S; SP=modMap.SP; textFormat=modMap.textFormat; V=modMap.V");
 
-tr.push("duck=V.duck; drill=ONEW.drill; json=V.json");
+tr.push("duck=V.duck; drill=O.drill; json=V.json");
 
-tr.push("IF=AP.IF;");
+tr.push("IF=AP.IF");
 
 process = function(code, ENV = {}) {
   var a, arg, doReq, im, j, k, len, len1, line, lineNbr, lines, name, out, req, stack, th;
