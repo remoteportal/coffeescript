@@ -101,7 +101,7 @@ process = function(code, ENV = {}) {
       req.name = name;
       req.bFoundIF = true;
       //			"client" needs to be turned on for node for unit testing
-      if ((ref = req.name) !== "0" && ref !== "1" && ref !== "aws" && ref !== "client" && ref !== "daemon" && ref !== "dev" && ref !== "fuse" && ref !== "instrumentation" && ref !== "mac" && ref !== "node" && ref !== "node8" && ref !== "rn" && ref !== "ut" && ref !== "web" && ref !== "win") {
+      if ((ref = req.name) !== "0" && ref !== "1" && ref !== "aws" && ref !== "checks" && ref !== "client" && ref !== "daemon" && ref !== "dev" && ref !== "fuse" && ref !== "instrumentation" && ref !== "mac" && ref !== "node" && ref !== "node8" && ref !== "rn" && ref !== "ut" && ref !== "web" && ref !== "win") {
         th("unknown env target");
       }
       // only go if this target is one of the environments

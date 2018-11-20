@@ -95,7 +95,7 @@ process = (code, ENV = {}) ->
 			req.bFoundIF = true
 
 #			"client" needs to be turned on for node for unit testing
-			if req.name not in ["0","1","aws","client","daemon","dev","fuse","instrumentation","mac","node","node8","rn","ut","web","win"]
+			if req.name not in ["0","1","aws","checks","client","daemon","dev","fuse","instrumentation","mac","node","node8","rn","ut","web","win"]
 				th "unknown env target"
 
 			# only go if this target is one of the environments
