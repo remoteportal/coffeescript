@@ -1,28 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="11dbedff-929c-41ba-92e0-c0b43c9dffab" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/A.coffee" afterPath="$PROJECT_DIR$/src/coffeescript/A.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/A.js" afterPath="$PROJECT_DIR$/src/coffeescript/A.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/Base.coffee" afterPath="$PROJECT_DIR$/src/coffeescript/Base.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/Base.js" afterPath="$PROJECT_DIR$/src/coffeescript/Base.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/Date.coffee" afterPath="$PROJECT_DIR$/src/coffeescript/Date.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/Date.js" afterPath="$PROJECT_DIR$/src/coffeescript/Date.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/N.coffee" afterPath="$PROJECT_DIR$/src/coffeescript/N.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/N.js" afterPath="$PROJECT_DIR$/src/coffeescript/N.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/O.coffee" afterPath="$PROJECT_DIR$/src/coffeescript/O.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/O.js" afterPath="$PROJECT_DIR$/src/coffeescript/O.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/S.coffee" afterPath="$PROJECT_DIR$/src/coffeescript/S.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/S.js" afterPath="$PROJECT_DIR$/src/coffeescript/S.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/Util.coffee" afterPath="$PROJECT_DIR$/src/coffeescript/Util.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/Util.js" afterPath="$PROJECT_DIR$/src/coffeescript/Util.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/V.coffee" afterPath="$PROJECT_DIR$/src/coffeescript/V.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/V.js" afterPath="$PROJECT_DIR$/src/coffeescript/V.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/peter.coffee" afterPath="$PROJECT_DIR$/src/coffeescript/peter.coffee" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/peter.js" afterPath="$PROJECT_DIR$/src/coffeescript/peter.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/coffeescript/tests.js" afterPath="$PROJECT_DIR$/src/coffeescript/tests.js" />
-    </list>
+    <list default="true" id="11dbedff-929c-41ba-92e0-c0b43c9dffab" name="Default" comment="" />
     <ignored path="coffeescript.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
