@@ -61,7 +61,7 @@ arraysEqual = (a, b) ->
 module.exports =
 #if ut
 	s_ut: ->
-		UT = require './UT'
+		UT = require './ut'
 
 		(new (class A_UT extends UT
 			run: ->

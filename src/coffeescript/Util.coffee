@@ -382,7 +382,7 @@ size_pr = (path) -> #CONVENTION
 module.exports =
 #if ut
 	s_ut: ->
-		UT = require './UT'
+		UT = require './ut'
 
 		(new (class UtilUT extends UT
 			run: ->

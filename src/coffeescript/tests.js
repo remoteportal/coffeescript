@@ -3,7 +3,7 @@ var Peter, UT, ut;
 
 Peter = require('./peter');
 
-UT = require('./UT');
+UT = require('./ut');
 
 Peter.s_ut(0);
 

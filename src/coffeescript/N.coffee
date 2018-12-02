@@ -113,7 +113,7 @@ module.exports =
 
 #if ut
 	s_ut: ->
-		UT = require './UT'
+		UT = require './ut'
 
 		(new (class N_UT extends UT
 			run: ->

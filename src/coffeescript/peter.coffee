@@ -257,6 +257,11 @@ PROC = (line, ENV, spath) ->
 			line = line.replace /\#PREV.*/g, ""
 			line = line.replace /\#HERE.*/g, ""
 
+		if line.includes "EV_"
+			line = line.replace /\EV_LOGGED_IN/g,	'"EV_LOGGED_IN"'
+			line = line.replace /\EV_ONLINE/g,		'"EV_ONLINE"'
+			line = line.replace /\EV_SMILE_NEW/g,	'"EV_SMILE_NEW"'
+
 	line
 
 #	if line.includes "?"
@@ -270,7 +275,7 @@ module.exports =
 #if ut
 	s_ut: (_OUTPUT) ->
 		OUTPUT = _OUTPUT
-		UT = require './UT'
+		UT = require './ut'
 
 		(new (class PeterUT extends UT
 			run: ->

@@ -382,7 +382,7 @@ module.exports =
 	type: type
 #if ut
 	s_ut: ->
-		UT = require './UT'
+		UT = require './ut'
 
 		class VU_UT extends UT
 			run: ->

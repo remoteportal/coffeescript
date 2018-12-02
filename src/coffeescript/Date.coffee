@@ -66,7 +66,7 @@ module.exports =
 	MMSS: MMSS
 #if ut
 	s_ut: ->
-		UT = require './UT'
+		UT = require './ut'
 
 		(new (class Date_UT extends UT
 			run: ->

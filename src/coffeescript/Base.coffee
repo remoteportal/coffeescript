@@ -77,7 +77,7 @@ m_openMap = new Map()
 module.exports = class Base
 #if ut
 	@s_ut: ->
-		UT = require './UT'
+		UT = require './ut'
 
 		(new (class BaseUT extends UT
 			run: ->

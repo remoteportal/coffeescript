@@ -286,6 +286,11 @@ PROC = function(line, ENV, spath) {
       line = line.replace(/\#PREV.*/g, "");
       line = line.replace(/\#HERE.*/g, "");
     }
+    if (line.includes("EV_")) {
+      line = line.replace(/\EV_LOGGED_IN/g, '"EV_LOGGED_IN"');
+      line = line.replace(/\EV_ONLINE/g, '"EV_ONLINE"');
+      line = line.replace(/\EV_SMILE_NEW/g, '"EV_SMILE_NEW"');
+    }
   }
   return line;
 };
@@ -299,7 +304,7 @@ module.exports = {
   s_ut: function(_OUTPUT) {
     var PeterUT, UT;
     OUTPUT = _OUTPUT;
-    UT = require('./UT');
+    UT = require('./ut');
     return (new (PeterUT = class PeterUT extends UT {
       run() {
         return this.s("process", function() {
