@@ -1,4 +1,4 @@
-PETER=2
+PETER=3
 
 # The `coffee` utility. Handles command-line compilation of CoffeeScript
 # into various forms: saved into `.js` files or printed to stdout

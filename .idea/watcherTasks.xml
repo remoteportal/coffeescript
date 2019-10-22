@@ -15,12 +15,12 @@
           <FilterInfo>
             <option name="description" value="coffee error format" />
             <option name="name" value="coffee" />
-            <option name="regExp" value="$FILE_PATH$:$LINE$:$COLUMN$: $MESSAGE$$" />
+            <option name="regExp" value=";:$LINE$:$COLUMN$: $MESSAGE$$" />
           </FilterInfo>
         </array>
       </option>
       <option name="outputFromStdout" value="false" />
-      <option name="program" value="$USER_HOME$/gitlab/rn/API/Flexbase/node_modules/coffeescript/bin/coffee" />
+      <option name="program" value="E:/readonly/coffeescript/bin/coffee.cmd" />
       <option name="scopeName" value="Project Files" />
       <option name="trackOnlyRoot" value="true" />
       <option name="workingDir" value="$FileDir$" />
