@@ -103,7 +103,7 @@ exports.run = ->
 
   #PETER
   #HERE
-  if opts.node or 1
+  if opts.node or 1   #RECENT turned off or 1
 #    printLine "OUTPUT NODE: __dirname=#{__dirname} CWD=#{process.cwd()}"
     try
 #TODO: climb parents until find env.json
