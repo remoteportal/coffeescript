@@ -27,7 +27,7 @@
 
 CoffeeScript is a little language that compiles into JavaScript.
 
-## Peter Customizations
+## Peter's Customizations
 
 - Copy *.js from unit test project to ReactNative project
 - Conditional code: #if target
