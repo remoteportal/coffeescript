@@ -13,7 +13,7 @@ SourceMap     = require './sourcemap'
 packageJson   = require '../../package.json'
 
 # The current CoffeeScript version number.
-exports.VERSION = packageJson.version + " (coffeescript.coffee VER7D affects ./coffee -v)"
+exports.VERSION = packageJson.version + " (coffeescript.coffee VER8 affects ./coffee -v)"
 
 exports.FILE_EXTENSIONS = FILE_EXTENSIONS = ['.coffee', '.litcoffee', '.coffee.md']
 

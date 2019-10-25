@@ -317,6 +317,18 @@ compilePath = (source, topLevel, base) ->
 #      process.stdout.write "LINE: #{line}\n"
 #    code = lines.join '\n'
 ##    process.stdout.write "FILE: SRC2: #{code}\n"    #PETER
+
+
+    ENV.aws = ENV.mac = ENV.win = false     #RECENT
+    switch process.platform
+      when "darwin"   # 'darwin', 'freebsd', 'linux', 'sunos' or 'win32'
+        ENV.mac = true
+      when "freebsd", "linux"
+        ENV.aws = true
+      when "win32"
+        ENV.win = true
+        
+
     ENV.source = source
     code = peter.process code, ENV
 

@@ -69,7 +69,7 @@ process = (code, ENV = {}) ->
 
 		#SLOW: set for EACH LINE!
 		im = (name) ->
-			if ENV.server
+			if ENV.aws			# ENV.server
 				a.push "#{name} = require './Flexbase/#{name}'"
 			else if ENV.node
 				a.push "#{name} = require './#{name}'"
@@ -172,7 +172,7 @@ process = (code, ENV = {}) ->
 					if name is "UT" and !ENV.ut
 						a.push "# UT import is disabled"
 					else
-						if ENV.server
+						if ENV.aws			# ENV.server
 							out = "#{name} = require './Flexbase/#{name}'"
 						else if ENV.node
 							out = "#{name} = require './#{name}'"
